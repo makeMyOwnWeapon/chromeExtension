@@ -4,14 +4,30 @@ window.onload = function() {
   curriculm.click();
 
   setTimeout(function() {
-    const small_lecture = document.querySelector('li[aria-current="true"][data-testid="sectionUnit"]');
-    console.dir(small_lecture);
-    console.log("소강의 : " + small_lecture.textContent);
+    const small_lecture = document.querySelector('li[aria-current="true"][data-testid="sectionUnit"]').textContent;
+    console.log("소강의 : " + small_lecture);
 
-    const big_lecture = document.querySelector('.css-1pqj6dl');
-    console.dir(big_lecture);
-    console.log("대강의 : " + big_lecture.innerText);
+    const big_lecture = document.querySelector('.css-1pqj6dl').innerText;
+    console.log("대강의 : " + big_lecture);
     console.log('======');
 
+    // background.js 와 연결
+    console.log("send Message to Background Worker From content");
+    chrome.runtime.sendMessage({greeting: "hello", small_lecture : small_lecture}, function(response){
+      
+    console.log(response.farewell);
+
+
+      
+    });
+
   }, 3000);
+
+
+
+
+
+
+
+
 };

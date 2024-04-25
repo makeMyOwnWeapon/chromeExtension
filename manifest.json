@@ -20,7 +20,12 @@
         "https://www.inflearn.com/course*"
       ]
     }
-  ]
+  ],
+  "background": {
+    "service_worker": "scripts/service_worker.js"
+  },
+  "permissions" : ["notifications"]
+
 
 
   
