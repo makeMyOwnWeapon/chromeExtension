@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "Reading time",
+  "name": "Learn On Air",
   "version": "1.0",
-  "description": "Add the reading time to Chrome Extension documentation articles",
+  "description": "It is an application that helps you focus more when learning",
   "action": {
     "default_popup": "popup.html",
-    "default_icon": "hello_extensions.png"
+    "default_icon": "images/icon-16.png"
   },
   "icons": {
     "16": "images/icon-16.png",
@@ -15,14 +15,14 @@
   },
   "content_scripts": [
     {
-      "js": ["scripts/contentScripts/dist/bundle.js"],
+      "js": ["dist/contentScript.bundle.js"],
       "matches": [
         "https://www.inflearn.com/course*"
       ]
     }
   ],
   "background": {
-    "service_worker": "scripts/service_worker.js"
+    "service_worker": "dist/serviceWorker.bundle.js"
   },
   "permissions" : ["notifications", "activeTab"]
 

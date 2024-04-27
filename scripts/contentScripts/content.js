@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     if (request.action == "toggleElement") {
       // 요소 토글 로직
-      console.log("수신완료!");
+      console.log("수신완료!!");
       document.querySelector('.mantine-Tabs-tabsList.mantine-knbi38').style.backgroundColor = getRandomColor();
     }
   }
