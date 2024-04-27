@@ -1,13 +1,16 @@
+import { getRandomColor } from './randomColor.js'; // 경로는 실제 파일 위치에 따라 다를 수 있습니다.
+
+
 window.onload = function() {
   // 랜덤 색상 생성 함수
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
-}
+// function getRandomColor() {
+//   var letters = '0123456789ABCDEF';
+//   var color = '#';
+//   for (var i = 0; i < 6; i++) {
+//       color += letters[Math.floor(Math.random() * 16)];
+//   }
+//   return color;
+// }
 
   console.log('====== content.js start ======');
 
