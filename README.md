@@ -13,6 +13,8 @@ npx start
 ```
 - **크롬익스텐션에 등록**
 ```js
-chrome 확장프로그램 관리 사이트에서, dist가 아닌 프로젝트 최상단 폴더 열기[LOA_Chrome_Extension]
+- chrome 확장프로그램 관리 사이트에서, dist가 아닌 프로젝트 최상단 폴더 열기[LOA_Chrome_Extension]
+- 바꾸지 마세요~
+- package.json, webpack.config.js, content.js, serviceWorker.js
 ```
 
