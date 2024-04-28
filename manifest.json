@@ -2,9 +2,15 @@
   "manifest_version": 3,
   "name": "Learn On Air",
   "version": "1.0",
-  "description": "It is an application that helps you focus more when learning",
+  "description": "Learn on Air for Chrome && inflearn",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "notifications"
+  ],
   "action": {
-    "default_popup": "popup.html",
+    "default_popup": "./src/popup.html",
     "default_icon": "images/icon-16.png"
   },
   "icons": {
@@ -17,18 +23,11 @@
     {
       "js": ["dist/contentScript.bundle.js"],
       "matches": [
-        "https://www.inflearn.com/course*"
+        "http://*/*", "https://*/*"
       ]
     }
   ],
   "background": {
     "service_worker": "dist/serviceWorker.bundle.js"
-  },
-  "permissions" : ["notifications", "activeTab"]
-
-
-
-  
-
-
+  }
 }
