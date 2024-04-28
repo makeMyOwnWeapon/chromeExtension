@@ -8,5 +8,5 @@ function updateSummaryContent(content) {
 }
 
 export function displaySummaryContent() {
-    updateSummaryContent('<p>Summary</p>');
+    updateSummaryContent('<p>SummaryPage</p>');
 }

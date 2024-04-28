@@ -46,6 +46,28 @@ function createDraggableNavbar() {
     footer.style.position = 'static';  // 푸터를 네비게이션바 내부에서 자연스럽게 흐르도록 설정
     navbar.appendChild(footer);
 
+    navbar.onmousedown = function(event) {
+        event.preventDefault();
+        let shiftX = event.clientX - navbar.getBoundingClientRect().left;
+        let shiftY = event.clientY - navbar.getBoundingClientRect().top;
+
+        function moveAt(pageX, pageY) {
+            navbar.style.left = pageX - shiftX + 'px';
+            navbar.style.top = pageY - shiftY + 'px';
+        }
+
+        function onMouseMove(event) {
+            moveAt(event.pageX, event.pageY);
+        }
+
+        document.addEventListener('mousemove', onMouseMove);
+
+        navbar.onmouseup = function() {
+            document.removeEventListener('mousemove', onMouseMove);
+            navbar.onmouseup = null;
+        };
+    };
+    
     document.body.appendChild(navbar);
 
     setupButtonHandlers();

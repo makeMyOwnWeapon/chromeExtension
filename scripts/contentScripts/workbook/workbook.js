@@ -8,5 +8,5 @@ function updateWorkbookContent(content) {
 }
 
 export function displayWorkbookContent() {
-    updateWorkbookContent('<p>Workbooooook</p>');
+    updateWorkbookContent('<p>WorkbookPage</p>');
 }
