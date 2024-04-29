@@ -17,7 +17,7 @@ export function addLearningAssistantIcon() {
                 <button class="mantine-UnstyledButton-root mantine-Button-root mantine-syxma7" type="button">
                     <div class="mantine-1yjkc96 mantine-Button-inner">
                         <span class="mantine-1vgkxjh mantine-Button-label">
-                            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2Fw6E6e%2FbtsGRJCy10B%2FDorSShP9f3AJjKRGQnCAZk%2Fimg.png">
+                            <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FrsQP1%2FbtsGY1xO42N%2FHguDHJehMxoHTt2PoSter1%2Fimg.png">
                             <p class="mantine-Text-root mantine-qjo01i">학습 보조</p>
                         </span>
                     </div>
