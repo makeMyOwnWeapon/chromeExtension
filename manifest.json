@@ -23,7 +23,7 @@
     {
       "js": ["dist/contentScript.bundle.js"],
       "matches": [
-        "http://*/*", "https://*/*"
+        "https://www.inflearn.com/course/*"
       ]
     }
   ],
