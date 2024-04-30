@@ -11,6 +11,7 @@
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
         }
         button {
             background-color: #4CAF50;
@@ -20,9 +21,13 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+            transition: transform 0.1s;
         }
         button:hover {
             background-color: #45a049;
+        }
+        button:active {
+            transform: translate(2px, 2px);
         }
         input[type="text"] {
             padding: 10px;
@@ -31,6 +36,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+            text-align: center;
         }
         .message {
             padding: 10px;
@@ -44,16 +50,29 @@
         .success {
             background-color: #4CAF50;
         }
-        .controls {
+        .controls, .centered {
             display: none;
             margin-top: 10px;
+        }
+        .centered {
+            display: flex;
+            justify-content: center;
+        }
+        .header {
+            font-size: 24px;
+            color: #4CAF50;
+            padding: 20px 0;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <input type="text" id="authCode" placeholder="인증 코드를 입력하세요">
+    <div class="header">Learn on Air!</div>
+    <input type="text" id="authCode" placeholder="인증 코드를 입력하세요.">
     <button id="linkAccount">계정 연결</button>
-    <button id="imNew">신규 등록하러 가기!</button>
+    <div class="centered">
+        <button id="imNew">신규 등록하러 가기!</button>
+    </div>
     <div id="authMessage" class="message error" style="display: none;"></div>
     <div id="statusMessage" class="message success" style="display: none;"></div>
     <div id="controlButtons" class="controls">
