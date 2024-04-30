@@ -24,7 +24,7 @@ export function addLearningAssistantIcon() {
                 </button>
             `;
             scriptButton.parentNode.insertBefore(li, scriptButton.nextSibling);
-            li.querySelector('button').addEventListener('click', function() {
+            li.querySelector('button').addEventListener('click', {passive:true}, function() {
                 toggleNavbarVisibility();
             });
             isActive = true;

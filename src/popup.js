@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('authMessage').textContent = 'Network or server error.';
         });
     });
-
+    
     document.getElementById('showToken').addEventListener('click', function() {  //임시 코드
         chrome.storage.local.get('authToken', function(data) {
             if (data.authToken) {
