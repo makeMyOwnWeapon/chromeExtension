@@ -1,21 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
+    <meta charset="UTF-8">
     <title>Learn on Air</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        input[type="text"] {
+            padding: 10px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .message {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 4px;
+            color: #fff;
+        }
+        .error {
+            background-color: #f44336;
+        }
+        .success {
+            background-color: #4CAF50;
+        }
+        .controls {
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
-    <input type="text" id="authCode" placeholder="Enter your auth code here">
-    <button id="showToken">Show Token</button> <!-- 임시로 만든 코드-->
-    <button id="linkAccount">Link Account</button>
-    <button id="imNew">I'm new!</button>
-    <div id="authMessage" style="color: red; display: none;"></div>
-    <div id="statusMessage" style="color: green; display: none;"></div>
-    <div id="controlButtons" style="display: none;">
-        <button id="activate">Activate</button>
-        <button id="deactivate">Deactivate</button>
+    <input type="text" id="authCode" placeholder="인증 코드를 입력하세요">
+    <button id="linkAccount">계정 연결</button>
+    <button id="imNew">신규 등록하러 가기!</button>
+    <div id="authMessage" class="message error" style="display: none;"></div>
+    <div id="statusMessage" class="message success" style="display: none;"></div>
+    <div id="controlButtons" class="controls">
+        <button id="activate">활성화</button>
+        <button id="deactivate">비활성화</button>
     </div>
-    <button id="nsactivate">NSActivate</button> <!--서버없이도 activate가능하게 임시로 만든 코드-->
-    <button id="nsdeactivate">NSDeactivate</button> <!--서버없이도 activate가능하게 임시로 만든 코드-->
+    <button id="nsactivate">활성화(admin용)</button>
+    <button id="nsdeactivate">비활성화(admin용)</button>
+    <button id="showToken">토큰보기(admin용)</button>
     <script src="popup.js"></script>
 </body>
 </html>
