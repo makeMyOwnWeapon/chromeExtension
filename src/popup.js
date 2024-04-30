@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    chrome.storage.sync.get('authToken', function(data) {
+    chrome.storage.local.get('authToken', function(data) {
         if (data.authToken) {
             document.getElementById('controlButtons').style.display = 'block';
         }
@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return response.json();
         })
         .then(data => {
-            chrome.storage.sync.set({'authToken': data.token}, () => {
+            chrome.storage.local.set({'authToken': data.token}, () => {
                 document.getElementById('controlButtons').style.display = 'block';
                 document.getElementById('authMessage').style.display = 'none';
             });
@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('showToken').addEventListener('click', function() {
-        chrome.storage.sync.get('authToken', function(data) {
+        chrome.storage.local.get('authToken', function(data) {
             if (data.authToken) {
                 alert("Stored Token: " + data.authToken);
             } else {
