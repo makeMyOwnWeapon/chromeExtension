@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    document.getElementById('showToken').addEventListener('click', function() {
+    document.getElementById('showToken').addEventListener('click', function() {  //임시 코드
         chrome.storage.local.get('authToken', function(data) {
             if (data.authToken) {
                 alert("Stored Token: " + data.authToken);
@@ -66,3 +66,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+
+document.getElementById('nsactivate').addEventListener('click', function() {   //임시 코드
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {command: 'turnOn'}, function(response) {
+        });
+    });
+});
+
+document.getElementById('nsdeactivate').addEventListener('click', function() {  //임시 코드
+    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+        chrome.tabs.sendMessage(tabs[0].id, {command: 'turnOff'});
+    });
+});
+
