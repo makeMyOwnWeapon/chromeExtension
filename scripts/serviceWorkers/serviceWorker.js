@@ -1,27 +1,27 @@
 console.log("hi I`m service Worker");
 
-chrome.runtime.onInstalled.addListener(()=>{
+chrome.runtime.onInstalled.addListener(() => {
     console.log("chrome.runtime.onInstalled!!");
 
     //receiving a message
     chrome.runtime.onMessage.addListener(
-        function(request, sender, sendResponse) {
-        console.log(sender.tab ?
-                    "from a content script:" + sender.tab.url :
-                    "from the extension");
-        if (request.greeting === "hello")
-            sendResponse({farewell: "goodbye"});
+        function (request, sender, sendResponse) {
+            console.log(sender.tab ?
+                "from a content script:" + sender.tab.url :
+                "from the extension");
+            if (request.greeting === "hello")
+                sendResponse({ farewell: "goodbye" });
 
 
-        
-        console.log("서버로 보낼 소강의 : " + request.small_lecture);
 
-        const sendData = JSON.stringify({
-            test1: request.small_lecture // 서버로 전송할 데이터
-        })
+            console.log("서버로 보낼 소강의 : " + request.small_lecture);
 
-        sendDataToServer(sendData);
-        
+            const sendData = JSON.stringify({
+                test1: request.small_lecture // 서버로 전송할 데이터
+            })
+
+            sendDataToServer(sendData);
+
 
 
 
@@ -47,20 +47,20 @@ function sendDataToServer(data) {
         },
         body: data
     })
-    .then(response => {
-        // 응답을 받았을 때의 처리
-        if (response.ok) {
-            console.log('ok');
-            return response.json();
-        }
-        console.log('ok2');
-        throw new Error('Network response was not ok.');
-    })
-    .then(data => {
-        console.log('Data successfully sent to the server:', data);
-    })
-    .catch(error => {
-        // 에러 처리
-        console.error('Error sending data:', error);
-    });
+        .then(response => {
+            // 응답을 받았을 때의 처리
+            if (response.ok) {
+                console.log('ok');
+                return response.json();
+            }
+            console.log('ok2');
+            throw new Error('Network response was not ok.');
+        })
+        .then(data => {
+            console.log('Data successfully sent to the server:', data);
+        })
+        .catch(error => {
+            // 에러 처리
+            console.error('Error sending data:', error);
+        });
 }
