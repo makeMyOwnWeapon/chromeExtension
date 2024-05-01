@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             })
             .catch(error => {
-                console.error('Error:', error);
                 document.getElementById('authMessage').style.display = 'block';
                 document.getElementById('authMessage').textContent = '인증 실패! 다시 시도해주세요.';
             });

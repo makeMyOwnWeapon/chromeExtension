@@ -14,6 +14,12 @@
     "default_popup": "./src/popup.html",
     "default_icon": "images/icon-16.png"
   },
+  "web_accessible_resources": [
+    {
+      "resources": ["sounds/alert.mp3"],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "icons": {
     "16": "images/icon-16.png",
     "32": "images/icon-32.png",
