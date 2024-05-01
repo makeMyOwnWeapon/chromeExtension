@@ -1,17 +1,25 @@
-import io from 'socket.io-client';
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+  if (request.type === "LOG_TO_CONSOLE") {
+      console.log("Received in background:", request.message);
+      if (request.token) {
+          console.log("Token received in background:", request.token);
 
-const socket = io('http://localhost:3000');
-
-socket.on('connect', () => {
-  console.log('Connected to the server!');
+          const socket = new WebSocket('ws://localhost:55555');
+          
+          socket.onopen = function(event) {
+              console.log('Connection established');
+              socket.send(JSON.stringify({ token: request.token }));
+          };
+          
+          socket.onerror = function(error) {
+              console.error('WebSocket Error:', error);
+          };
+          
+          socket.onclose = function(event) {
+              console.log('Socket closed:', event);
+          };
+      }
+      sendResponse({ status: "Message and token logged successfully" });
+  }
+  return true;
 });
-
-socket.on('message', (data) => {
-  console.log('Message received:', data);
-});
-
-socket.on('connect', () => {
-    console.log('Connected to the server!');
-    socket.emit('message', 'Hello from Chrome Extension!');
-  });
-  

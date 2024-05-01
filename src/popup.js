@@ -99,3 +99,20 @@ document.getElementById('nsdeactivate').addEventListener('click', function() {  
     });
 });
 
+document.getElementById('logButton').addEventListener('click', function() {
+    chrome.storage.local.get('authToken', function(data) {
+        if (data.authToken) {
+
+            chrome.runtime.sendMessage({ 
+                type: "LOG_TO_CONSOLE", 
+                message: "WebSocket connection attempted from popup with token.",
+                token: data.authToken
+            }, function(response) {
+                console.log("Response from background:", response);
+            });
+        } else {
+            console.log('No auth token found in Chrome storage.');
+        }
+    });
+});
+
