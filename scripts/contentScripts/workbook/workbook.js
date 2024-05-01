@@ -13,7 +13,7 @@ export const workbookContext = {
     videoElement: null,
 };
 
-loadDefaultElements()
+
 initializerRegisterQueue.enqueue(initializeEventForPopupQuiz);
 
 function loadDefaultElements() {
@@ -103,5 +103,6 @@ function makeWorkbookHTML_TOBE() {
 }
 
 export function displayWorkbookContent() {
+    loadDefaultElements()
     updateWorkbookContent(makeWorkbookHTML_TOBE());
 }
