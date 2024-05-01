@@ -8,5 +8,5 @@ function updateSummaryContent(content) {
 }
 
 export function displaySummaryContent() {
-    updateSummaryContent('<p>SummaryPage</p>');
+    updateSummaryContent('<p style = "color: #000000;">SummaryPage</p>');
 }
