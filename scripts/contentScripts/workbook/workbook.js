@@ -1,7 +1,7 @@
 import { Quizsets } from "./component/quizsets";
 
 // [ {targetElementId: handler} ... ]
-export const handlerRegisterQueue = [];
+export const handlerRegisterQueue = new Queue();
 
 function updateWorkbookContent(content, afterCreateInitializers) {
     const navbarContent = document.getElementById('navbarContent');

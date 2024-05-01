@@ -7,6 +7,7 @@ export function QuizSet(quizsetId, title, nickname, recommendations, createAt) {
         console.log("onClick QuizSet");
     };
     handlerRegisterQueue.push({ elementId, type: 'click', handler: onclickHandler});
+    handlerRegisterQueue.enqueue({ elementId, type: 'click', handler: onclickHandler});
     return `
         <button class="list-group-item quizset" id="${elementId}">
         <div>
