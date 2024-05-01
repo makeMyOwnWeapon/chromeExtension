@@ -35,7 +35,6 @@ function createDraggableNavbar() {
     navbar.style.flexDirection = 'column';
     navbar.style.borderRadius = '8px';
     navbar.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
-    navbar.style.fontFamily = 'Arial, sans-serif';
 
     const header = createNavbarHeader();
     navbar.appendChild(header);
