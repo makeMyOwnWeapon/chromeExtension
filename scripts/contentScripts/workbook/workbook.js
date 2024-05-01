@@ -1,3 +1,7 @@
+import { Quizsets } from "./component/quizsets";
+
+// [ {targetElementId: handler} ... ]
+export const handlerRegisterQueue = [];
 
 function updateWorkbookContent(content, afterCreateInitializers) {
     const navbarContent = document.getElementById('navbarContent');
@@ -9,6 +13,11 @@ function updateWorkbookContent(content, afterCreateInitializers) {
     afterCreateInitializers.forEach(init => {
         init();
     });
+    handlerRegisterQueue.forEach(job => {
+        const targetEl = document.getElementById(job.elementId)
+        targetEl.addEventListener(job.type, job.handler);
+    });
+    handlerRegisterQueue.length = 0;
 }
 
 function removePopup() {
@@ -42,7 +51,6 @@ function initializeEventForPopupQuiz() {
     const video = document.getElementsByTagName('video')[0];
     video.addEventListener('timeupdate', () => {
         const currentTime = video.currentTime;
-        console.log('currentTime', currentTime);
         for (let i = lastSolvedIndex; i < popupTimes.length; i++) {
             const parsedTime = parseInt(currentTime);
             if (parsedTime < popupTimes[i])
@@ -87,38 +95,21 @@ function popupQuiz() {
     videoPlayer.parentNode.prepend(quiz);
 }
 
-function makeWorkbookHTML() {
+function makeWorkbookHTML_TOBE() {
+    const subLectureName = ''
+    const mainLectureName = ''
+    const subLectureURL = ''
+
     return `
     <div style="width: 100%">
-        <div class="list-group">
-            <button class="list-group-item" aria-current="true">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">AI가 생성한 문제</h5>
-            </div>
-            <p class="mb-1">LOA AI</p>
-            </button>
-            <button class="list-group-item active" aria-current="true">
-            <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">소단원 중심의 문제</h5>
-                <small><i class="bi bi-hand-thumbs-up-fill"></i> 15</small>
-            </div>
-            <p class="mb-1">의도한 짜장면</p>
-            </button>
-            <button class="list-group-item ">
-            <div>
-                <h5 class="mb-1">뽀모도로 학습법에 기반한 문제</h5>
-                <small><i class="bi bi-hand-thumbs-up-fill"></i> 3</small>
-            </div>
-            <p class="mb-1">성실한 단무지</p>
-            </button>
-        </div>
+        ${ Quizsets(subLectureName, mainLectureName, subLectureURL) }
         <div>
             <button class="btn btn-primary d-inline-flex align-items-center center" type="button">
             문제집 만들기
             </button>
         </div>
-        <div>
-            <div class="position-relative m-4" style="margin-bottom: 30px;">
+        <div id='popuptime-preview'>
+            <div id="popuptimes-view" class="position-relative m-4">
                 <i class="bi bi-caret-down-fill position-absolute start-20"></i>
                 <i class="bi bi-caret-down-fill position-absolute start-60"></i>
                 <i class="bi bi-caret-down-fill position-absolute start-80"></i>
@@ -132,5 +123,5 @@ function makeWorkbookHTML() {
 }
 
 export function displayWorkbookContent() {
-    updateWorkbookContent(makeWorkbookHTML(), [initializeEventForPopupQuiz]);
+    updateWorkbookContent(makeWorkbookHTML_TOBE(), [initializeEventForPopupQuiz]);
 }
