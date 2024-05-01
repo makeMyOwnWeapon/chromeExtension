@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Learn On Air",
+  "name": "Learn On-Air",
   "version": "1.0",
-  "description": "Learn on Air for Chrome && inflearn",
+  "description": "Learn On-Air for Chrome && inflearn",
   "permissions": [
     "activeTab",
     "tabs",

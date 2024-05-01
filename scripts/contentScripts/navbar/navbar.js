@@ -27,12 +27,15 @@ function createDraggableNavbar() {
     navbar.style.position = 'fixed';
     navbar.style.top = '100px';
     navbar.style.right = '10px';
-    navbar.style.backgroundColor = 'white';
-    navbar.style.border = '1px solid black';
+    navbar.style.backgroundColor = '#f4f4f9';
+    navbar.style.border = '1px solid #ccc';
     navbar.style.zIndex = '1000';
     navbar.style.textAlign = 'center';
     navbar.style.display = 'flex';
     navbar.style.flexDirection = 'column';
+    navbar.style.borderRadius = '8px';
+    navbar.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
+    navbar.style.fontFamily = 'Arial, sans-serif';
 
     const header = createNavbarHeader();
     navbar.appendChild(header);

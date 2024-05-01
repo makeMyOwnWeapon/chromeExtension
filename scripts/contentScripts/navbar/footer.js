@@ -6,6 +6,6 @@ export function createNavbarFooter() {
     footer.style.position = 'absolute';
     footer.style.bottom = '0';
     footer.style.textAlign = 'center';
-    footer.innerHTML = '<p>Copyright © 2024 Learn on Air</p>';
+    footer.innerHTML = '<p>Copyright © 2024 Learn On-Air</p>';
     return footer;
 }
