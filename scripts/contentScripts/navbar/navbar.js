@@ -42,6 +42,7 @@ function createDraggableNavbar() {
     const contentDiv = document.createElement('div');
     contentDiv.id = 'navbarContent';
     contentDiv.style.padding = '10px 20px 20px 20px';  // 위쪽 여백 조정
+    contentDiv.style.height = '100%';  // 위쪽 여백 조정
     navbar.appendChild(contentDiv);
 
     const footer = createNavbarFooter();
