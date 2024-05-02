@@ -1,35 +1,53 @@
 import { workbookContext } from "../workbook";
 
-function Quiz() {
+function QuizView(instruction) {
     return `
-        <div class="modal-content">
+        <div class="modal-content center">
             <div class="modal-header">
-                <h1 class="modal-title">문제 1</h1>
+                <h1 class="modal-title">${instruction}</h1>
             </div>
-            <div class="modal-body">
-                <button type="button" class="btn">가상 메모리는 진짜 가상일뿐이다. 하드웨어와 관련이 없다.</button>
-                <button type="button" class="btn">가상화 기술에는 가상 메모리밖에 없다.</button>
-                <button type="button" class="btn">CPU 가상화를 이루기 위해서 시분할 기법을 사용한다.</button>
+            <div class="modal-body" id="choices-container">
             </div>
             <div class="modal-footer">
-                <button type="button" id="submit-btn" class="submit-btn">제출</button>
+                <button type="button" id="submit-btn" class="submit-btn">정답 확인</button>
             </div>
         </div>
         `
 }
 
+function createQuizModal() {
+    const videoContainer = document.querySelector('.shaka-video-container');
+    const quizModal = document.createElement('div');
+    quizModal.id = 'quiz-modal';
+    quizModal.classList.add('overlay');
+    videoContainer.parentNode.appendChild(quizModal);
+    return quizModal;
+}
+
 export function popupQuiz() {
     const video = workbookContext.videoElement;
-    const quizModal = document.getElementById('quiz-modal');
-    quizModal.innerHTML = Quiz();
+    const quizzes = workbookContext.curQuizzes;
+    const curQuizIdx = workbookContext.lastSolvedIndex;
+    const quiz = quizzes[curQuizIdx];
+    const quizModal = createQuizModal();
+
+    quizModal.innerHTML = QuizView(quiz.instruction);
+    const choicesContainer = document.getElementById('choices-container');
+    for (const choice of quiz.choice) {
+        const choiceBtn = document.createElement('button');
+        choiceBtn.type = "button";
+        choiceBtn.id = `choice-${choice.choiceId}`
+        choiceBtn.className = "btn";
+        choiceBtn.innerText = choice.content;
+        choicesContainer.appendChild(choiceBtn);
+    }
     video.pause();
-    quizModal.hidden = false;
 
     const submitBtn = document.getElementById('submit-btn');
     submitBtn.addEventListener('click', () => {
-        const popupQuiz = document.getElementById('quiz-modal');
-        popupQuiz.innerHTML = '';
-        quizModal.hidden = true;
+        const quizModal = document.getElementById('quiz-modal');
+        quizModal.remove();
         video.play();
+        workbookContext.lastSolvedIndex += 1;
     })
 }

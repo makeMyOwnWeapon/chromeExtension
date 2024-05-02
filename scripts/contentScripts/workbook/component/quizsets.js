@@ -1,72 +1,65 @@
-import { QuizSet } from "./quizset";
+import { initializerRegisterQueue } from "../workbook";
+import { QuizSet, QuizSetView } from "./quizset";
 
-export function Quizsets(subLectureURL) {
-    'use strict'
-    let quizsets = [];
+
+export function addQuizsetsAndRender(subLectureURL) {
+    Quizsets(subLectureURL);
+}
+
+function Quizsets(subLectureURL) {
+    'use strict';
+
     (function initialize() {
-        const data = fetchQuizzes(subLectureURL);
-        quizsets = convertJsonToQuizsetElement(data);
+        fetchQuizsets(subLectureURL);
     })();
 
-    function convertJsonToQuizsetElement(quizsets) {
-        return quizsets.map((quizsetDto) => {
-            return QuizSet(
-                quizsetDto.quizsetId,
-                quizsetDto.title,
-                quizsetDto.nickname,
-                quizsetDto.recommendations,
+    function renderQuizsetViews(quizsets) {
+        if (!quizsets)
+            return;
+
+        const quizsetViews = quizsets.map((quizsetDto) => {
+            return QuizSetView(
+                quizsetDto.quizSetId,
+                quizsetDto.quizSetTitle,
+                quizsetDto.quizSetAuthor,
+                quizsetDto.recommendationCount,
                 quizsetDto.createdAt
             )
         })
+        const quizsetsList = document.getElementById("quizsets-container");
+        quizsetsList.innerHTML = quizsetViews.join("\n");
     }
 
-    function fetchQuizzes(subLectureURL) {
-        // TODO: GET /api/quizsets?subLectureURL=subLectureURL
-        // TODO: 쿠키를 스토리지로부터 가져오기.
-        const token = 'FETCH FROM STORAGE';
-        const encodedUrl = encodeURIComponent(subLectureURL);
-        fetch(`http://localhost:3000/api/quizsets?subLectureURL=${encodedUrl}`, {
-            method: 'GET', // 데이터 전송 방식 지정
-            headers: {
-                'Authorization': `Bearer ${token}`, // 컨텐츠 타입 지정
+    function fetchQuizsets(subLectureURL) {
+        chrome.storage.local.get('authToken', function(data) {
+            if (!data.authToken) {
+                console.error("Doesn't have authToken");
+                return;
             }
-        })
-        .then(response => {
-            // 응답을 받았을 때의 처리
-            if (response.ok) {
-                console.log(response.data);
-                return response.json();
+            const token = data.authToken;
+            const encodedUrl = encodeURIComponent(subLectureURL);
+            const options = {
+                method: 'GET', // 데이터 전송 방식 지정
+                headers: {
+                    'Authorization': `Bearer ${token}`, // 컨텐츠 타입 지정
+                }
             }
-        })
-
-        return [
-            {
-                quizsetId: 1,
-                title: 'AI가 생성한 문제',
-                nickname: 'LOA AI',
-                recommendations: 0,
-                createdAt: '2024-04-30'
-            },
-            {
-                quizsetId: 2,
-                title: '소단원 중심의 문제',
-                nickname: '의도한 짜장면',
-                recommendations: 15,
-                createdAt: '2024-04-30'
-            },
-            {
-                quizsetId: 3,
-                title: '뽀모도로 학습법에 기반한 문제',
-                nickname: '성실한 단무지',
-                recommendations: 3,
-                createdAt: '2024-04-30'
-            }
-        ];
+            chrome.runtime.sendMessage({
+                type: 'fetch',
+                url: `http://localhost:3000/api/quizsets?subLectureUrl=${encodedUrl}`,
+                options: options
+            }, (response) => {     
+                renderQuizsetViews(response);
+                addQuizFetcher();
+            });
+        });
     }
 
-    return `
-        <div class="list-group quizsets">
-            ${quizsets.join('\n')}
-        </div>
-        `;
+    function addQuizFetcher() {
+        const quizsets = document.getElementsByClassName('quizset');
+        for(let quizset of quizsets) {
+            const quizsetId = quizset.id.split("-")[1];
+            quizset.addEventListener('click', QuizSet(quizsetId));
+          }
+    }
 };
