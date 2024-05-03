@@ -44,7 +44,7 @@ function Quizsets(subLectureURL) {
                 }
             }
             chrome.runtime.sendMessage({
-                type: 'fetch',
+                type: 'REST',
                 url: `http://localhost:3000/api/quizsets?subLectureUrl=${encodedUrl}`,
                 options: options
             }, (response) => {     
@@ -59,6 +59,6 @@ function Quizsets(subLectureURL) {
         for(let quizset of quizsets) {
             const quizsetId = quizset.id.split("-")[1];
             quizset.addEventListener('click', QuizSet(quizsetId));
-          }
+        }
     }
 };

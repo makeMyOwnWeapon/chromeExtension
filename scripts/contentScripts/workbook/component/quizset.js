@@ -65,7 +65,7 @@ export function QuizSet(quizsetId) {
                 }
             }
             chrome.runtime.sendMessage({
-                type: 'fetch',
+                type: 'REST',
                 url: `http://localhost:3000/api/quizsets/${quizsetId}/quizzes?commentary=true&answer=true`,
                 options: options
             }, (response) => {             

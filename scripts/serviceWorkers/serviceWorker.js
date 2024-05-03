@@ -22,12 +22,12 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         sendResponse({ status: "Message and token logged successfully" });
     }
 
-    if (request.type === 'fetch') {
+    if (request.type === 'REST') {
         fetch(request.url, request.options)
             .then(resp => resp.json())
             .then(data => {
                 // json 데이터 추출 
-                sendResponse(data);
+                sendResponse(data, sender);
             });
     }
     return true;
