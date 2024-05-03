@@ -1,10 +1,5 @@
 import { addQuizsetsAndRender } from "./component/quizsets";
-import { Queue } from "../utils/Queue";
-import { popupQuiz } from "./component/quiz";
 
-// [ {targetElementId: handler} ... ]
-export const handlerRegisterQueue = new Queue();
-export const initializerRegisterQueue = new Queue();
 export const workbookContext = {
     totalTime: 0,
     curQuizzes : [],

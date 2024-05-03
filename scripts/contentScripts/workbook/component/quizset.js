@@ -72,7 +72,6 @@ export function QuizSet(quizsetId) {
                 workbookContext.curQuizzes = response;
                 renderPopupTimeCarrot();
                 initializeEventForPopupQuiz();
-                addRecommendListener();
             });
         });
     }
@@ -85,10 +84,8 @@ export function QuizSet(quizsetId) {
     function initializeEventForPopupQuiz() {
         const video = workbookContext.videoElement;
         const quizzes = workbookContext.curQuizzes;
-        console.log("quizzes", quizzes);
-        const popupTimes = quizzes.map((quiz) => {
-            return quiz.popupTime;
-        }).sort((t1, t2) => t1 - t2);
+        const popupTimes = quizzes.map((quiz) => { return quiz.popupTime;})
+            .sort((t1, t2) => t1 - t2);
         const solved = Array(popupTimes.length).fill(false);
         workbookContext.lastSolvedIndex = 0;
         video.addEventListener('timeupdate', () => {
