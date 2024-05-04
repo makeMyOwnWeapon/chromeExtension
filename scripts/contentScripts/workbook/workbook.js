@@ -1,33 +1,23 @@
 import { addQuizsetsAndRender } from "./component/quizsets";
-import { isAnalyzing, refreshAnalysisBtn } from "./controller/analysis";
+import { isAnalyzing, refreshAnalysisBtn, addAnalysisInfoModalIfNotAnalyzing, addAnalysisInfoModalIfAnalysisDone } from "./controller/analysis";
 
 export const workbookContext = {
     totalTime: 0,
     curQuizzes : [],
     solved : [],
-    lastSolvedIndex : 0,
     videoElement: null,
-    isAnalyzing: false
+    isAnalyzing: false,
 };
 
-loadDefaultElements();
-
-function loadDefaultElements() {
+export function loadDefaultElementsForWorkbook() {
     loadVideoElement();
 }
 
 function loadVideoElement() {
     workbookContext.videoElement = document.getElementsByTagName('video')[0];
     workbookContext.videoElement.pause();
-    workbookContext.videoElement.addEventListener("play", () => {
-        if (!workbookContext.isAnalyzing) {
-            workbookContext.videoElement.pause();
-            alert('학습 보조 아이콘(Workbook)을 통해 분석 시작 버튼을 눌러주세요');
-        }
-    });
-    workbookContext.videoElement.addEventListener("ended", () => {
-        alert('학습 보조 아이콘에서 분석 종료 버튼을 누르면 결과가 저장됩니다!');
-    });
+    workbookContext.videoElement.addEventListener("play", addAnalysisInfoModalIfNotAnalyzing);
+    workbookContext.videoElement.addEventListener("ended", addAnalysisInfoModalIfAnalysisDone);
 }
 
 function updateWorkbookContent(content) {

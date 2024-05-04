@@ -106,14 +106,14 @@ $index-normal: 1;
 $index-upper: 1000;
 
 .overlay {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%; 
     z-index: $index-upper;
     background: rgba(0, 0, 0, 0.3);
-};
+}
 
 #quiz-modal {
   display: flex;
@@ -122,6 +122,15 @@ $index-upper: 1000;
   transition: all .5s;
   .modal-content {
     width: 400px;
+  }
+}
+
+#analysis-info-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  .modal-content {
+    width: 500px;
   }
 }
 
