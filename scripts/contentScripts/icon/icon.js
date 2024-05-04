@@ -1,9 +1,20 @@
 import { toggleNavbarVisibility } from '../navbar/navbar.js';
+import { loadDefaultElementsForWorkbook } from '../workbook/workbook.js';
 
-let isActive = false;  // 상태 추적 변수 추가
+const handler = {
+    set(target, key, value) {
+      target[key] = value;
+      if (value) {
+        loadDefaultElementsForWorkbook();
+      }
+      return true;
+    }  
+};
+
+const LOA = new Proxy({isActive: false}, handler);
 
 export function addLearningAssistantIcon() {
-    if (!isActive) {
+    if (!LOA.isActive) {
         const sideBar = document.querySelector('.css-zl1inp').parentNode;
         const li = document.createElement('li');
         li.className = 'css-zl1inp';
@@ -23,7 +34,7 @@ export function addLearningAssistantIcon() {
         li.querySelector('button').addEventListener('click', function() {
             toggleNavbarVisibility();
         });
-        isActive = true;
+        LOA.isActive = true;
     }
 }
 
@@ -31,6 +42,6 @@ export function removeLearningAssistantIcon() {
     const iconElement = document.getElementById('learningAssistantIcon');
     if (iconElement) {
         iconElement.remove(); // ID를 사용하여 아이콘 요소 제거
-        isActive = false;  // 상태를 비활성화로 설정
+        LOA.isActive = false;  // 상태를 비활성화로 설정
     }
 }
