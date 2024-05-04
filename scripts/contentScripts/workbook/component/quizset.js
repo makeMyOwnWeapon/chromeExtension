@@ -24,6 +24,12 @@ function formatDate(dateString) {
     }
   }
 
+function PopuptimeCarrotView(popuptime) {
+    const totalTime = workbookContext.videoElement.duration;
+    const timeRatio = parseInt(popuptime / totalTime * 100);
+    return `<i class="bi bi-caret-down-fill position-absolute start-${timeRatio}"></i>`
+}
+
 export function QuizSetView(quizsetId, quizSetTitle, quizSetAuthor, recommendationCount, createAt) {
     const elementId = `quizset-${quizsetId}`;
     return `
@@ -37,19 +43,34 @@ export function QuizSetView(quizsetId, quizSetTitle, quizSetAuthor, recommendati
         `
 };
 
-export function QuizSet(quizsetId) {
-    let totalTime = workbookContext.videoElement.duration;
+export function renderPopupTimeCarrot() {
+    const popuptimesView = document.getElementById('popuptimes-view');
+    popuptimesView.innerHTML = workbookContext.curQuizzes.map(quiz => {
+        return PopuptimeCarrotView(quiz.popupTime);
+    }).join('\n');
+}
 
+export function sweepQuizset(quizsetId) {
+    const prevSelectedQuizset = document.getElementById(`quizset-${quizsetId}`);
+    if (prevSelectedQuizset) {
+        prevSelectedQuizset.classList.remove("selected");
+    }
+}
+
+export function markQuizset(quizsetId) {
+    workbookContext.selectedQuizsetId = quizsetId;
+    const selectedQuizset = document.getElementById(`quizset-${quizsetId}`);
+    if (selectedQuizset) {
+        selectedQuizset.classList.add("selected");
+    }
+}
+
+export function QuizSetController(quizsetId) {
     const onclickHandler = () => {
         fetchQuizzes(quizsetId);
+        sweepQuizset(workbookContext.selectedQuizsetId);
+        markQuizset(quizsetId);
     };
-
-    function renderPopupTimeCarrot() {
-        const popuptimesView = document.getElementById('popuptimes-view');
-        popuptimesView.innerHTML = workbookContext.curQuizzes.map(quiz => {
-            return PopuptimeCarrot(quiz.popupTime);
-        }).join('\n');
-    }
 
     function fetchQuizzes(quizsetId) {
         chrome.storage.local.get('authToken', function(data) {
@@ -74,11 +95,6 @@ export function QuizSet(quizsetId) {
                 initializeEventForPopupQuiz();
             });
         });
-    }
-
-    function PopuptimeCarrot(popuptime) {
-        const timeRatio = parseInt(popuptime / totalTime * 100);
-        return `<i class="bi bi-caret-down-fill position-absolute start-${timeRatio}"></i>`
     }
 
     function initializeEventForPopupQuiz() {

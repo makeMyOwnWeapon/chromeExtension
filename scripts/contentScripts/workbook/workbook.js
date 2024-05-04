@@ -7,6 +7,7 @@ export const workbookContext = {
     solved : [],
     videoElement: null,
     isAnalyzing: false,
+    selectedQuizsetId: null
 };
 
 export function loadDefaultElementsForWorkbook() {

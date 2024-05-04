@@ -1,33 +1,41 @@
-import { QuizSet, QuizSetView } from "./quizset";
-
+import { QuizSetController, QuizSetView, renderPopupTimeCarrot, markQuizset } from "./quizset";
+import { workbookContext } from "../workbook";
 
 export function addQuizsetsAndRender(subLectureURL) {
-    Quizsets(subLectureURL);
+    QuizsetsController(subLectureURL);
+    markQuizsetIfPrevSeleceted();
 }
 
-function Quizsets(subLectureURL) {
+function markQuizsetIfPrevSeleceted() {
+    markQuizset(workbookContext.selectedQuizsetId);
+    if (workbookContext.curQuizzes) {
+        renderPopupTimeCarrot();
+    }
+}
+
+function renderQuizsetViews(quizsets) {
+    if (!quizsets)
+        return;
+
+    const quizsetViews = quizsets.map((quizsetDto) => {
+        return QuizSetView(
+            quizsetDto.quizSetId,
+            quizsetDto.quizSetTitle,
+            quizsetDto.quizSetAuthor,
+            quizsetDto.recommendationCount,
+            quizsetDto.createdAt
+        )
+    })
+    const quizsetsList = document.getElementById("quizsets-container");
+    quizsetsList.innerHTML = quizsetViews.join("\n");
+}
+
+function QuizsetsController(subLectureURL) {
     'use strict';
 
     (function initialize() {
         fetchQuizsets(subLectureURL);
     })();
-
-    function renderQuizsetViews(quizsets) {
-        if (!quizsets)
-            return;
-
-        const quizsetViews = quizsets.map((quizsetDto) => {
-            return QuizSetView(
-                quizsetDto.quizSetId,
-                quizsetDto.quizSetTitle,
-                quizsetDto.quizSetAuthor,
-                quizsetDto.recommendationCount,
-                quizsetDto.createdAt
-            )
-        })
-        const quizsetsList = document.getElementById("quizsets-container");
-        quizsetsList.innerHTML = quizsetViews.join("\n");
-    }
 
     function fetchQuizsets(subLectureURL) {
         chrome.storage.local.get('authToken', function(data) {
@@ -58,7 +66,7 @@ function Quizsets(subLectureURL) {
         const quizsets = document.getElementsByClassName('quizset');
         for(let quizset of quizsets) {
             const quizsetId = quizset.id.split("-")[1];
-            quizset.addEventListener('click', QuizSet(quizsetId));
+            quizset.addEventListener('click', QuizSetController(quizsetId));
         }
     }
 };
