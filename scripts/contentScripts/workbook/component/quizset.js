@@ -1,3 +1,4 @@
+import { LoaAxios } from "../../network/LoaAxios";
 import { workbookContext } from "../workbook";
 import { popupQuiz } from "./quiz";
 
@@ -73,28 +74,14 @@ export function QuizSetController(quizsetId) {
     };
 
     function fetchQuizzes(quizsetId) {
-        chrome.storage.local.get('authToken', function(data) {
-            if (!data.authToken) {
-                console.error("Doesn't have authToken");
-                return;
-            }
-            const token = data.authToken;
-            const options = {
-                method: 'GET', // 데이터 전송 방식 지정
-                headers: {
-                    'Authorization': `Bearer ${token}`, // 컨텐츠 타입 지정
-                }
-            }
-            chrome.runtime.sendMessage({
-                type: 'REST',
-                url: `http://localhost:3000/api/quizsets/${quizsetId}/quizzes?commentary=true&answer=true`,
-                options: options
-            }, (response) => {             
+        LoaAxios.get(
+            `http://localhost:3000/api/quizsets/${quizsetId}/quizzes?commentary=true&answer=true`,
+            (response) => {             
                 workbookContext.curQuizzes = response;
                 renderPopupTimeCarrot();
                 initializeEventForPopupQuiz();
-            });
-        });
+            }
+        );
     }
 
     function initializeEventForPopupQuiz() {

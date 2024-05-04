@@ -1,5 +1,6 @@
 import { QuizSetController, QuizSetView, renderPopupTimeCarrot, markQuizset } from "./quizset";
 import { workbookContext } from "../workbook";
+import { LoaAxios } from "../../network/LoaAxios";
 
 export function addQuizsetsAndRender(subLectureURL) {
     QuizsetsController(subLectureURL);
@@ -38,28 +39,14 @@ function QuizsetsController(subLectureURL) {
     })();
 
     function fetchQuizsets(subLectureURL) {
-        chrome.storage.local.get('authToken', function(data) {
-            if (!data.authToken) {
-                console.error("Doesn't have authToken");
-                return;
-            }
-            const token = data.authToken;
-            const encodedUrl = encodeURIComponent(subLectureURL);
-            const options = {
-                method: 'GET', // 데이터 전송 방식 지정
-                headers: {
-                    'Authorization': `Bearer ${token}`, // 컨텐츠 타입 지정
-                }
-            }
-            chrome.runtime.sendMessage({
-                type: 'REST',
-                url: `http://localhost:3000/api/quizsets?subLectureUrl=${encodedUrl}`,
-                options: options
-            }, (response) => {     
+        const encodedUrl = encodeURIComponent(subLectureURL);
+        LoaAxios.get(
+            `http://localhost:3000/api/quizsets?subLectureUrl=${encodedUrl}`,
+            (response) => {
                 renderQuizsetViews(response);
                 addQuizFetcher();
-            });
-        });
+            }
+        );
     }
 
     function addQuizFetcher() {
