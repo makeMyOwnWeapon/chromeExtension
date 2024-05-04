@@ -1,3 +1,4 @@
+import { URLParser } from "../network/URLParser";
 import { addQuizsetsAndRender } from "./component/quizsets";
 import { isAnalyzing, refreshAnalysisBtn, addAnalysisInfoModalIfNotAnalyzing, addAnalysisInfoModalIfAnalysisDone } from "./controller/analysis";
 
@@ -58,6 +59,6 @@ function makeWorkbookHTML_TOBE() {
 
 export function displayWorkbookContent() {
     updateWorkbookContent(makeWorkbookHTML_TOBE());
-    addQuizsetsAndRender(document.location.href);
+    addQuizsetsAndRender(URLParser.parseWithoutTab(document.location.href));
     refreshAnalysisBtn();
 }

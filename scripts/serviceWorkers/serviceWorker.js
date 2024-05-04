@@ -27,7 +27,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             .then(resp => resp.json())
             .then(data => {
                 // json 데이터 추출 
-                sendResponse(data, sender);
+                sendResponse(data);
             });
     }
     return true;

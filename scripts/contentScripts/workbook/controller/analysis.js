@@ -1,10 +1,12 @@
+import { LoaAxios, HOST } from "../../network/LoaAxios";
+import { URLParser } from "../../network/URLParser";
 import { workbookContext } from "../workbook";
 
-function startAnalysis(someArgs) {
+function startAnalysis() {
     workbookContext.isAnalyzing = true;
 }
   
-function endAnalysis(someArgs) {
+function endAnalysis() {
     workbookContext.isAnalyzing = false; 
 }
 
@@ -67,11 +69,24 @@ export function refreshAnalysisBtn() {
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
             <span role="status">분석 요청중</span>
         `
-        setTimeout(() => {
-            startAnalysis('');
-            removeInfoModalIfExist();
-            analysisStartBtn.innerHTML = '<span role="status">분석중</span>'
-        }, 2000);
+        LoaAxios.post(
+            `${HOST}/api/lecture/sub-lecture/history`,
+            {
+                subLectureUrl: URLParser.parseWithoutTab(document.location.href),
+                startedAt: new Date()
+            },
+            (response) => {
+                if (!response) {
+                    console.log("error", error);
+                    analysisStartBtn.innerHTML = '<span role="status">재시도</span>'
+                    analysisStartBtn.disabled = false;
+                }
+                startAnalysis();
+                removeInfoModalIfExist();
+                analysisStartBtn.innerHTML = '<span role="status">분석중</span>'
+                workbookContext.curLectureHistoryId = response.lectureHistoryId;
+            }
+        );
     })
 
     const analysisEndBtn = document.getElementById("analysis-end-btn");
@@ -84,14 +99,24 @@ export function refreshAnalysisBtn() {
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
             <span role="status">분석 종료중</span>
         `
-        setTimeout(() => {
-            endAnalysis('');            
-            analysisEndBtn.innerHTML = '<span role="status">기록 완료</span>'
-            analysisStartBtn.innerHTML = '<span> 분석 시작 </span>'
-            analysisStartBtn.disabled = false;
-            analysisEndBtn.innerHTML = '<span> 분석 종료 </span>'
-            analysisEndBtn.disabled = false;
-            removeInfoModalIfExist();
-        }, 2000);
+        const lectureHistoryId = workbookContext.curLectureHistoryId;
+        LoaAxios.patch(
+            `${HOST}/api/lecture/sub-lecture/history/${lectureHistoryId}`,
+            {
+                endedAt: new Date()
+            },
+            (response) => {
+                if (response.lectureHistoryId !== lectureHistoryId) {
+                    analysisEndBtn.innerHTML = '<span> 분석 실패 </span>'
+                    return;
+                }
+                endAnalysis();            
+                analysisStartBtn.innerHTML = '<span> 분석 시작 </span>'
+                analysisStartBtn.disabled = false;
+                analysisEndBtn.innerHTML = '<span> 분석 종료 </span>'
+                analysisEndBtn.disabled = false;
+                removeInfoModalIfExist();
+            }
+        );
     })
 }

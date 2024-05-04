@@ -1,6 +1,6 @@
 import { QuizSetController, QuizSetView, renderPopupTimeCarrot, markQuizset } from "./quizset";
 import { workbookContext } from "../workbook";
-import { LoaAxios } from "../../network/LoaAxios";
+import { LoaAxios, HOST } from "../../network/LoaAxios";
 
 export function addQuizsetsAndRender(subLectureURL) {
     QuizsetsController(subLectureURL);
@@ -41,7 +41,7 @@ function QuizsetsController(subLectureURL) {
     function fetchQuizsets(subLectureURL) {
         const encodedUrl = encodeURIComponent(subLectureURL);
         LoaAxios.get(
-            `http://localhost:3000/api/quizsets?subLectureUrl=${encodedUrl}`,
+            `${HOST}/api/quizsets?subLectureUrl=${encodedUrl}`,
             (response) => {
                 renderQuizsetViews(response);
                 addQuizFetcher();
