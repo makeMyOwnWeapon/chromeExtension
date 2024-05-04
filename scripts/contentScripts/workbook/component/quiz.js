@@ -24,23 +24,31 @@ function createQuizModal() {
     return quizModal;
 }
 
-export function popupQuiz() {
+export function popupQuiz(quizIdx) {
     const video = workbookContext.videoElement;
     const quizzes = workbookContext.curQuizzes;
-    const curQuizIdx = workbookContext.lastSolvedIndex;
-    const quiz = quizzes[curQuizIdx];
+    const quiz = quizzes[quizIdx];
     const quizModal = createQuizModal();
 
     quizModal.innerHTML = QuizView(quiz.instruction);
     const choicesContainer = document.getElementById('choices-container');
-    for (const choice of quiz.choice) {
-        const choiceBtn = document.createElement('button');
-        choiceBtn.type = "button";
-        choiceBtn.id = `choice-${choice.choiceId}`
-        choiceBtn.className = "btn";
-        choiceBtn.innerText = choice.content;
-        choicesContainer.appendChild(choiceBtn);
+    if (quiz.choice.length === 1) {
+        const inputField = document.createElement('input');
+        inputField.type = "text";
+        inputField.placeholder = "정답을 입력해주세요";
+        inputField.className = "input-answer";
+        choicesContainer.appendChild(inputField);
+    } else {
+        for (const choice of quiz.choice) {
+            const choiceBtn = document.createElement('button');
+            choiceBtn.type = "button";
+            choiceBtn.id = `choice-${choice.choiceId}`
+            choiceBtn.className = "btn";
+            choiceBtn.innerText = choice.content;
+            choicesContainer.appendChild(choiceBtn);
+        }
     }
+
     video.pause();
 
     const submitBtn = document.getElementById('submit-btn');
@@ -48,6 +56,5 @@ export function popupQuiz() {
         const quizModal = document.getElementById('quiz-modal');
         quizModal.remove();
         video.play();
-        workbookContext.lastSolvedIndex += 1;
     })
 }

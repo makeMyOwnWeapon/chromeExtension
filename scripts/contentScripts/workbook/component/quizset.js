@@ -103,18 +103,16 @@ export function QuizSetController(quizsetId) {
         const popupTimes = quizzes.map((quiz) => { return quiz.popupTime;})
             .sort((t1, t2) => t1 - t2);
         const solved = Array(popupTimes.length).fill(false);
-        workbookContext.lastSolvedIndex = 0;
+
         video.addEventListener('timeupdate', () => {
             const currentTime = video.currentTime;
-            for (let i = workbookContext.lastSolvedIndex; i < quizzes.length; i++) {
+            for (let i = 0; i < quizzes.length; i++) {
                 const parsedTime = parseInt(currentTime);
-                if (parsedTime < popupTimes[i])
-                    return
                 if (solved[i])
                     continue;
                 if (parsedTime === popupTimes[i]) {
                     solved[i] = true;
-                    popupQuiz();
+                    popupQuiz(i);
                     video.pause();
                 }
             }
