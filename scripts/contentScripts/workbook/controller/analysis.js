@@ -1,3 +1,4 @@
+import { createAndPopupModalWithHTML } from "../../modal/modal";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
 import { URLParser } from "../../network/URLParser";
 import { workbookContext } from "../workbook";
@@ -22,36 +23,28 @@ export function addAnalysisInfoModalIfNotAnalyzing() {
         return;
     }
     workbookContext.videoElement.pause();
-    const videoContainer = document.querySelector('.shaka-video-container');
-    const modal = document.createElement('div');
-    modal.classList.add("overlay");
-    modal.id = "analysis-info-modal";
-    modal.innerHTML = `
-        <div class="modal-content center">
+    const modal = createAndPopupModalWithHTML({
+        bodyHTML: `
             <div class="modal-body">
                 학습 보조 아이콘-Workbook을 통해 분석 시작 버튼을 눌러주세요
             </div>
-        </div>
-    `
-    videoContainer.parentNode.appendChild(modal);
+        `
+        });
+    modal.id = "analysis-info-modal";
 }
 
 export function addAnalysisInfoModalIfAnalysisDone() {
     if (!isAnalyzing()) {
         return;
     }
-    const videoContainer = document.querySelector('.shaka-video-container');
-    const modal = document.createElement('div');
-    modal.classList.add("overlay");
-    modal.id = "analysis-info-modal";
-    modal.innerHTML = `
-        <div class="modal-content center">
+    const modal = createAndPopupModalWithHTML({
+        bodyHTML: `
             <div class="modal-body">
-                학습 보조 아이콘에서 분석 종료 버튼을 누르면 결과가 저장됩니다!
+            학습 보조 아이콘에서 분석 종료 버튼을 누르면 결과가 저장됩니다!
             </div>
-        </div>
-    `
-    videoContainer.parentNode.appendChild(modal);
+        `
+        });
+    modal.id = "analysis-info-modal";
 }
 
 export function isAnalyzing() {
