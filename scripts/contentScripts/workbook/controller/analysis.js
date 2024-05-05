@@ -65,14 +65,14 @@ export function refreshAnalysisBtn() {
         LoaAxios.post(
             `${HOST}/api/lecture/sub-lecture/history`,
             {
-                subLectureUrl: URLParser.parseWithoutTab(document.location.href),
+                subLectureUrl: decodeURIComponent(URLParser.parseWithoutTab(document.location.href)),
                 startedAt: new Date()
             },
             (response) => {
-                if (!response) {
-                    console.log("error", error);
+                if (!response.lectureHistoryId) {
                     analysisStartBtn.innerHTML = '<span role="status">재시도</span>'
                     analysisStartBtn.disabled = false;
+                    return;
                 }
                 startAnalysis();
                 removeInfoModalIfExist();
