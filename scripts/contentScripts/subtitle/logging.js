@@ -15,7 +15,7 @@ export function turnOffLogging() {
     subtitleElement = null;
     videoPlayer = null;
     lastSubtitle = "";
-    chrome.storage.local.clear(); // 모든 저장 데이터 삭제
+    //chrome.storage.local.clear(); // 모든 저장 데이터 삭제
 }
 
 function handleTimeUpdate() {
@@ -39,6 +39,9 @@ function handleTimeUpdate() {
                 // 중복이 아니라면 저장
                 if (!isDuplicate) {
                     chrome.storage.local.set({[roundedTime]: currentText});
+                    // { script: {roundedTime: currentText } , authToken}
+
+                    // local.set(scirpt , {})
                 }
             });
         }
@@ -54,7 +57,7 @@ function handleTimeUpdate() {
                 sortedItems[key] = items[key];
             });
             console.log(sortedItems); // 정렬된 모든 자막 로그 출력
-            chrome.storage.local.clear(); // 저장된 자막 데이터 삭제
+            // chrome.storage.local.clear(); // 저장된 자막 데이터 삭제
         });
     }
 }
