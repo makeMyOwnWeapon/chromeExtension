@@ -2,6 +2,7 @@ import { createAndPopupModalWithHTML } from "../../modal/modal";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
 import { URLParser } from "../../network/URLParser";
 import { workbookContext } from "../workbook";
+import { connect, disconnect } from "../../connection/connection";
 
 function startAnalysis() {
     workbookContext.isAnalyzing = true;
@@ -57,6 +58,7 @@ export function refreshAnalysisBtn() {
         if (isAnalyzing()) {
             return;
         }
+        connect();
         analysisStartBtn.disabled = true;
         analysisStartBtn.innerHTML = `
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
@@ -87,6 +89,7 @@ export function refreshAnalysisBtn() {
         if (!isAnalyzing()) {
             return;
         }
+        disconnect();
         analysisEndBtn.disabled = true;
         analysisEndBtn.innerHTML = `
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>

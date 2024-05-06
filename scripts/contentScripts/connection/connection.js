@@ -1,29 +1,38 @@
 import io from 'socket.io-client';
+import { showWakeUpModal } from '../alarm/wakeupmodal';
 
 const SERVER_URL = 'http://localhost:4000';
-
+let socket;
 function connect() {
-    const socket = io(SERVER_URL, {
+     socket = io(SERVER_URL, {
         autoConnect: true
     });
 
     socket.on('connect', () => {
         console.log('Connected to the server');
+        chrome.storage.local.get('authToken', function(data) {
+            const authToken = data.authToken;
+            socket.emit('sendData', { socketId: socket.id, token: authToken });
+        });
     });
 
-    socket.on('message', (message) => {
-        console.log('Message from server:', message);
+    socket.on('wakeup', (message) => {
+        console.log('Wake-up message received:', message);
+        showWakeUpModal();
     });
+    
 
-    socket.on('connect_error', (error) => {
-        console.error('Connection error:', error);
-    });
 
-    socket.on('disconnect', () => {
-        console.log('Disconnected from server');
-    });
 
     return socket;
 }
 
 export { connect };
+
+function disconnect(){
+    socket.close();
+    socket.on('disconnect', () => {
+        console.log('Disconnected from server');
+    });
+
+} export{disconnect};
