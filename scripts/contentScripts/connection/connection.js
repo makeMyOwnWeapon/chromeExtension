@@ -9,7 +9,8 @@ function connect() {
     });
 
     socket.on('connect', () => {
-        console.log('Connected to the server');
+        console.log('Connected to the server',socket);
+        alert('소켓 연결이 되었습니다!');
         chrome.storage.local.get('authToken', function(data) {
             const authToken = data.authToken;
             socket.emit('sendData', { socketId: socket.id, token: authToken });
