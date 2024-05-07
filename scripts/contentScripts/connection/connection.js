@@ -3,8 +3,9 @@ import { showWakeUpModal } from '../alarm/wakeupmodal';
 
 const SERVER_URL = 'http://localhost:4000';
 let socket;
+
 function connect() {
-     socket = io(SERVER_URL, {
+    socket = io(SERVER_URL, {
         autoConnect: true
     });
 
@@ -12,18 +13,13 @@ function connect() {
         alert('소켓 연결이 되었습니다!');
         chrome.storage.local.get('authToken', function(data) {
             const authToken = data.authToken;
-            socket.emit('sendData', { socketId: socket.id, token: authToken });
+            socket.emit('sendData', { socketId: socket.id, token: authToken, subLectureId: "spring boot" });
         });
     });
 
     socket.on('wakeup', (message) => {
-        
         showWakeUpModal();
     });
-    //졸음0, 자리이탈1
-    
-
-
 
     return socket;
 }
@@ -36,4 +32,4 @@ function disconnect(){
         console.log('Disconnected from server');
     });
 
-} export{disconnect};
+} export { disconnect };
