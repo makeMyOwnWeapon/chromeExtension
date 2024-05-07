@@ -61,4 +61,5 @@ export function displayWorkbookContent() {
     updateWorkbookContent(makeWorkbookHTML_TOBE());
     addQuizsetsAndRender(URLParser.parseWithoutTab(document.location.href));
     refreshAnalysisBtn();
+    
 }
