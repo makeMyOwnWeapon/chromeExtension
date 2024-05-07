@@ -5,7 +5,13 @@ export const URLParser = (() => {
         return parsedUrl.href;
     }
 
+    function getParam(url, param) {
+        const parsedUrl = new URL(url);
+        return parsedUrl.searchParams.get(param);
+    }
+
     return {
-        parseWithoutTab: parseWithoutTab
+        parseWithoutTab: parseWithoutTab,
+        getParam: getParam,
     }
 })();

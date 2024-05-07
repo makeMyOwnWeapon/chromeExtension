@@ -5,6 +5,9 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             .then(data => {
                 // json 데이터 추출 
                 sendResponse(data);
+            })
+            .catch(error => {
+                sendResponse(error);
             });
     }
     return true;

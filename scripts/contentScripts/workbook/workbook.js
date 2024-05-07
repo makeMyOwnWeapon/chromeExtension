@@ -1,18 +1,21 @@
+import { HOST, LoaAxios } from "../network/LoaAxios";
 import { URLParser } from "../network/URLParser";
 import { addQuizsetsAndRender } from "./component/quizsets";
 import { isAnalyzing, refreshAnalysisBtn, addAnalysisInfoModalIfNotAnalyzing, addAnalysisInfoModalIfAnalysisDone } from "./controller/analysis";
 
 export const workbookContext = {
-    totalTime: 0,
-    curQuizzes : [],
-    solved : [],
+    curQuizzes: [],
+    solved: [],
     videoElement: null,
     isAnalyzing: false,
-    selectedQuizsetId: null
+    selectedQuizsetId: null,
+    subLectureId: null,
+    lectureHistoryId: null
 };
 
 export function loadDefaultElementsForWorkbook() {
     loadVideoElement();
+    loadCurSubLectureId();
 }
 
 function loadVideoElement() {
@@ -20,6 +23,33 @@ function loadVideoElement() {
     workbookContext.videoElement.pause();
     workbookContext.videoElement.addEventListener("play", addAnalysisInfoModalIfNotAnalyzing);
     workbookContext.videoElement.addEventListener("ended", addAnalysisInfoModalIfAnalysisDone);
+}
+
+function loadCurSubLectureId() {
+    const url = encodeURIComponent(URLParser.parseWithoutTab(document.location.href));
+    const title = document.querySelector('.css-1vtpfoe').innerText;
+    const mainLectureTitle = encodeURIComponent(URLParser.getParam(document.location.href, 'courseSlug'));
+    LoaAxios.get(`${HOST}/api/lecture/sub-lecture?url=${url}`,
+        (response) => {
+            if (response.subLectureId) {
+                workbookContext.subLectureId = response.subLectureId;
+                return;
+            }
+            LoaAxios.post(`${HOST}/api/lecture/main-lecture/${mainLectureTitle}/sub-lecture`,
+                {
+                    "url": URLParser.parseWithoutTab(document.location.href),
+                    "title": title,
+                    "duration": parseInt(workbookContext.videoElement.duration),
+                },
+                (response) => {
+                    if (!response.subLectureId) {
+                        console.error("Doesn't make Lecture!");
+                    }
+                    workbookContext.subLectureId = response.subLectureId;
+                }
+            )
+        }
+    )
 }
 
 function updateWorkbookContent(content) {
@@ -61,5 +91,4 @@ export function displayWorkbookContent() {
     updateWorkbookContent(makeWorkbookHTML_TOBE());
     addQuizsetsAndRender(URLParser.parseWithoutTab(document.location.href));
     refreshAnalysisBtn();
-    
 }

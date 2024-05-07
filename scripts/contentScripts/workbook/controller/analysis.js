@@ -79,7 +79,7 @@ export function refreshAnalysisBtn() {
                 startAnalysis();
                 removeInfoModalIfExist();
                 analysisStartBtn.innerHTML = '<span role="status">분석중</span>'
-                workbookContext.curLectureHistoryId = response.lectureHistoryId;
+                workbookContext.lectureHistoryId = response.lectureHistoryId;
             }
         );
     })
@@ -95,7 +95,7 @@ export function refreshAnalysisBtn() {
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
             <span role="status">분석 종료중</span>
         `
-        const lectureHistoryId = workbookContext.curLectureHistoryId;
+        const lectureHistoryId = workbookContext.lectureHistoryId;
         LoaAxios.patch(
             `${HOST}/api/lecture/sub-lecture/history/${lectureHistoryId}`,
             {
