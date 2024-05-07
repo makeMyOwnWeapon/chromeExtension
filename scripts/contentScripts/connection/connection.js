@@ -1,5 +1,6 @@
 import io from 'socket.io-client';
 import { showWakeUpModal } from '../alarm/wakeupmodal';
+import { workbookContext } from '../workbook/workbook';
 
 const SERVER_URL = 'http://localhost:4000';
 let socket;
@@ -13,7 +14,7 @@ function connect() {
         alert('소켓 연결이 되었습니다!');
         chrome.storage.local.get('authToken', function(data) {
             const authToken = data.authToken;
-            socket.emit('sendData', { socketId: socket.id, token: authToken, subLectureId: "spring boot" });
+            socket.emit('sendData', { socketId: socket.id, token: authToken, subLectureId: workbookContext.subLectureId || "default" });
         });
     });
 
@@ -31,5 +32,6 @@ function disconnect(){
     socket.on('disconnect', () => {
         console.log('Disconnected from server');
     });
+} 
 
-} export { disconnect };
+export { disconnect };
