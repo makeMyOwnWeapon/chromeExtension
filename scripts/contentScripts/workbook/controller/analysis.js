@@ -27,7 +27,7 @@ export function addAnalysisInfoModalIfNotAnalyzing() {
     const modal = createAndPopupModalWithHTML({
         bodyHTML: `
             <div class="modal-body">
-                학습 보조 아이콘-Workbook을 통해 분석 시작 버튼을 눌러주세요
+                학습 보조 아이콘-Workbook을 통해 학습 시작 버튼을 눌러주세요
             </div>
         `
         });
@@ -41,7 +41,7 @@ export function addAnalysisInfoModalIfAnalysisDone() {
     const modal = createAndPopupModalWithHTML({
         bodyHTML: `
             <div class="modal-body">
-            학습 보조 아이콘에서 분석 종료 버튼을 누르면 결과가 저장됩니다!
+            학습 보조 아이콘에서 학습 종료 버튼을 누르면 결과가 저장됩니다!
             </div>
         `
         });
@@ -62,7 +62,7 @@ export function refreshAnalysisBtn() {
         analysisStartBtn.disabled = true;
         analysisStartBtn.innerHTML = `
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-            <span role="status">분석 요청중</span>
+            <span role="status">학습 시작 요청중</span>
         `
         LoaAxios.post(
             `${HOST}/api/lecture/sub-lecture/history`,
@@ -93,7 +93,7 @@ export function refreshAnalysisBtn() {
         analysisEndBtn.disabled = true;
         analysisEndBtn.innerHTML = `
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-            <span role="status">분석 종료중</span>
+            <span role="status">학습 종료중</span>
         `
         const lectureHistoryId = workbookContext.lectureHistoryId;
         LoaAxios.patch(
@@ -103,13 +103,13 @@ export function refreshAnalysisBtn() {
             },
             (response) => {
                 if (response.lectureHistoryId !== lectureHistoryId) {
-                    analysisEndBtn.innerHTML = '<span> 분석 실패 </span>'
+                    analysisEndBtn.innerHTML = '<span> 종료 실패 </span>'
                     return;
                 }
                 endAnalysis();            
-                analysisStartBtn.innerHTML = '<span> 분석 시작 </span>'
+                analysisStartBtn.innerHTML = '<span> 학습 시작 </span>'
                 analysisStartBtn.disabled = false;
-                analysisEndBtn.innerHTML = '<span> 분석 종료 </span>'
+                analysisEndBtn.innerHTML = '<span> 학습 종료 </span>'
                 analysisEndBtn.disabled = false;
                 removeInfoModalIfExist();
             }
