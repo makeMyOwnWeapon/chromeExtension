@@ -42,7 +42,7 @@ function getCurrentQuiz() {
  */
 function isAnswer(choiceId) {
   const curQuiz = getCurrentQuiz();
-  for (const choice of curQuiz.choice) {
+  for (const choice of curQuiz.choices) {
     if (choice.choiceId === choiceId && choice.isAnswer) {
       return true;
     }
