@@ -67,14 +67,14 @@ export function popupQuiz(quizIdx) {
 
     quizModal.innerHTML = QuizView(quiz.instruction);
     const choicesContainer = document.getElementById('choices-container');
-    if (quiz.choice.length === 1) {
+    if (quiz.choices.length === 1) {
         const inputField = document.createElement('input');
         inputField.type = "text";
         inputField.placeholder = "정답을 입력해주세요";
         inputField.className = "input-answer";
         choicesContainer.appendChild(inputField);
     } else {
-        for (const choice of quiz.choice) {
+        for (const choice of quiz.choices) {
             const choiceBtn = document.createElement('button');
             choiceBtn.type = "button";
             choiceBtn.id = `choice-${choice.choiceId}`
