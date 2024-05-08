@@ -2,7 +2,6 @@ import { createNavbarHeader } from './header.js';
 import { createNavbarFooter } from './footer.js';
 import { displaySummaryContent } from '../summary/summary.js';
 import { displayWorkbookContent } from '../workbook/workbook.js';
-import { connect } from '../connection/connection.js';
 
 export function toggleNavbarVisibility() {
     const navbar = document.getElementById('learningAssistantNavbar');
@@ -15,7 +14,6 @@ export function toggleNavbarVisibility() {
         }
     } else {
         // 네비게이션바가 없는 경우 새로 생성
-        connect();
         createDraggableNavbar();
     }
 }
