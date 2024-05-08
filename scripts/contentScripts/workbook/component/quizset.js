@@ -1,11 +1,10 @@
-import { LoaAxios } from "../../network/LoaAxios";
+import { HOST, LoaAxios } from "../../network/LoaAxios";
 import { workbookContext } from "../workbook";
-import { popupQuiz } from "./quiz";
 
 function formatDate(dateString) {
     const date = new Date(dateString);
     const currentDate = new Date();
-  
+
     const diffInMilliseconds = currentDate - date;
     const diffInSeconds = diffInMilliseconds / 1000;
     const diffInMinutes = diffInSeconds / 60;
@@ -13,17 +12,17 @@ function formatDate(dateString) {
     const diffInDays = diffInHours / 24;
     const diffInWeeks = diffInDays / 7;
     const diffInMonths = diffInDays / 30;
-  
+
     if (diffInDays < 1) {
-      return '오늘';
+        return '오늘';
     } else if (diffInDays < 7) {
-      return `${Math.floor(diffInDays)}일 전`;
+        return `${Math.floor(diffInDays)}일 전`;
     } else if (diffInWeeks < 4) {
-      return `${Math.floor(diffInWeeks)}주 전`;
+        return `${Math.floor(diffInWeeks)}주 전`;
     } else {
-      return `${Math.floor(diffInMonths)}개월 전`;
+        return `${Math.floor(diffInMonths)}개월 전`;
     }
-  }
+}
 
 function PopuptimeCarrotView(popuptime) {
     const totalTime = workbookContext.videoElement.duration;
@@ -45,6 +44,9 @@ export function QuizSetView(quizsetId, quizSetTitle, quizSetAuthor, recommendati
 };
 
 export function renderPopupTimeCarrot() {
+    if (!workbookContext.curQuizzes.length) {
+        return;
+    }
     const popuptimesView = document.getElementById('popuptimes-view');
     popuptimesView.innerHTML = workbookContext.curQuizzes.map(quiz => {
         return PopuptimeCarrotView(quiz.popupTime);
@@ -75,47 +77,55 @@ export function QuizSetController(quizsetId) {
 
     function fetchQuizzes(quizsetId) {
         LoaAxios.get(
-            `http://localhost:3000/api/quizsets/${quizsetId}/quizzes?commentary=true&answer=true`,
-            (response) => {             
+            `${HOST}/api/quizsets/${quizsetId}/quizzes?commentary=true&answer=true`,
+            (response) => {
                 workbookContext.curQuizzes = response;
                 renderPopupTimeCarrot();
-                initializeEventForPopupQuiz();
             }
         );
     }
-
-    function initializeEventForPopupQuiz() {
-        const video = workbookContext.videoElement;
-        const quizzes = workbookContext.curQuizzes;
-        const popupTimes = quizzes.map((quiz) => { return quiz.popupTime;})
-            .sort((t1, t2) => t1 - t2);
-        const solved = Array(popupTimes.length).fill(false);
-
-        video.addEventListener('timeupdate', () => {
-            const currentTime = video.currentTime;
-            for (let i = 0; i < quizzes.length; i++) {
-                const parsedTime = parseInt(currentTime);
-                if (solved[i])
-                    continue;
-                if (parsedTime === popupTimes[i]) {
-                    solved[i] = true;
-                    popupQuiz(i);
-                    video.pause();
-                }
-            }
-        });
-    }
-
-    function recommendHandler() {
-        return () => {
-            console.log("recommend!");
-        }
-    }
-
-    function addRecommendListener() {
-        const recommendBtn = document.getElementById('recommend-btn');
-        recommendBtn.addEventListener('click', recommendHandler);
-    }
-
     return onclickHandler;
 };
+
+export function AIQuizSetController() {
+    const totalMinutes = workbookContext.videoElement.duration / 60;
+    const popupTimes = [];
+
+    const onclickHandler = (event) => {
+        const quizsetBtn = event.target.closest('.quizset');
+        if (quizsetBtn.classList.contains("selected")) {
+            quizsetBtn.classList.remove("selected");
+        } else {
+            // TODO: 강의 스크립트를 모아, 문제를 만들어내는 이벤트 등록
+            if (popupAIQuizInfo()) {
+                console.log("ai ok");
+                const video = workbookContext.videoElement;
+                turnOnSubtitle(video);
+                video.addEventListener('timeupdate', () => {})
+            } else {
+                console.log("ai no");
+                quizsetBtn.classList.add("selected");
+            }
+            quizsetBtn.classList.add("selected");
+        }
+    };
+
+
+    function popupAIQuizInfo() {
+        return confirm("AI must turn on subtitle, total time must be larger than 5 minute");
+    }
+
+    function turnOnSubtitle(video) {
+        
+    }
+
+    function fetchQuiz() {
+        LoaAxios.get(
+            '',
+            (response) => {
+                workbookContext.curQuizzes = response;
+            }
+        )
+    }
+    return onclickHandler;
+}

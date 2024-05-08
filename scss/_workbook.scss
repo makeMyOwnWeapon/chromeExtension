@@ -190,6 +190,11 @@ $index-upper: 1000;
         background: #e5f3e8; 
         font-weight: bold;
       }
+
+      &.selected {
+        background: #cef0d7; 
+        font-weight: bold;
+      }      
     }
 
     .input-answer {
