@@ -92,8 +92,8 @@ export function popupQuiz(quizIdx) {
     submitBtn.addEventListener('click', () => {
         const quizModal = document.getElementById('quiz-modal');
         sendQuizResultAndRender(choicesContainer.childNodes, quizModal, video);
-        // quizModal.remove();
-        // video.play();
+        quizModal.remove();
+        video.play();
     })
 }
 
