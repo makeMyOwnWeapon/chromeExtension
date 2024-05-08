@@ -1,17 +1,18 @@
 import io from 'socket.io-client';
 import { showWakeUpModal } from '../alarm/wakeupmodal';
-import { workbookContext } from '../workbook/workbook';
+import { workbookContext, setLectureHistoryId } from '../workbook/workbook';
 
 const SERVER_URL = 'http://localhost:4000';
 let socket;
 
-function connect() {
+function connect(callback, btn) {
     socket = io(SERVER_URL, {
         autoConnect: true
     });
 
     socket.on('connect', () => {
         alert('소켓 연결이 되었습니다!');
+        callback(btn);
         chrome.storage.local.get('authToken', function(data) {
             const authToken = data.authToken;
             socket.emit('sendData', { 
@@ -20,22 +21,29 @@ function connect() {
                 subLectureId: workbookContext.subLectureId || "default",
             });
         });
-    });
+    }); 
 
     socket.on('wakeup', (message) => {
         showWakeUpModal();
     });
 
+    socket.on('historyget', (message) => {
+        setLectureHistoryId(message.lectureHistoryId);
+    });
+
     return socket;
 }
 
-export { connect };
+function disconnect(callback, startBtn, endBtn) {
+    socket.emit('requestTime');
 
-function disconnect(){
+    alert('소켓 연결이 해제되었습니다!');
     socket.close();
+    
     socket.on('disconnect', () => {
         console.log('Disconnected from server');
+        callback(startBtn, endBtn);
     });
-} 
+}
 
-export { disconnect };
+export { connect, disconnect };
