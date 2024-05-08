@@ -1,11 +1,12 @@
 import { HOST, LoaAxios } from "../network/LoaAxios";
 import { URLParser } from "../network/URLParser";
+import { popupQuizEventHandler } from "./component/quiz";
 import { addQuizsetsAndRender } from "./component/quizsets";
 import { isAnalyzing, refreshAnalysisBtn, addAnalysisInfoModalIfNotAnalyzing, addAnalysisInfoModalIfAnalysisDone } from "./controller/analysis";
 
 export const workbookContext = {
     curQuizzes: [],
-    solved: [],
+    solvedQuizzes: [],
     videoElement: null,
     isAnalyzing: false,
     selectedQuizsetId: null,
@@ -23,6 +24,7 @@ function loadVideoElement() {
     workbookContext.videoElement.pause();
     workbookContext.videoElement.addEventListener("play", addAnalysisInfoModalIfNotAnalyzing);
     workbookContext.videoElement.addEventListener("ended", addAnalysisInfoModalIfAnalysisDone);
+    workbookContext.videoElement.addEventListener("timeupdate", popupQuizEventHandler);
 }
 
 function loadCurSubLectureId() {
@@ -78,10 +80,10 @@ function makeWorkbookHTML_TOBE() {
             </div>
         </div>
         <button class="btn analysis-btn" type="button" id="analysis-start-btn" ${isAnalyzing() ? 'disabled' : ''}>
-            <span> ${isAnalyzing() ? '분석중' : '분석 시작'} </span>
+            <span> ${isAnalyzing() ? '학습중' : '학습 시작'} </span>
         </button>
         <button class="btn analysis-btn" type="button" id="analysis-end-btn">
-            <span> 분석 종료 </span>
+            <span> 학습 종료 </span>
         </button>
     </div>
     `;
