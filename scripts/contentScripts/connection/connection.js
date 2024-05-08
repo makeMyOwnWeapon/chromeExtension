@@ -35,15 +35,22 @@ function connect(callback, btn) {
 }
 
 function disconnect(callback, startBtn, endBtn) {
-    socket.emit('requestTime');
+    chrome.storage.local.get('authToken', function(data) {
+        const authToken = data.authToken;
+        const koreaTime = new Date().toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' });
 
-    alert('소켓 연결이 해제되었습니다!');
-    socket.close();
-    
+        socket.emit('disconnectRequest', { token: authToken, time: koreaTime });
+
+        socket.close();
+        alert('소켓 연결이 해제되었습니다!');
+    });
+
     socket.on('disconnect', () => {
-        console.log('Disconnected from server');
         callback(startBtn, endBtn);
     });
 }
+
+
+
 
 export { connect, disconnect };
