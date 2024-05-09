@@ -81,6 +81,7 @@ export function QuizSetController(quizsetId) {
             `${HOST}/api/quizsets/${quizsetId}/quizzes?commentary=true&answer=true`,
             (response) => {
                 workbookContext.curQuizzes = response;
+                console.log(response);
                 renderPopupTimeCarrot();
             }
         );
@@ -179,7 +180,7 @@ export function AIQuizSetController() {
                 if (!subtitles[quizRequestTimes[i]]) {
                     subtitles[quizRequestTimes[i]] = []; // 해당 키가 없으면 빈 배열로 초기화
                 }
-                if (subtitles[quizRequestTimes[i]].join().length > 500) {
+                if (subtitles[quizRequestTimes[i]].join().length > 1000) {
                     continue;
                 }
                 subtitles[quizRequestTimes[i]].push(subtitleText); // 자막 텍스트 추가
