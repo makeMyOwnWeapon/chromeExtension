@@ -163,13 +163,13 @@ export function popupQuiz(quizIdx) {
       isCorrect // 정답 여부도 함께 전달
     );
     // 선택한 답안이 정답이면 버튼 색상을 파란색으로, 아니면 빨간색으로 변경
-    const selectedButton = document.getElementById(
-      `choice-${selectedChoiceId}`
-    );
-    if (isCorrect) {
-      selectedButton.style.backgroundColor = "blue";
-    } else {
-      selectedButton.style.backgroundColor = "red";
+    for (const choice of quiz.choices) {
+        const choiceBtn = document.getElementById(`choice-${choice.choiceId}`)
+        if (choice.isAnswer) {
+            choiceBtn.className = 'btn correct-answer';
+        } else if (!choice.isAnswer && selectedChoiceId === choice.choiceId) {
+            choiceBtn.className = 'btn wrong-answer';
+        }
     }
   });
 }

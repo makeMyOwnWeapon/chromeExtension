@@ -198,6 +198,14 @@ $index-upper: 1000;
         background: #cef0d7;
         font-weight: bold;
       }
+
+      &.correct-answer {
+        background-color: rgb(103, 103, 255);
+      }
+      
+      &.wrong-answer {
+        background-color: rgb(248, 140, 140);
+      }
     }
 
     .input-answer {
@@ -327,12 +335,4 @@ $index-upper: 1000;
     background-color: #c7c4c4;
     color: white;
   }
-}
-
-.correct-answer {
-  background-color: blue;
-}
-
-.wrong-answer {
-  background-color: red;
 }
