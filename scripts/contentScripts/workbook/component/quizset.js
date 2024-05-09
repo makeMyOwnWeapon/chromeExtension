@@ -81,7 +81,10 @@ export function QuizSetController(quizsetId) {
             `${HOST}/api/quizsets/${quizsetId}/quizzes?commentary=true&answer=true`,
             (response) => {
                 workbookContext.curQuizzes = response;
-                console.log(response);
+                console.log(workbookContext.curQuizzes.map((quiz) => {
+                    const time = quiz.popupTime;
+                    return `${ parseInt(time / 60) }:${ time % 60 }`;
+                }))
                 renderPopupTimeCarrot();
             }
         );
@@ -131,7 +134,9 @@ export function AIQuizSetController() {
         const video = workbookContext.videoElement;
         addScriptFetcher(video);
         quizRequestTimes = calculateRequestTimes(parseInt(video.duration));
-        console.log("quizRequestTimes", quizRequestTimes);
+        console.log(quizRequestTimes.map((time) => {
+            return `${ parseInt(time / 60) }:${ time % 60 }`;
+        }));
         if (quizRequestTimes.length > 0) {
             video.addEventListener('timeupdate', fetchQuiz);
             return true;
