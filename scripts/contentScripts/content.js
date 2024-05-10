@@ -72,6 +72,7 @@ import { toggleNavbarVisibility } from './navbar/navbar.js';
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     if (request.command === 'turnOn') {
         addLearningAssistantIcon();
+
         sendResponse({result: "success"});
 
     } else if (request.command === 'turnOff') {

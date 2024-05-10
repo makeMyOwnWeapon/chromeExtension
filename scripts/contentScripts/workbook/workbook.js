@@ -74,7 +74,7 @@ function makeWorkbookHTML_TOBE() {
         <div class="list-group quizsets" id="quizsets-container">
         </div>
         <div>
-            <a class="btn create-quizsets-btn" style="color: #6a1b9a;" href='http://127.0.0.1:3002/create' target='_blank'>
+            <a class="btn create-quizsets-btn" href='http://localhost:3002/create' target='_blank'>
                 문제집 만들기
             </a>
         </div>
