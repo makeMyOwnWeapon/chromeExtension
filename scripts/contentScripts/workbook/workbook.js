@@ -3,6 +3,7 @@ import { URLParser } from "../network/URLParser";
 import { popupQuizEventHandler } from "./component/quiz";
 import { addQuizsetsAndRender } from "./component/quizsets";
 import { isAnalyzing, refreshAnalysisBtn, addAnalysisInfoModalIfNotAnalyzing, addAnalysisInfoModalIfAnalysisDone } from "./controller/analysis";
+import { getWebcamAndAddCaptureEvent } from "./controller/webcam";
 
 export const workbookContext = {
     curQuizzes: [],
@@ -89,44 +90,15 @@ function makeWorkbookHTML_TOBE() {
         <button class="btn analysis-btn" type="button" id="analysis-end-btn">
             <span> 학습 종료 </span>
         </button>
-        <video autoplay style="width: 100%;" class="web-cam"></video>
+        <video autoplay style="width: 100%;" id="web-cam" hidden></video>
     </div>
     `;
-}
-
-function captureAndSendImages(video) {
-    const canvas = document.createElement('canvas');
-    const context = canvas.getContext('2d');
-    console.log('video', video.width, video.height);
-    console.log('canvase', canvas.width, canvas.height);
-    const capture = () => {
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
-        LoaAxios.postFile(
-            `${HOST}/api/video`,
-            canvas.toDataURL('image/jpeg'), 
-            (response) => console.log(response.result)
-        );
-    };
-    // setTimeout(capture, 2000);
-    setInterval(capture, 1000);
 }
 
 export function displayWorkbookContent() {
     updateWorkbookContent(makeWorkbookHTML_TOBE());
     addQuizsetsAndRender(URLParser.parseWithoutTab(document.location.href));
     refreshAnalysisBtn();
-    navigator.mediaDevices.getUserMedia({ video: true })
-        .then(function(stream) {
-            // 스트림 사용, 예를 들어 비디오 태그에 연결
-            let video = document.querySelector('.web-cam');
-            video.srcObject = stream;
-            video.onloadedmetadata = function(e) {
-                video.play();
-            };
-            captureAndSendImages(video);
-        })
-        .catch(function(err) {
-            console.log("getUserMedia Error: " + err);
-        });   
+    getWebcamAndAddCaptureEvent();
 }
 

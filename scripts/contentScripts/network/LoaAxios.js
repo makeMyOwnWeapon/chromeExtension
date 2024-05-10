@@ -1,6 +1,5 @@
 export const LoaAxios = (() => {
     function _get(_url, successHandler) {
-        console.log("_get");
         chrome.storage.local.get('authToken', function(data) {
             if (!data.authToken) {
                 console.error("Doesn't have authToken");
@@ -22,7 +21,6 @@ export const LoaAxios = (() => {
     }
 
     function _post(_url, _body, successHandler) {
-        console.log("_post _body", _body);
         chrome.storage.local.get('authToken', function(data) {
             if (!data.authToken) {
                 console.error("Doesn't have authToken");

@@ -19,7 +19,6 @@ function createDraggableNavbar() {
     navbar.id = 'learningAssistantNavbar';
     navbar.className = 'css-nllztk';
     navbar.style.width = '300px';
-    navbar.style.height = '600px';
     navbar.style.position = 'fixed';
     navbar.style.top = '100px';
     navbar.style.right = '10px';
