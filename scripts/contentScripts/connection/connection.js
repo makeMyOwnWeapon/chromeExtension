@@ -1,5 +1,4 @@
 import io from 'socket.io-client';
-import { showWakeUpModal } from '../alarm/wakeupmodal';
 import { workbookContext, setLectureHistoryId } from '../workbook/workbook';
 
 const SERVER_URL = 'http://localhost:4000';
@@ -21,10 +20,6 @@ function connect(callback, btn) {
                 subLectureId: workbookContext.subLectureId || "default",
             });
         });
-    }); 
-
-    socket.on('wakeup', (message) => {
-        showWakeUpModal();
     });
 
     socket.on('historyget', (message) => {
@@ -49,8 +44,5 @@ function disconnect(callback, startBtn, endBtn) {
         callback(startBtn, endBtn);
     });
 }
-
-
-
 
 export { connect, disconnect };
