@@ -1,5 +1,6 @@
 export const LoaAxios = (() => {
     function _get(_url, successHandler) {
+        console.log("_get");
         chrome.storage.local.get('authToken', function(data) {
             if (!data.authToken) {
                 console.error("Doesn't have authToken");
@@ -21,6 +22,7 @@ export const LoaAxios = (() => {
     }
 
     function _post(_url, _body, successHandler) {
+        console.log("_post _body", _body);
         chrome.storage.local.get('authToken', function(data) {
             if (!data.authToken) {
                 console.error("Doesn't have authToken");
@@ -41,6 +43,14 @@ export const LoaAxios = (() => {
                 options: options
             }, successHandler);
         });
+    }
+
+    function _postFile(_url, base64Data, successHandler) {
+        chrome.runtime.sendMessage({
+            type: 'REST_FILE',
+            url: _url,
+            base64Data: base64Data
+        }, successHandler);
     }
 
     function _patch(_url, _body, successHandler) {
@@ -69,11 +79,12 @@ export const LoaAxios = (() => {
     return {
         get: _get,
         post: _post,
-        patch: _patch
+        patch: _patch,
+        postFile: _postFile,
     }
 })();
 
 export const HOST = {
     local: 'http://localhost:3000',
-    prod: ''
-}.local;
+    prod: 'http://13.124.188.208:3000'
+}.prod;
