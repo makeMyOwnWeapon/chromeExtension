@@ -3,6 +3,7 @@ import { URLParser } from "../network/URLParser";
 import { popupQuizEventHandler } from "./component/quiz";
 import { addQuizsetsAndRender } from "./component/quizsets";
 import { isAnalyzing, refreshAnalysisBtn, addAnalysisInfoModalIfNotAnalyzing, addAnalysisInfoModalIfAnalysisDone } from "./controller/analysis";
+import { getWebcamAndAddCaptureEvent } from "./controller/webcam";
 
 export const workbookContext = {
     curQuizzes: [],
@@ -89,6 +90,7 @@ function makeWorkbookHTML_TOBE() {
         <button class="btn analysis-btn" type="button" id="analysis-end-btn">
             <span> 학습 종료 </span>
         </button>
+        <video autoplay style="width: 100%;" id="web-cam" hidden></video>
     </div>
     `;
 }
@@ -97,4 +99,6 @@ export function displayWorkbookContent() {
     updateWorkbookContent(makeWorkbookHTML_TOBE());
     addQuizsetsAndRender(URLParser.parseWithoutTab(document.location.href));
     refreshAnalysisBtn();
+    getWebcamAndAddCaptureEvent();
 }
+

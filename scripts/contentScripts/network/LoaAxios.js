@@ -43,6 +43,14 @@ export const LoaAxios = (() => {
         });
     }
 
+    function _postFile(_url, base64Data, successHandler) {
+        chrome.runtime.sendMessage({
+            type: 'REST_FILE',
+            url: _url,
+            base64Data: base64Data
+        }, successHandler);
+    }
+
     function _patch(_url, _body, successHandler) {
         chrome.storage.local.get('authToken', function(data) {
             if (!data.authToken) {
@@ -69,11 +77,12 @@ export const LoaAxios = (() => {
     return {
         get: _get,
         post: _post,
-        patch: _patch
+        patch: _patch,
+        postFile: _postFile,
     }
 })();
 
 export const HOST = {
     local: 'http://localhost:3000',
-    prod: ''
-}.local;
+    prod: 'http://52.79.124.34:3000'
+}.prod;
