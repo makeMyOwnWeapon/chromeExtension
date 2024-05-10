@@ -3,6 +3,7 @@ import { LoaAxios, HOST } from "../../network/LoaAxios";
 import { URLParser } from "../../network/URLParser";
 import { workbookContext } from "../workbook";
 import { connect, disconnect } from "../../connection/connection";
+import { showReportModal } from "../../report/reportmodal";
 
 function startAnalysis(analysisStartBtn) {
     workbookContext.isAnalyzing = true;
@@ -16,7 +17,7 @@ function endAnalysis(analysisStartBtn, analysisEndBtn) {
     analysisStartBtn.disabled = false;
     analysisEndBtn.innerHTML = '<span> 학습 종료 </span>'
     analysisEndBtn.disabled = false;
-    removeInfoModalIfExist();
+    // removeInfoModalIfExist();
 }
 
 function removeInfoModalIfExist() {
@@ -76,6 +77,7 @@ export function refreshAnalysisBtn() {
 
     const analysisEndBtn = document.getElementById("analysis-end-btn");
     analysisEndBtn.addEventListener('click', () => {
+        showReportModal();
         if (!isAnalyzing()) {
             return;
         }
@@ -84,6 +86,8 @@ export function refreshAnalysisBtn() {
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
             <span role="status">학습 종료중</span>
         `
+        
         disconnect(endAnalysis, analysisStartBtn, analysisEndBtn);
+
     })
 }
