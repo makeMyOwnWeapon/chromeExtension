@@ -30,5 +30,5 @@ export function showLeaveSeatModal() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    showWakeUpModal();
+    showLeaveSeatModal();
 });
