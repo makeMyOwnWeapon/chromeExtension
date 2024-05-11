@@ -85,4 +85,4 @@ export const LoaAxios = (() => {
 export const HOST = {
     local: 'http://localhost:3000',
     prod: 'http://52.79.124.34:3000'
-}.prod;
+}.local;
