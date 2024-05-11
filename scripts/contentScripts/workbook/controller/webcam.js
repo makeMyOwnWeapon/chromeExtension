@@ -1,5 +1,7 @@
 import { IMAGE_PROCESSING_HOST, LoaAxios } from "../../network/LoaAxios";
 
+export let videoStream = null;
+
 function captureAndSendImages(video) {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
@@ -11,12 +13,16 @@ function captureAndSendImages(video) {
           (response) => console.log(response) // { "isExist": true, "isEyeClosed": false }
       );
   };
+  const intervalId = setInterval(capture, 1000);
 //   setTimeout(capture, 2000); // 2초 뒤 영상을 백엔드로 전송
-  setInterval(capture, 1000); // 1초마다 영상을 백엔드로 전송
+//   setInterval(capture, 1000); // 1초마다 영상을 백엔드로 전송
+  console.log("Interval ID:", intervalId);
+  return intervalId;
 }
 
+
 export function getWebcamAndAddCaptureEvent() {
-  navigator.mediaDevices.getUserMedia({ video: true })
+  return navigator.mediaDevices.getUserMedia({ video: true })
     .then(function(stream) {
         // 스트림 사용, 예를 들어 비디오 태그에 연결
         const video = document.querySelector('#web-cam');
@@ -25,9 +31,18 @@ export function getWebcamAndAddCaptureEvent() {
         video.onloadedmetadata = function(e) {
             video.play();
         };
-        captureAndSendImages(video);
+        return captureAndSendImages(video)
     })
     .catch(function(err) {
         console.log("getUserMedia Error: " + err);
     });   
 }
+
+export function stopWebcam() {
+    const video = document.querySelector('#web-cam');
+    if (video.srcObject) {
+        const tracks = video.srcObject.getTracks();
+        tracks.forEach(track => track.stop());
+    }
+}
+
