@@ -1,4 +1,4 @@
-import { HOST, LoaAxios } from "../../network/LoaAxios";
+import { IMAGE_PROCESSING_HOST, LoaAxios } from "../../network/LoaAxios";
 
 function captureAndSendImages(video) {
   const canvas = document.createElement('canvas');
@@ -6,13 +6,13 @@ function captureAndSendImages(video) {
   const capture = () => {
       context.drawImage(video, 0, 0, canvas.width, canvas.height);
       LoaAxios.postFile(
-          `${HOST}/api/video`,
+          `${IMAGE_PROCESSING_HOST}/api/image-process/image`,
           canvas.toDataURL('image/jpeg'), 
-          (response) => console.log(response.result)
+          (response) => console.log(response) // { "isExist": true, "isEyeClosed": false }
       );
   };
   setTimeout(capture, 2000); // 2초 뒤 영상을 백엔드로 전송
-  // setInterval(capture, 1000); // 1초마다 영상을 백엔드로 전송
+//   setInterval(capture, 3000); // 1초마다 영상을 백엔드로 전송
 }
 
 export function getWebcamAndAddCaptureEvent() {
