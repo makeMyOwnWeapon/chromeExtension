@@ -79,7 +79,7 @@ export function refreshAnalysisBtn() {
 
         LoaAxios.post(
             `${HOST}/api/lecture/sub-lecture/history`,
-            postData,	
+            postData,
             (response) => {	
                 console.log("POST 요청 응답:", response);
                 if (!response.lectureHistoryId) {	
@@ -107,12 +107,14 @@ export function refreshAnalysisBtn() {
             <span role="status">학습 종료중</span>
         `;
 
+        const patchData = {
+            lectureHistoryId : workbookContext.lectureHistoryId
+        };
 
-        const lectureHistoryId = workbookContext.lectureHistoryId;
-        console.log("PATCH 요청 보내기 전:", `${HOST}/api/lecture/sub-lecture/history/${lectureHistoryId}`);
+        console.log("PATCH 요청 보내기 전:", `${HOST}/api/lecture/sub-lecture/history`, patchData);
 
         LoaAxios.patch(	
-            `${HOST}/api/lecture/sub-lecture/history/${lectureHistoryId}`,
+            `${HOST}/api/lecture/sub-lecture/history/`, patchData,
             (response) => {	
                 console.log("PATCH 요청 응답:", response);
                 if (response.lectureHistoryId !== lectureHistoryId) {	
