@@ -1,7 +1,13 @@
 import { createAndPopupModalWithHTML } from '../modal/modal.js'; 
 
 export function showLeaveSeatModal() {
-    const modal = createAndPopupModalWithHTML({
+    let modal = document.getElementById("analysis-info-modal");
+    
+    if (modal) {
+        return;
+    }
+    
+    modal = createAndPopupModalWithHTML({
         headerHTML : `
         <div class="modal-header">
             <p>자리이탈이 감지되었습니다.</p>

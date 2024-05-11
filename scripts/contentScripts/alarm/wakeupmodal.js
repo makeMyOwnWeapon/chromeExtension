@@ -2,7 +2,13 @@ import { createAndPopupModalWithHTML } from '../modal/modal.js';
 import { playSound, stopSound } from './sound.js';
 
 export function showWakeUpModal() {
-    const modal = createAndPopupModalWithHTML({
+    let modal = document.getElementById("analysis-info-modal");
+    
+    if (modal) {
+        return;
+    }
+    
+    modal = createAndPopupModalWithHTML({
         headerHTML : `
         <div class="modal-header">
             <p>졸음이 감지되었습니다.</p>
@@ -15,6 +21,7 @@ export function showWakeUpModal() {
         `
     });
     modal.id = "analysis-info-modal";
+
     const dismissButton = document.getElementById('dismissButton');
     dismissButton.onclick = function() {
         modal.remove();
