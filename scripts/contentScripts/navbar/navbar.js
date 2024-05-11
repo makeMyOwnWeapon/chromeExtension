@@ -1,5 +1,7 @@
 import { createNavbarHeader } from './header.js';
 import { createNavbarFooter } from './footer.js';
+import { displaySummaryContent } from '../summary/summary.js';
+import { displayWorkbookContent } from '../workbook/workbook.js';
 
 export function toggleNavbarVisibility() {
     const navbar = document.getElementById('learningAssistantNavbar');
@@ -45,6 +47,7 @@ function createDraggableNavbar() {
     footer.style.position = 'static';
     navbar.appendChild(footer);
 
+
     navbar.onmousedown = function(event) {
         if (event.button === 2) return;
     
@@ -72,7 +75,6 @@ function createDraggableNavbar() {
     
         document.addEventListener('mousemove', onMouseMove);
     
-        // 마우스를 놓았을 때 이벤트 해제
         navbar.onmouseup = function() {
             document.removeEventListener('mousemove', onMouseMove);
             navbar.onmouseup = null;
@@ -94,8 +96,20 @@ function createDraggableNavbar() {
     };
     
     
-    
     document.body.appendChild(navbar);
 
+    setupButtonHandlers();
 }
 
+function setupButtonHandlers() {
+    const summaryButton = document.getElementById('summaryButton');
+    const workbookButton = document.getElementById('workbookButton');
+
+    if (summaryButton && workbookButton) {
+        summaryButton.onclick = displaySummaryContent;
+        workbookButton.onclick = displayWorkbookContent;
+    } else {
+        console.error('One or more elements are missing');
+    }
+
+}

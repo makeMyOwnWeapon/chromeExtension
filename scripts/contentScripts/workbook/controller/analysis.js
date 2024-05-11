@@ -2,21 +2,20 @@ import { createAndPopupModalWithHTML } from "../../modal/modal";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
 import { URLParser } from "../../network/URLParser";
 import { workbookContext } from "../workbook";
-import { connect, disconnect } from "../../connection/connection";
-import { showReportModal } from "../../report/reportmodal";
+//import { connect, disconnect } from "../../connection/connection";
 
-function startAnalysis(analysisStartBtn) {
+function startAnalysis(/*analysisStartBtn*/) {
     workbookContext.isAnalyzing = true;
-    removeInfoModalIfExist();
-    analysisStartBtn.innerHTML = '<span role="status">학습중</span>'
+    // removeInfoModalIfExist();
+    // analysisStartBtn.innerHTML = '<span role="status">학습중</span>'
 }
   
-function endAnalysis(analysisStartBtn, analysisEndBtn) {
+function endAnalysis(/*analysisStartBtn, analysisEndBtn*/) {
     workbookContext.isAnalyzing = false; 
-    analysisStartBtn.innerHTML = '<span> 학습 시작 </span>'
-    analysisStartBtn.disabled = false;
-    analysisEndBtn.innerHTML = '<span> 학습 종료 </span>'
-    analysisEndBtn.disabled = false;
+    // analysisStartBtn.innerHTML = '<span> 학습 시작 </span>'
+    // analysisStartBtn.disabled = false;
+    // analysisEndBtn.innerHTML = '<span> 학습 종료 </span>'
+    // analysisEndBtn.disabled = false;
     // removeInfoModalIfExist();
 }
 
@@ -71,8 +70,26 @@ export function refreshAnalysisBtn() {
         <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
         <span role="status">요청중</span>
         `
-        connect(startAnalysis, analysisStartBtn);
-        //workbookContext.lectureHistoryId = response.lectureHistoryId;
+        LoaAxios.post(
+            `${HOST}/api/lecture/sub-lecture/history`,
+            {	
+                subLectureUrl: decodeURIComponent(URLParser.parseWithoutTab(document.location.href)),	
+                startedAt: new Date()	
+            },	
+            (response) => {	
+                if (!response.lectureHistoryId) {	
+                    analysisStartBtn.innerHTML = '<span role="status">재시도</span>'	
+                    analysisStartBtn.disabled = false;	
+                    return;	
+                }	
+                startAnalysis();	
+                removeInfoModalIfExist();	
+                analysisStartBtn.innerHTML = '<span role="status">학습중</span>'	
+                workbookContext.lectureHistoryId = response.lectureHistoryId;	
+            }	
+        );
+        //connect(startAnalysis, analysisStartBtn);
+        workbookContext.lectureHistoryId = response.lectureHistoryId;
     })
 
     const analysisEndBtn = document.getElementById("analysis-end-btn");
@@ -86,8 +103,25 @@ export function refreshAnalysisBtn() {
             <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
             <span role="status">학습 종료중</span>
         `
-        
-        disconnect(endAnalysis, analysisStartBtn, analysisEndBtn);
-
+        const lectureHistoryId = workbookContext.lectureHistoryId;
+        LoaAxios.patch(	
+            `${HOST}/api/lecture/sub-lecture/history/${lectureHistoryId}`,	
+            {	
+                endedAt: new Date()	
+            },	
+            (response) => {	
+                if (response.lectureHistoryId !== lectureHistoryId) {	
+                    analysisEndBtn.innerHTML = '<span> 종료 실패 </span>'	
+                    return;	
+                }	
+                endAnalysis();            	
+                analysisStartBtn.innerHTML = '<span> 학습 시작 </span>'	
+                analysisStartBtn.disabled = false;	
+                analysisEndBtn.innerHTML = '<span> 학습 종료 </span>'	
+                analysisEndBtn.disabled = false;	
+                removeInfoModalIfExist();	
+            }	
+        );
+        //disconnect(endAnalysis, analysisStartBtn, analysisEndBtn);
     })
 }
