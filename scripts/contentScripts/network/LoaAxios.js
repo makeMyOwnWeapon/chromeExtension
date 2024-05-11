@@ -7,9 +7,9 @@ export const LoaAxios = (() => {
             }
             const token = data.authToken;
             const options = {
-                method: 'GET', // 데이터 전송 방식 지정
+                method: 'GET',
                 headers: {
-                    'Authorization': `Bearer ${token}`, // 컨텐츠 타입 지정
+                    'Authorization': `Bearer ${token}`,
                 }
             }
             chrome.runtime.sendMessage({
@@ -28,9 +28,9 @@ export const LoaAxios = (() => {
             }
             const token = data.authToken;
             const options = {
-                method: 'POST', // 데이터 전송 방식 지정
+                method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${token}`, // 컨텐츠 타입 지정
+                    'Authorization': `Bearer ${token}`,
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(_body)
@@ -59,7 +59,7 @@ export const LoaAxios = (() => {
             }
             const token = data.authToken;
             const options = {
-                method: 'PATCH', // 데이터 전송 방식 지정
+                method: 'PATCH',
                 headers: {
                     'Authorization': `Bearer ${token}`,
                     "Content-Type": "application/json"
