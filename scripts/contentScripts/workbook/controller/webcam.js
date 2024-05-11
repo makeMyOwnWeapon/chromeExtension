@@ -11,8 +11,8 @@ function captureAndSendImages(video) {
           (response) => console.log(response) // { "isExist": true, "isEyeClosed": false }
       );
   };
-  setTimeout(capture, 2000); // 2초 뒤 영상을 백엔드로 전송
-//   setInterval(capture, 3000); // 1초마다 영상을 백엔드로 전송
+//   setTimeout(capture, 2000); // 2초 뒤 영상을 백엔드로 전송
+  setInterval(capture, 1000); // 1초마다 영상을 백엔드로 전송
 }
 
 export function getWebcamAndAddCaptureEvent() {
