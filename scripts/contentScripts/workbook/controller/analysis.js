@@ -1,15 +1,14 @@
 import { createAndPopupModalWithHTML } from "../../modal/modal";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
-import { URLParser } from "../../network/URLParser";
 import { workbookContext } from "../workbook";
+import { getWebcamAndAddCaptureEvent, stopWebcam } from "./webcam";
 
 function startAnalysis(/*analysisStartBtn*/) {
     workbookContext.isAnalyzing = true;
 }
   
 function endAnalysis() {
-    workbookContext.isAnalyzing = false; 
-
+    workbookContext.isAnalyzing = false;
 }
 
 function removeInfoModalIfExist() {
@@ -18,6 +17,7 @@ function removeInfoModalIfExist() {
         modal.remove();
     }
 }
+
 
 export function addAnalysisInfoModalIfNotAnalyzing() {
     if (isAnalyzing()) {
@@ -68,20 +68,19 @@ export function refreshAnalysisBtn() {
             subLectureId : workbookContext.subLectureId
         };
 
-        console.log("POST 요청 보내기 전:", `${HOST}/api/lecture/sub-lecture/history`, postData);
-
         LoaAxios.post(
             `${HOST}/api/lecture/sub-lecture/history`,
             postData,
-            (response) => {	
-                console.log("POST 요청 응답:", response);
+            async (response) => {	
                 if (!response.lectureHistoryId) {	
                     analysisStartBtn.innerHTML = '<span role="status">재시도</span>'	
                     analysisStartBtn.disabled = false;	
                     return;	
                 }
-                startAnalysis();	
-                removeInfoModalIfExist();	
+                startAnalysis();
+                removeInfoModalIfExist();
+                const temp = await getWebcamAndAddCaptureEvent();
+                workbookContext.videoIntervalId = temp;
                 analysisStartBtn.innerHTML = '<span role="status">학습중</span>'	
                 workbookContext.lectureHistoryId = response.lectureHistoryId;	
             }	
@@ -91,7 +90,6 @@ export function refreshAnalysisBtn() {
     const analysisEndBtn = document.getElementById("analysis-end-btn");
     analysisEndBtn.addEventListener('click', () => {
         if (!isAnalyzing()) {
-            console.log('학습 종료 error!');
             return;
         }
         analysisEndBtn.disabled = true;
@@ -104,8 +102,6 @@ export function refreshAnalysisBtn() {
             lectureHistoryId : workbookContext.lectureHistoryId
         };
 
-        console.log("PATCH 요청 보내기 전:", `${HOST}/api/lecture/sub-lecture/history`, patchData);
-
         LoaAxios.patch(	
             `${HOST}/api/lecture/sub-lecture/history/`, patchData,
             (response) => {	
@@ -113,7 +109,9 @@ export function refreshAnalysisBtn() {
                     analysisEndBtn.innerHTML = '<span> 종료 실패 </span>'	
                     return;
                 }
-                endAnalysis();           
+                endAnalysis();
+                clearInterval(workbookContext.videoIntervalId);
+                stopWebcam();
                 analysisStartBtn.innerHTML = '<span> 학습 시작 </span>'	
                 analysisStartBtn.disabled = false;	
                 analysisEndBtn.innerHTML = '<span> 학습 종료 </span>'	

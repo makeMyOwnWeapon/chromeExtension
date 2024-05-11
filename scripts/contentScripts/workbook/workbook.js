@@ -12,7 +12,8 @@ export const workbookContext = {
     isAnalyzing: false,
     selectedQuizsetId: null,
     subLectureId: null,
-    lectureHistoryId: null
+    lectureHistoryId: null,
+    videoIntervalId: null
 };
 
 export function loadDefaultElementsForWorkbook() {
@@ -95,6 +96,5 @@ export function displayWorkbookContent() {
     updateWorkbookContent(makeWorkbookHTML_TOBE());
     addQuizsetsAndRender(URLParser.parseWithoutTab(document.location.href));
     refreshAnalysisBtn();
-    getWebcamAndAddCaptureEvent();
 }
 

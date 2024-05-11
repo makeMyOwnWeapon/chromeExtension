@@ -104,10 +104,13 @@ function createDraggableNavbar() {
 function setupButtonHandlers() {
     const summaryButton = document.getElementById('summaryButton');
     const workbookButton = document.getElementById('workbookButton');
-
-    if (summaryButton && workbookButton) {
+    const openIconButton = document.getElementById('openIcon');
+    const closeIconButton = document.getElementById('closeIcon');
+    if (summaryButton && workbookButton && openIconButton && closeIconButton) {
         summaryButton.onclick = displaySummaryContent;
         workbookButton.onclick = displayWorkbookContent;
+        openIconButton.onclick = displaySummaryContent;
+        closeIconButton.onclick = displaySummaryContent;
     } else {
         console.error('One or more elements are missing');
     }
