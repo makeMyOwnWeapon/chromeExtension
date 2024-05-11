@@ -8,7 +8,7 @@ function captureAndSendImages(video) {
       LoaAxios.postFile(
           `${IMAGE_PROCESSING_HOST}/api/image-process/image`,
           canvas.toDataURL('image/jpeg'), 
-          (response) => console.log(response) // { "isExist": true, "isEyeClosed": flase }
+          (response) => console.log(response) // { "isExist": true, "isEyeClosed": false }
       );
   };
   setTimeout(capture, 2000); // 2초 뒤 영상을 백엔드로 전송
