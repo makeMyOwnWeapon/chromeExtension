@@ -15,11 +15,6 @@ export const workbookContext = {
     lectureHistoryId: null
 };
 
-// export function setLectureHistoryId(lectureHistoryId) {
-//     workbookContext.lectureHistoryId = lectureHistoryId;
-// }
-//pppppppppppppppppppppppppppppppppppppppppp
-
 export function loadDefaultElementsForWorkbook() {
     loadVideoElement();
     loadCurSubLectureId();
