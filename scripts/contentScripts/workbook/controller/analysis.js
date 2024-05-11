@@ -108,21 +108,17 @@ export function refreshAnalysisBtn() {
             <span role="status">학습 종료중</span>
         `;
 
-        const patchData = {
-            lectureHistoryId : workbookContext.lectureHistoryId
-        };
 
         const lectureHistoryId = workbookContext.lectureHistoryId;
-        console.log("PATCH 요청 보내기 전:", `${HOST}/api/lecture/sub-lecture/history/${lectureHistoryId}`, patchData);
+        console.log("PATCH 요청 보내기 전:", `${HOST}/api/lecture/sub-lecture/history/${lectureHistoryId}`);
 
         LoaAxios.patch(	
-            `${HOST}/api/lecture/sub-lecture/history/${lectureHistoryId}`,	
-            patchData,	
+            `${HOST}/api/lecture/sub-lecture/history/${lectureHistoryId}`,
             (response) => {	
                 console.log("PATCH 요청 응답:", response);
                 if (response.lectureHistoryId !== lectureHistoryId) {	
                     analysisEndBtn.innerHTML = '<span> 종료 실패 </span>'	
-                    return;	
+                    return;
                 }	
                 endAnalysis();            	
                 analysisStartBtn.innerHTML = '<span> 학습 시작 </span>'	
