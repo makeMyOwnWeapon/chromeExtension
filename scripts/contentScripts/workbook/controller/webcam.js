@@ -1,22 +1,41 @@
+import { showWakeUpModal } from "../../alarm/wakeupmodal";
+import { showLeaveSeatModal } from "../../leaveSeat/leaveSeat";
 import { IMAGE_PROCESSING_HOST, LoaAxios } from "../../network/LoaAxios";
-
-export let videoStream = null;
+import { workbookContext } from "../workbook";
 
 function captureAndSendImages(video) {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
   const capture = () => {
-      context.drawImage(video, 0, 0, canvas.width, canvas.height);
-      LoaAxios.postFile(
-          `${IMAGE_PROCESSING_HOST}/api/image-process/image`,
-          canvas.toDataURL('image/jpeg'), 
-          (response) => console.log(response) // { "isExist": true, "isEyeClosed": false }
-      );
+    context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    LoaAxios.postFile(
+      `${IMAGE_PROCESSING_HOST}/api/image-process/image`,
+      canvas.toDataURL('image/jpeg'), 
+      (response) => {
+            if(response.isExist == true && response.isEyeClosed == true){
+            workbookContext.sleepCount = workbookContext.sleepCount + 1;
+            }
+            else if(response.isExist == false && response.isEyeClosed == false){
+                workbookContext.existCount = workbookContext.existCount +1;
+            }
+            else{
+                workbookContext.sleepCount = 0;
+                workbookContext.existCount = 0;
+            }
+            if(workbookContext.sleepCount >= 5){
+                workbookContext.sleepCount = 0;
+                showWakeUpModal();
+            }
+            else if(workbookContext.existCount >= 5){
+                workbookContext.existCount = 0;
+                showLeaveSeatModal();
+            }
+      }
+    );
   };
+
   const intervalId = setInterval(capture, 1000);
 //   setTimeout(capture, 2000); // 2초 뒤 영상을 백엔드로 전송
-//   setInterval(capture, 1000); // 1초마다 영상을 백엔드로 전송
-  console.log("Interval ID:", intervalId);
   return intervalId;
 }
 

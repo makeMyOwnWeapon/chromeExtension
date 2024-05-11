@@ -3,7 +3,6 @@ import { URLParser } from "../network/URLParser";
 import { popupQuizEventHandler } from "./component/quiz";
 import { addQuizsetsAndRender } from "./component/quizsets";
 import { isAnalyzing, refreshAnalysisBtn, addAnalysisInfoModalIfNotAnalyzing, addAnalysisInfoModalIfAnalysisDone } from "./controller/analysis";
-import { getWebcamAndAddCaptureEvent } from "./controller/webcam";
 
 export const workbookContext = {
     curQuizzes: [],
@@ -13,7 +12,9 @@ export const workbookContext = {
     selectedQuizsetId: null,
     subLectureId: null,
     lectureHistoryId: null,
-    videoIntervalId: null
+    videoIntervalId: null,
+    sleepCount: 0,
+    existCount: 0
 };
 
 export function loadDefaultElementsForWorkbook() {
