@@ -20,13 +20,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         formData.append('file', blob, 'temp.jpeg');
         fetch(request.url, {method: 'POST', body: formData})
             .then(resp => resp.json())
-            .then(data => {
-                // json 데이터 추출 
-                sendResponse(data);
-            })
-            .catch(error => {
-                sendResponse(error);
-            });
+            .then(data => sendResponse(data))
+            .catch(error => sendResponse(error));
     } 
     return true;
 });
