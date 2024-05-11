@@ -72,18 +72,16 @@ export function refreshAnalysisBtn() {
         `;
 
         const postData = {
-            subLectureUrl: decodeURIComponent(URLParser.parseWithoutTab(document.location.href)),	
-            startedAt: new Date()
+            subLectureId : workbookContext.subLectureId
         };
 
-        console.log("POST 요청 보내기 전:", `${HOST}/api/lecture/sub-lecture/history`, postData);  // 요청 내용을 콘솔에 출력
+        console.log("POST 요청 보내기 전:", `${HOST}/api/lecture/sub-lecture/history`, postData);
 
-        // AJAX POST 요청을 시작합니다.
         LoaAxios.post(
             `${HOST}/api/lecture/sub-lecture/history`,
             postData,	
             (response) => {	
-                console.log("POST 요청 응답:", response);  // 응답을 콘솔에 출력
+                console.log("POST 요청 응답:", response);
                 if (!response.lectureHistoryId) {	
                     analysisStartBtn.innerHTML = '<span role="status">재시도</span>'	
                     analysisStartBtn.disabled = false;	
@@ -111,18 +109,17 @@ export function refreshAnalysisBtn() {
         `;
 
         const patchData = {
-            endedAt: new Date()
+            lectureHistoryId : workbookContext.lectureHistoryId
         };
 
         const lectureHistoryId = workbookContext.lectureHistoryId;
-        console.log("PATCH 요청 보내기 전:", `${HOST}/api/lecture/sub-lecture/history/${lectureHistoryId}`, patchData);  // 요청 내용을 콘솔에 출력
+        console.log("PATCH 요청 보내기 전:", `${HOST}/api/lecture/sub-lecture/history/${lectureHistoryId}`, patchData);
 
-        // AJAX PATCH 요청을 시작합니다.
         LoaAxios.patch(	
             `${HOST}/api/lecture/sub-lecture/history/${lectureHistoryId}`,	
             patchData,	
             (response) => {	
-                console.log("PATCH 요청 응답:", response);  // 응답을 콘솔에 출력
+                console.log("PATCH 요청 응답:", response);
                 if (response.lectureHistoryId !== lectureHistoryId) {	
                     analysisEndBtn.innerHTML = '<span> 종료 실패 </span>'	
                     return;	
