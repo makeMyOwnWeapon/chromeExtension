@@ -1,8 +1,9 @@
 import { createAndPopupModalWithHTML } from '../modal/modal.js'; 
-import { LoaAxios } from '../network/LoaAxios.js';
+import { LoaAxios, HOST } from '../network/LoaAxios.js';
 import { formatDate } from '../network/TimeFomater.js';
 import { analyticsContext } from '../workbook/controller/webcam.js';
 import { playSound, stopSound } from './sound.js';
+import { workbookContext } from '../workbook/workbook.js'
 
 export function showWakeUpModal() {
     let modal = document.getElementById("analysis-info-modal");
@@ -31,7 +32,7 @@ export function showWakeUpModal() {
             `${HOST}/api/analytics/save`,
             { "startedAt": analyticsContext.startedAt,
                 "endedAt": analyticsContext.endedAt,
-                "lectureHistories": analyticsContext.lectureHistoryId,
+                "lectureHistories": workbookContext.lectureHistoryId,
                 "analysisType": 0 },
             (response) => {
                 console.log(response);

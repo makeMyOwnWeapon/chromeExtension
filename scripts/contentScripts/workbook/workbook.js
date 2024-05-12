@@ -12,7 +12,6 @@ export const workbookContext = {
     selectedQuizsetId: null,
     subLectureId: null,
     lectureHistoryId: null,
-    videoIntervalId: null
 };
 
 export function loadDefaultElementsForWorkbook() {
