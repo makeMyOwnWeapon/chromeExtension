@@ -1,6 +1,6 @@
 import '../../scss/main.scss';
 import { addLearningAssistantIcon, removeLearningAssistantIcon } from './icon/icon.js';
-import { toggleNavbarVisibility } from './navbar/navbar.js';
+//import { toggleNavbarVisibility } from './navbar/navbar.js';
 
 // chrome.storage.local.get('authToken', function(data) {
 //     if (data.authToken) {

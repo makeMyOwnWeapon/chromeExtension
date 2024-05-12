@@ -1,0 +1,19 @@
+#learningAssistantNavbar {
+    height: 600px;
+    width: 300px;
+    position: fixed;
+    top: 5vh;
+    left: 10vh;
+    background-color: #f4f4f9;
+    border: 1px solid #ccc;
+    z-index: 1000;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    &:draggable {
+        opacity: 1;
+    }
+}
