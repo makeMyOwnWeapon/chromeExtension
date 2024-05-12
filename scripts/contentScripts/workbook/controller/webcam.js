@@ -2,11 +2,12 @@ import { showWakeUpModal } from "../../alarm/wakeupmodal";
 import { showLeaveSeatModal } from "../../leaveSeat/leaveSeat";
 import { IMAGE_PROCESSING_HOST, LoaAxios } from "../../network/LoaAxios";
 import { formatDate } from "../../network/TimeFomater";
-import { workbookContext } from "../workbook";
 
 export const analyticsContext = {
   startedAt: null,
-  endedAt: null
+  endedAt: null,
+  sleepCount: 0,
+  existCount: 0
 };
 
 function captureAndSendImages(video) {
@@ -20,23 +21,22 @@ function captureAndSendImages(video) {
       (response) => {
             console.log(response);
             if(response.isExist && response.isEyeClosed){
-            workbookContext.sleepCount = workbookContext.sleepCount + 1;
+              analyticsContext.sleepCount = analyticsContext.sleepCount + 1;
             }
             else if(!response.isExist){
-                workbookContext.existCount = workbookContext.existCount +1;
+              analyticsContext.existCount = analyticsContext.existCount +1;
             }
             else{
-                workbookContext.sleepCount = 0;
-                workbookContext.existCount = 0;
+              analyticsContext.sleepCount = 0;
+              analyticsContext.existCount = 0;
             }
-            if(workbookContext.sleepCount == 5){
+            if(analyticsContext.sleepCount == 5){
                 analyticsContext.startedAt = formatDate(new Date());
                 showWakeUpModal();
             }
-            else if(workbookContext.existCount == 5){
+            else if(analyticsContext.existCount == 5){
                 analyticsContext.startedAt = formatDate(new Date());
                 showLeaveSeatModal();
-                workbookContext.existCount = 0;
             }
       }
     );
