@@ -1,5 +1,6 @@
 import { createAndPopupModalWithHTML } from "../../modal/modal";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
+import { showReportModal } from "../../report/reportmodal";
 import { workbookContext } from "../workbook";
 import { analyticsContext, getWebcamAndAddCaptureEvent, stopWebcam } from "./webcam";
 
@@ -33,6 +34,7 @@ function endAnalysis() {
         analysisStartBtn.style.display = 'none';
         congratulationsMessage.style.display = 'block';
     }
+    showReportModal();
 }
 
 
@@ -114,6 +116,7 @@ export function refreshAnalysisBtn() {
 
     const analysisEndBtn = document.getElementById("analysis-end-btn");
     analysisEndBtn.addEventListener('click', () => {
+
         if (!isAnalyzing()) {
             return;
         }
