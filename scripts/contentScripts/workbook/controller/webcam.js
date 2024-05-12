@@ -1,7 +1,13 @@
 import { showWakeUpModal } from "../../alarm/wakeupmodal";
 import { showLeaveSeatModal } from "../../leaveSeat/leaveSeat";
 import { IMAGE_PROCESSING_HOST, LoaAxios } from "../../network/LoaAxios";
+import { formatDate } from "../../network/TimeFomater";
 import { workbookContext } from "../workbook";
+
+export const analyticsContext = {
+  startedAt: null,
+  endedAt: null
+};
 
 function captureAndSendImages(video) {
   const canvas = document.createElement('canvas');
@@ -12,23 +18,25 @@ function captureAndSendImages(video) {
       `${IMAGE_PROCESSING_HOST}/api/image-process/image`,
       canvas.toDataURL('image/jpeg'), 
       (response) => {
-            if(response.isExist == true && response.isEyeClosed == true){
+            console.log(response);
+            if(response.isExist && response.isEyeClosed){
             workbookContext.sleepCount = workbookContext.sleepCount + 1;
             }
-            else if(response.isExist == false && response.isEyeClosed == false){
+            else if(!response.isExist){
                 workbookContext.existCount = workbookContext.existCount +1;
             }
             else{
                 workbookContext.sleepCount = 0;
                 workbookContext.existCount = 0;
             }
-            if(workbookContext.sleepCount >= 5){
-                workbookContext.sleepCount = 0;
+            if(workbookContext.sleepCount == 5){
+                analyticsContext.startedAt = formatDate(new Date());
                 showWakeUpModal();
             }
-            else if(workbookContext.existCount >= 5){
-                workbookContext.existCount = 0;
+            else if(workbookContext.existCount == 5){
+                analyticsContext.startedAt = formatDate(new Date());
                 showLeaveSeatModal();
+                workbookContext.existCount = 0;
             }
       }
     );
