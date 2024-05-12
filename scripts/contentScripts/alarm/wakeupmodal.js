@@ -1,4 +1,8 @@
 import { createAndPopupModalWithHTML } from '../modal/modal.js'; 
+import { LoaAxios } from '../network/LoaAxios.js';
+import { formatDate } from '../network/TimeFomater.js';
+import { analyticsContext } from '../workbook/controller/webcam.js';
+import { workbookContext } from '../workbook/workbook.js';
 import { playSound, stopSound } from './sound.js';
 
 export function showWakeUpModal() {
@@ -24,6 +28,16 @@ export function showWakeUpModal() {
 
     const dismissButton = document.getElementById('dismissButton');
     dismissButton.onclick = function() {
+        analyticsContext.endedAt = formatDate(new Date());
+        LoaAxios.post(
+            `/api/analytics/save`,
+            { startedAt: analyticsContext.startedAt, endedAt: analyticsContext.endedAt, lectureHistories: workbookContext.lectureHistoryId, analysisType: 0 },
+            (response) => {
+                console.log(response);
+            }
+        )
+        analyticsContext.startedAt = null;
+        analyticsContext.endedAt = null;
         modal.remove();
         stopSound();
     };
@@ -43,3 +57,4 @@ export function showWakeUpModal() {
 document.addEventListener('DOMContentLoaded', function() {
     showWakeUpModal();
 });
+
