@@ -25,13 +25,15 @@ export function showWakeUpModal() {
         `
     });
     modal.id = "analysis-info-modal";
-
     const dismissButton = document.getElementById('dismissButton');
     dismissButton.onclick = function() {
         analyticsContext.endedAt = formatDate(new Date());
         LoaAxios.post(
-            `/api/analytics/save`,
-            { startedAt: analyticsContext.startedAt, endedAt: analyticsContext.endedAt, lectureHistories: workbookContext.lectureHistoryId, analysisType: 0 },
+            `${HOST}/api/analytics/save`,
+            { "startedAt": analyticsContext.startedAt,
+                "endedAt": analyticsContext.endedAt,
+                "lectureHistories": workbookContext.lectureHistoryId,
+                "analysisType": 0 },
             (response) => {
                 console.log(response);
             }

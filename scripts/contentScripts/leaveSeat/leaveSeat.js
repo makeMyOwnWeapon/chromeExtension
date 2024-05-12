@@ -1,5 +1,5 @@
 import { createAndPopupModalWithHTML } from '../modal/modal.js'; 
-import { LoaAxios } from '../network/LoaAxios.js';
+import { LoaAxios, HOST } from '../network/LoaAxios.js';
 import { formatDate } from '../network/TimeFomater.js';
 import { analyticsContext } from '../workbook/controller/webcam.js';
 import { workbookContext } from '../workbook/workbook.js';
@@ -27,10 +27,12 @@ export function showLeaveSeatModal() {
     const dismissButton = document.getElementById('dismissButton');
     dismissButton.onclick = function() {
         analyticsContext.endedAt = formatDate(new Date());
-        console.log(analyticsContext.endedAt);
         LoaAxios.post(
-            `/api/analytics/save`,
-            { startedAt: analyticsContext.startedAt, endedAt: analyticsContext.endedAt, lectureHistories: workbookContext.lectureHistoryId, analysisType: 1 },
+            `${HOST}/api/analytics/save`,
+            { "startedAt": analyticsContext.startedAt,
+                "endedAt": analyticsContext.endedAt,
+                "lectureHistories": workbookContext.lectureHistoryId,
+                "analysisType": 1 },
             (response) => {
                 console.log(response);
             }
