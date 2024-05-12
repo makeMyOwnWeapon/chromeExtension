@@ -73,6 +73,13 @@ function makeWorkbookHTML_TOBE() {
                 문제집 만들기
             </a>
         </div>
+        <div id="congratulations-message" style="display: none; font-size: 24px; color: #6a1b9a; font-weight: bold; text-align: center;">
+            <br />
+            <br />
+            수고하셨습니다!
+            <br />
+            <br />
+        </div>
         <div id='popuptime-preview'>
             <div id="popuptimes-view" class="position-relative m-4"></div>
             <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
