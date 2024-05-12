@@ -2,7 +2,6 @@ import { createAndPopupModalWithHTML } from '../modal/modal.js';
 import { LoaAxios, HOST } from '../network/LoaAxios.js';
 import { formatDate } from '../network/TimeFomater.js';
 import { analyticsContext } from '../workbook/controller/webcam.js';
-import { workbookContext } from '../workbook/workbook.js';
 
 export function showLeaveSeatModal() {
     let modal = document.getElementById("analysis-info-modal");
@@ -31,7 +30,7 @@ export function showLeaveSeatModal() {
             `${HOST}/api/analytics/save`,
             { "startedAt": analyticsContext.startedAt,
                 "endedAt": analyticsContext.endedAt,
-                "lectureHistories": workbookContext.lectureHistoryId,
+                "lectureHistories": analyticsContext.lectureHistoryId,
                 "analysisType": 1 },
             (response) => {
                 console.log(response);
