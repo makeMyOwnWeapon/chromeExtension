@@ -1,7 +1,7 @@
 import { createAndPopupModalWithHTML } from "../../modal/modal";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
 import { workbookContext } from "../workbook";
-import { getWebcamAndAddCaptureEvent, stopWebcam } from "./webcam";
+import { analyticsContext, getWebcamAndAddCaptureEvent, stopWebcam } from "./webcam";
 
 function startAnalysis(/*analysisStartBtn*/) {
     workbookContext.isAnalyzing = true;
@@ -80,7 +80,7 @@ export function refreshAnalysisBtn() {
                 startAnalysis();
                 removeInfoModalIfExist();
                 const temp = await getWebcamAndAddCaptureEvent();
-                workbookContext.videoIntervalId = temp;
+                analyticsContext.videoIntervalId = temp;
                 analysisStartBtn.innerHTML = '<span role="status">학습중</span>'	
                 workbookContext.lectureHistoryId = response.lectureHistoryId;	
             }	
@@ -111,7 +111,7 @@ export function refreshAnalysisBtn() {
                     return;
                 }
                 endAnalysis();
-                clearInterval(workbookContext.videoIntervalId);
+                clearInterval(analyticsContext.videoIntervalId);
                 stopWebcam();
                 analysisStartBtn.innerHTML = '<span> 학습 시작 </span>'	
                 analysisStartBtn.disabled = false;	

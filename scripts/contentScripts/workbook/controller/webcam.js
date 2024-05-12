@@ -7,7 +7,8 @@ export const analyticsContext = {
   startedAt: null,
   endedAt: null,
   sleepCount: 0,
-  existCount: 0
+  existCount: 0,
+  videoIntervalId: null
 };
 
 function captureAndSendImages(video) {
@@ -19,7 +20,6 @@ function captureAndSendImages(video) {
       `${IMAGE_PROCESSING_HOST}/api/image-process/image`,
       canvas.toDataURL('image/jpeg'), 
       (response) => {
-            console.log(response);
             if(response.isExist && response.isEyeClosed){
               analyticsContext.sleepCount = analyticsContext.sleepCount + 1;
             }
