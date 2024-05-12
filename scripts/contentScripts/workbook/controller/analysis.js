@@ -3,8 +3,12 @@ import { LoaAxios, HOST } from "../../network/LoaAxios";
 import { workbookContext } from "../workbook";
 import { analyticsContext, getWebcamAndAddCaptureEvent, stopWebcam } from "./webcam";
 
-function startAnalysis(/*analysisStartBtn*/) {
+function startAnalysis() {
     workbookContext.isAnalyzing = true;
+    const quizsetsContainer = document.getElementById('quizsets-container');
+    if (quizsetsContainer) {
+        quizsetsContainer.style.display = 'none';
+    }
 }
   
 function endAnalysis() {

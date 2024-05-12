@@ -11,7 +11,8 @@ export function showWakeUpModal() {
     if (modal) {
         return;
     }
-    
+    const video = workbookContext.videoElement;
+    video.pause();
     modal = createAndPopupModalWithHTML({
         headerHTML : `
         <div class="modal-header">
@@ -42,6 +43,7 @@ export function showWakeUpModal() {
         analyticsContext.endedAt = null;
         modal.remove();
         stopSound();
+        video.play();
     };
     dismissButton.onmouseover = function() {
         this.style.backgroundColor = '#45a049';

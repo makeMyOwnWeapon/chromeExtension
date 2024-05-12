@@ -2,6 +2,7 @@ import { createAndPopupModalWithHTML } from '../modal/modal.js';
 import { LoaAxios, HOST } from '../network/LoaAxios.js';
 import { formatDate } from '../network/TimeFomater.js';
 import { analyticsContext } from '../workbook/controller/webcam.js';
+import { workbookContext } from '../workbook/workbook.js'
 
 export function showLeaveSeatModal() {
     let modal = document.getElementById("analysis-info-modal");
@@ -9,7 +10,8 @@ export function showLeaveSeatModal() {
     if (modal) {
         return;
     }
-    
+    const video = workbookContext.videoElement;
+    video.pause();
     modal = createAndPopupModalWithHTML({
         headerHTML : `
         <div class="modal-header">
@@ -39,6 +41,7 @@ export function showLeaveSeatModal() {
         analyticsContext.startedAt = null;
         analyticsContext.endedAt = null;
         modal.remove();
+        video.play();
     };
     dismissButton.onmouseover = function() {
         this.style.backgroundColor = '#45a049';
