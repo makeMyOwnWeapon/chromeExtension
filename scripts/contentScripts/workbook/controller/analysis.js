@@ -4,16 +4,37 @@ import { workbookContext } from "../workbook";
 import { analyticsContext, getWebcamAndAddCaptureEvent, stopWebcam } from "./webcam";
 
 function startAnalysis() {
+    const video = workbookContext.videoElement;
     workbookContext.isAnalyzing = true;
+    video.play();
+
     const quizsetsContainer = document.getElementById('quizsets-container');
+    
     if (quizsetsContainer) {
         quizsetsContainer.style.display = 'none';
     }
 }
   
 function endAnalysis() {
+    const video = workbookContext.videoElement;
     workbookContext.isAnalyzing = false;
+    video.pause();
+
+    const analysisEndBtn = document.getElementById("analysis-end-btn");
+    const analysisStartBtn = document.getElementById("analysis-start-btn");
+    const webCam = document.querySelector('#web-cam');
+    const popupTimesView = document.getElementById("popuptime-preview");
+    const congratulationsMessage = document.getElementById("congratulations-message");
+
+    if (analysisEndBtn) {
+        analysisEndBtn.style.display = 'none';
+        webCam.style.display = 'none';
+        popupTimesView.style.display = 'none';
+        analysisStartBtn.style.display = 'none';
+        congratulationsMessage.style.display = 'block';
+    }
 }
+
 
 function removeInfoModalIfExist() {
     const modal = document.getElementById('analysis-info-modal');

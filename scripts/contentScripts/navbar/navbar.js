@@ -97,23 +97,23 @@ function createDraggableNavbar() {
     
     
     document.body.appendChild(navbar);
-
-    setupButtonHandlers();
+    displayWorkbookContent();
+    // setupButtonHandlers();
 }
 
-function setupButtonHandlers() {
-    const summaryButton = document.getElementById('summaryButton');
-    const workbookButton = document.getElementById('workbookButton');
-    // const openIconButton = document.getElementById('openIcon');
-    // const closeIconButton = document.getElementById('closeIcon');
-    //if (summaryButton && workbookButton && openIconButton && closeIconButton) {
-    if (summaryButton && workbookButton) {
-        summaryButton.onclick = displaySummaryContent;
-        workbookButton.onclick = displayWorkbookContent;
-        // openIconButton.onclick = displaySummaryContent;
-        // closeIconButton.onclick = displaySummaryContent;
-    } else {
-        console.error('One or more elements are missing');
-    }
+// function setupButtonHandlers() {
+//     const summaryButton = document.getElementById('summaryButton');
+//     const workbookButton = document.getElementById('workbookButton');
+//     // const openIconButton = document.getElementById('openIcon');
+//     // const closeIconButton = document.getElementById('closeIcon');
+//     //if (summaryButton && workbookButton && openIconButton && closeIconButton) {
+//     if (summaryButton && workbookButton) {
+//         summaryButton.onclick = displaySummaryContent;
+//         workbookButton.onclick = displayWorkbookContent;
+//         // openIconButton.onclick = displaySummaryContent;
+//         // closeIconButton.onclick = displaySummaryContent;
+//     } else {
+//         console.error('One or more elements are missing');
+//     }
 
-}
+// }
