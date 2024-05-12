@@ -6,7 +6,7 @@ export function createNavbarHeader() {
         <div style="position: absolute; top: 1px; right: 3px; cursor: pointer;">
             &#10005; <!-- HTML entity for the letter 'X' -->
         </div>
-        <p style="font-size: 24px; color: #4CAF50; padding: 14px 0; font-weight: bold;">Let's LOA!</p>
+        <p style="font-size: 24px; color: #6a1b9a; font-weight: bold;">Let's LOA!</p>
         <br>
         `;
         // <button id="summaryButton" style="background-color: #4CAF50; color: white; padding: 10px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer; transition: transform 0.1s;">요약</button>

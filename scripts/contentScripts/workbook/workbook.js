@@ -65,11 +65,16 @@ function updateWorkbookContent(content) {
 
 function makeWorkbookHTML_TOBE() {
     return `
+    <style>
+    .analysis-btn {
+        color: #6a1b9a;
+    }
+    </style>
     <div style="width: 100%">
         <div class="list-group quizsets" id="quizsets-container">
         </div>
         <div>
-            <a class="btn create-quizsets-btn" href='http://127.0.0.1:3002/create' target='_blank'>
+            <a class="btn create-quizsets-btn" style="color: #6a1b9a;" href='http://127.0.0.1:3002/create' target='_blank'>
                 문제집 만들기
             </a>
         </div>
@@ -83,15 +88,17 @@ function makeWorkbookHTML_TOBE() {
         <div id='popuptime-preview'>
             <div id="popuptimes-view" class="position-relative m-4"></div>
             <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%; background-color: lightgray"></div>
+                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%; background-color: #6a1b9a;"></div>
             </div>
         </div>
-        <button class="btn analysis-btn" type="button" id="analysis-start-btn" ${isAnalyzing() ? 'disabled' : ''}>
+        <div>
+        <button class="btn analysis-btn" id="analysis-start-btn" ${isAnalyzing() ? 'disabled' : ''}>
             <span> ${isAnalyzing() ? '학습중' : '학습 시작'} </span>
         </button>
-        <button class="btn analysis-btn" type="button" id="analysis-end-btn">
+        <button class="btn analysis-btn" id="analysis-end-btn">
             <span> 학습 종료 </span>
         </button>
+        <div>
         <video autoplay style="width: 100%;" id="web-cam" hidden></video>
     </div>
     `;
