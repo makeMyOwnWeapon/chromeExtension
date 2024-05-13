@@ -32,7 +32,7 @@ export function showLeaveSeatModal() {
             `${HOST}/api/analytics/save`,
             { "startedAt": analyticsContext.startedAt,
                 "endedAt": analyticsContext.endedAt,
-                "lectureHistories": analyticsContext.lectureHistoryId,
+                "lectureHistories": workbookContext.lectureHistoryId,
                 "analysisType": 1 },
             (response) => {
                 console.log(response);
