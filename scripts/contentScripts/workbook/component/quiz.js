@@ -1,11 +1,15 @@
 import { workbookContext } from "../workbook";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
 
-function QuizView(instruction) {
+function QuizView(instructionVisible, instruction) {
   return `
         <div class="modal-content center">
             <div class="modal-header">
-                <h1 class="modal-title">${instruction}</h1>
+                ${
+                  instructionVisible
+                    ? `<h1 class="modal-title">${instruction}</h1>`
+                    : ""
+                }
             </div>
             <div class="modal-body" id="choices-container">
             </div>
@@ -62,17 +66,47 @@ function sendQuizResultAndRender(choices, quizModal, video, solvedDuration) {
   // TODO: 문제 결과 저장 로직 추가 (+정답 결과 보여주기)
   const selectedChoiceId = getSelectedChoiceId(choices);
   if (selectedChoiceId === null) {
-    alert("답안을 선택해주세요."); // 선택한 답안이 없는 경우 알림
+    alert("답안을 선택해주세요.");
     return;
   }
-  const isCorrect = isAnswer(selectedChoiceId); // 선택한 답안이 정답인지 확인
-  const result = saveQuizResult(selectedChoiceId, isCorrect, solvedDuration); // 서버에 퀴즈 결과 저장
+  const isCorrect = isAnswer(selectedChoiceId);
+  saveQuizResult(selectedChoiceId, isCorrect, solvedDuration);
 
-  // 일정 시간 후 모달 닫기
-  setTimeout(() => {
+  quizModal.innerHTML = QuizView(false, getCurrentQuiz().instruction);
+
+  const modalFooter = quizModal.querySelector(".modal-footer");
+  modalFooter.innerHTML = ""; // 기존 버튼 제거
+
+  const continueBtn = document.createElement("button");
+  continueBtn.type = "button";
+  continueBtn.id = "continue-btn";
+  continueBtn.className = "continue-btn";
+  continueBtn.innerText = "계속 진행하기";
+  continueBtn.addEventListener("click", () => {
     quizModal.remove();
     video.play();
-  }, 1500);
+  });
+  modalFooter.appendChild(continueBtn); // 계속 진행하기 버튼 추가
+  if (!isCorrect) {
+    const goBackBtn = document.createElement("button");
+    goBackBtn.type = "button";
+    goBackBtn.id = "go-back-btn";
+    goBackBtn.className = "go-back-btn";
+    goBackBtn.innerText = "돌아가기";
+    goBackBtn.addEventListener("click", () => {
+      if (workbookContext.solvedQuizzes.length <= 1) {
+        video.currentTime = 0;
+      } else {
+        video.currentTime =
+          workbookContext.solvedQuizzes[
+            workbookContext.solvedQuizzes.length - 2
+          ].popupTime;
+      }
+      quizModal.remove();
+      video.play();
+    });
+    modalFooter.appendChild(goBackBtn); // 돌아가기 버튼 추가
+  }
 }
 
 // 선택한 선택지의 id를 반환하는 함수
@@ -164,12 +198,12 @@ export function popupQuiz(quizIdx) {
     );
     // 선택한 답안이 정답이면 버튼 색상을 파란색으로, 아니면 빨간색으로 변경
     for (const choice of quiz.choices) {
-        const choiceBtn = document.getElementById(`choice-${choice.choiceId}`)
-        if (choice.isAnswer) {
-            choiceBtn.className = 'btn correct-answer';
-        } else if (!choice.isAnswer && selectedChoiceId === choice.choiceId) {
-            choiceBtn.className = 'btn wrong-answer';
-        }
+      const choiceBtn = document.getElementById(`choice-${choice.choiceId}`);
+      if (choice.isAnswer) {
+        choiceBtn.className = "btn correct-answer";
+      } else if (!choice.isAnswer && selectedChoiceId === choice.choiceId) {
+        choiceBtn.className = "btn wrong-answer";
+      }
     }
   });
 }
