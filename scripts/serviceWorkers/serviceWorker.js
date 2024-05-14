@@ -3,15 +3,13 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
         fetch(request.url, request.options)
             .then(resp => resp.json())
             .then(data => {
-                // json 데이터 추출 
                 sendResponse(data);
             })
             .catch(error => {
                 sendResponse(error);
             });
     }
-
-    if (request.type === "REST_FILE") {
+    else if (request.type === "REST_FILE") {
         const base64Data = request.base64Data;
         const parts = base64Data.split(';base64,');
         const imageData = parts[1];
@@ -22,7 +20,17 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             .then(resp => resp.json())
             .then(data => sendResponse(data))
             .catch(error => sendResponse(error));
-    } 
+    }
+    else if (request.type === 'TEXT') {
+        fetch(request.url, request.options)
+            .then(resp => resp.text())
+            .then(data => {
+                sendResponse(data)
+            })
+            .catch(error => {
+                sendResponse(error);
+            });
+    }
     return true;
 });
 
