@@ -16,30 +16,32 @@ function captureAndSendImages(video) {
   const context = canvas.getContext('2d');
   const capture = () => {
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    LoaAxios.postFile(
-      `${IMAGE_PROCESSING_HOST}/api/image-process/image`,
-      canvas.toDataURL('image/jpeg'), 
-      (response) => {
-            if(response.isExist && response.isEyeClosed){
-              analyticsContext.sleepCount = analyticsContext.sleepCount + 1;
-            }
-            else if(!response.isExist){
-              analyticsContext.existCount = analyticsContext.existCount +1;
-            }
-            else{
-              analyticsContext.sleepCount = 0;
-              analyticsContext.existCount = 0;
-            }
-            if(analyticsContext.sleepCount == 5){
-                analyticsContext.startedAt = formatDate(new Date());
-                showWakeUpModal();
-            }
-            else if(analyticsContext.existCount == 5){
-                analyticsContext.startedAt = formatDate(new Date());
-                showLeaveSeatModal();
-            }
-      }
-    );
+    if(!document.querySelector("#quiz-modal")) {
+      LoaAxios.postFile(
+        `${IMAGE_PROCESSING_HOST}/api/image-process/image`,
+        canvas.toDataURL('image/jpeg'), 
+        (response) => {
+              if(response.isExist && response.isEyeClosed){
+                analyticsContext.sleepCount = analyticsContext.sleepCount + 1;
+              }
+              else if(!response.isExist){
+                analyticsContext.existCount = analyticsContext.existCount +1;
+              }
+              else{
+                analyticsContext.sleepCount = 0;
+                analyticsContext.existCount = 0;
+              }
+              if(analyticsContext.sleepCount == 5){
+                  analyticsContext.startedAt = formatDate(new Date());
+                  showWakeUpModal();
+              }
+              else if(analyticsContext.existCount == 5){
+                  analyticsContext.startedAt = formatDate(new Date());
+                  showLeaveSeatModal();
+              }
+        }
+      );
+    };
   };
 
   const intervalId = setInterval(capture, 1000);
