@@ -14,7 +14,7 @@ function QuizView(instructionVisible, instruction) {
             <div class="modal-body" id="choices-container">
             </div>
             <div class="modal-footer">
-                <button type="button" id="submit-btn" class="submit-btn">정답 확인</button>
+                <button type="button" id="submit-btn" class="submit-btn">제출하기</button>
             </div>
         </div>
         `;
