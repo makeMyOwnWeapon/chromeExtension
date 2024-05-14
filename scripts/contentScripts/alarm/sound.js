@@ -1,7 +1,6 @@
-let audio;
+let audio = new Audio(chrome.runtime.getURL('sounds/alarm.mp3'));
 
 export function playSound() {
-    audio = new Audio(chrome.runtime.getURL('sounds/alarm.mp3'));
     audio.play().then(() => {
         console.log("alarm on");
     }).catch(error => {
