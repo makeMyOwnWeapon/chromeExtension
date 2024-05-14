@@ -8,11 +8,16 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('imNew').style.display = display ? 'block' : 'none';
     }
 
+    function toggleAuthCodeInput(display) {
+        document.getElementById('authCode').style.display = display ? '' : 'none';
+    }
+
     chrome.storage.local.get('authToken', function(data) {
         if (data.authToken) {
             document.getElementById('controlButtons').style.display = 'block';
             updateLinkButton(true);
             toggleNewAccountButton(false);
+            toggleAuthCodeInput(false);
         }
     });
 
@@ -40,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     document.getElementById('authMessage').style.display = 'none';
                     updateLinkButton(true);
                     toggleNewAccountButton(false);
+                    toggleAuthCodeInput(false);
                 });
             })
             .catch(error => {
@@ -51,17 +57,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 document.getElementById('controlButtons').style.display = 'none';
                 updateLinkButton(false);
                 toggleNewAccountButton(true);
+                toggleAuthCodeInput(true);
             });
         }
-    });
-    document.getElementById('showToken').addEventListener('click', function() {  //임시 코드
-        chrome.storage.local.get('authToken', function(data) {
-            if (data.authToken) {
-                alert("Stored Token: " + data.authToken);
-            } else {
-                alert("No token found.");
-            }
-        });
     });
 
     document.getElementById('imNew').addEventListener('click', function() {
@@ -83,36 +81,6 @@ document.addEventListener('DOMContentLoaded', function() {
         chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
             chrome.tabs.sendMessage(tabs[0].id, {command: 'turnOff'});
         });
-    });
-});
-
-document.getElementById('nsactivate').addEventListener('click', function() {   //임시 코드
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, {command: 'turnOn'}, function(response) {
-        });
-    });
-});
-
-document.getElementById('nsdeactivate').addEventListener('click', function() {  //임시 코드
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-        chrome.tabs.sendMessage(tabs[0].id, {command: 'turnOff'});
-    });
-});
-
-document.getElementById('logButton').addEventListener('click', function() {
-    chrome.storage.local.get('authToken', function(data) {
-        if (data.authToken) {
-
-            chrome.runtime.sendMessage({ 
-                type: "LOG_TO_CONSOLE", 
-                message: "WebSocket connection attempted from popup with token.",
-                token: data.authToken
-            }, function(response) {
-                console.log("Response from background:", response);
-            });
-        } else {
-            console.log('No auth token found in Chrome storage.');
-        }
     });
 });
 
