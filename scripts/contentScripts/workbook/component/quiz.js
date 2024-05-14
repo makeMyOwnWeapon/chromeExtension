@@ -72,11 +72,10 @@ function sendQuizResultAndRender(
   const isCorrect = isAnswer(selectedChoiceId, quizIdx);
   saveQuizResult(selectedChoiceId, isCorrect, solvedDuration);
 
-  quizModal.innerHTML = QuizView(false, getCurrentQuiz(quizIdx).instruction);
-
   const modalFooter = quizModal.querySelector(".modal-footer");
-  modalFooter.innerHTML = ""; // 기존 버튼 제거
+  modalFooter.innerHTML = ""; // 제출하기 버튼 제거
 
+  // '계속 진행하기' 버튼 추가
   const continueBtn = document.createElement("button");
   continueBtn.type = "button";
   continueBtn.id = "continue-btn";
@@ -86,7 +85,7 @@ function sendQuizResultAndRender(
     quizModal.remove();
     video.play();
   });
-  modalFooter.appendChild(continueBtn); // 계속 진행하기 버튼 추가
+  modalFooter.appendChild(continueBtn);
   if (!isCorrect) {
     const goBackBtn = document.createElement("button");
     goBackBtn.type = "button";
@@ -102,7 +101,7 @@ function sendQuizResultAndRender(
       quizModal.remove();
       video.play();
     });
-    modalFooter.appendChild(goBackBtn); // 돌아가기 버튼 추가
+    modalFooter.appendChild(goBackBtn);
   }
 }
 
@@ -141,8 +140,6 @@ export function popupQuiz(quizIdx) {
   const quizzes = workbookContext.curQuizzes;
 
   const quiz = quizzes[quizIdx];
-
-  //workbookContext.solvedQuizzes.push(quizzes.splice(quizIdx, 1)[0]);
 
   const quizModal = createQuizModal();
 
@@ -194,13 +191,13 @@ export function popupQuiz(quizIdx) {
       selectedChoiceId, // 선택한 답안의 ID도 함께 전달
       isCorrect // 정답 여부도 함께 전달
     );
-    // 선택한 답안이 정답이면 버튼 색상을 파란색으로, 아니면 빨간색으로 변경
+    //선택한 답안이 정답이면 버튼 색상을 파란색으로, 아니면 빨간색으로 변경
     for (const choice of quiz.choices) {
       const choiceBtn = document.getElementById(`choice-${choice.choiceId}`);
       if (choice.isAnswer) {
-        choiceBtn.className = "btn correct-answer";
+        choiceBtn.classList.add("correct-answer");
       } else if (!choice.isAnswer && selectedChoiceId === choice.choiceId) {
-        choiceBtn.className = "btn wrong-answer";
+        choiceBtn.classList.add("wrong-answer");
       }
     }
   });
