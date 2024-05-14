@@ -1,15 +1,11 @@
 import { workbookContext } from "../workbook";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
 
-function QuizView(instructionVisible, instruction) {
+function QuizView(instruction) {
   return `
         <div class="modal-content center">
-            <div class="modal-header">
-                ${
-                  instructionVisible
-                    ? `<h1 class="modal-title">${instruction}</h1>`
-                    : ""
-                }
+            <div class="modal-header">  
+              <h1 class="modal-title">${instruction}</h1>
             </div>
             <div class="modal-body" id="choices-container">
             </div>
@@ -216,9 +212,8 @@ export function popupQuizEventHandler() {
   const currentTime = video.currentTime;
   for (let i = 0; i < quizzes.length; i++) {
     const parsedTime = parseInt(currentTime);
-    if (quizzes[i].ispopuped === false && parsedTime === quizzes[i].popupTime) {
-      quizzes[i].ispopuped = true;
-      console.log("몇번째 문제인가?: ", i);
+    if (quizzes[i].isPopuped === false && parsedTime === quizzes[i].popupTime) {
+      quizzes[i].isPopuped = true;
       popupQuiz(i);
       video.pause();
     }
