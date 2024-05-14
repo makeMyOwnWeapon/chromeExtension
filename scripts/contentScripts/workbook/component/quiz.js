@@ -33,10 +33,8 @@ function createQuizModal() {
  * 현재 풀고 있는 퀴즈 객체를 반환한다.
  * @returns 퀴즈 객체 (API 문서 참고)
  */
-function getCurrentQuiz() {
-  return workbookContext.solvedQuizzes.at(
-    workbookContext.solvedQuizzes.length - 1
-  );
+function getCurrentQuiz(quizIdx) {
+  return workbookContext.curQuizzes[quizIdx];
 }
 
 /**
@@ -44,8 +42,8 @@ function getCurrentQuiz() {
  * @param {*: number} choiceId 선택지 id
  * @returns 정답여부
  */
-function isAnswer(choiceId) {
-  const curQuiz = getCurrentQuiz();
+function isAnswer(choiceId, quizIdx) {
+  const curQuiz = getCurrentQuiz(quizIdx);
   for (const choice of curQuiz.choices) {
     if (choice.choiceId === choiceId && choice.isAnswer) {
       return true;
@@ -62,17 +60,23 @@ function isAnswer(choiceId) {
  * @param {HTMLElement} quizModal 현재 떠있는 문제 모달창
  * @param {HTMLElement} video 현재 보고 있는 강의 영상
  */
-function sendQuizResultAndRender(choices, quizModal, video, solvedDuration) {
+function sendQuizResultAndRender(
+  quizIdx,
+  choices,
+  quizModal,
+  video,
+  solvedDuration
+) {
   // TODO: 문제 결과 저장 로직 추가 (+정답 결과 보여주기)
   const selectedChoiceId = getSelectedChoiceId(choices);
   if (selectedChoiceId === null) {
     alert("답안을 선택해주세요.");
     return;
   }
-  const isCorrect = isAnswer(selectedChoiceId);
+  const isCorrect = isAnswer(selectedChoiceId, quizIdx);
   saveQuizResult(selectedChoiceId, isCorrect, solvedDuration);
 
-  quizModal.innerHTML = QuizView(false, getCurrentQuiz().instruction);
+  quizModal.innerHTML = QuizView(false, getCurrentQuiz(quizIdx).instruction);
 
   const modalFooter = quizModal.querySelector(".modal-footer");
   modalFooter.innerHTML = ""; // 기존 버튼 제거
@@ -94,13 +98,10 @@ function sendQuizResultAndRender(choices, quizModal, video, solvedDuration) {
     goBackBtn.className = "go-back-btn";
     goBackBtn.innerText = "돌아가기";
     goBackBtn.addEventListener("click", () => {
-      if (workbookContext.solvedQuizzes.length <= 1) {
+      if (quizIdx == 0) {
         video.currentTime = 0;
       } else {
-        video.currentTime =
-          workbookContext.solvedQuizzes[
-            workbookContext.solvedQuizzes.length - 2
-          ].popupTime;
+        video.currentTime = workbookContext.curQuizzes[quizIdx - 1].popupTime;
       }
       quizModal.remove();
       video.play();
@@ -145,7 +146,7 @@ export function popupQuiz(quizIdx) {
 
   const quiz = quizzes[quizIdx];
 
-  workbookContext.solvedQuizzes.push(quizzes.splice(quizIdx, 1)[0]);
+  //workbookContext.solvedQuizzes.push(quizzes.splice(quizIdx, 1)[0]);
 
   const quizModal = createQuizModal();
 
@@ -187,8 +188,9 @@ export function popupQuiz(quizIdx) {
       alert("답안을 선택해주세요.");
       return;
     }
-    const isCorrect = isAnswer(selectedChoiceId);
+    const isCorrect = isAnswer(selectedChoiceId, quizIdx);
     sendQuizResultAndRender(
+      quizIdx,
       choicesContainer.childNodes,
       quizModal,
       video,
@@ -214,7 +216,9 @@ export function popupQuizEventHandler() {
   const currentTime = video.currentTime;
   for (let i = 0; i < quizzes.length; i++) {
     const parsedTime = parseInt(currentTime);
-    if (parsedTime === quizzes[i].popupTime) {
+    if (quizzes[i].ispopuped === false && parsedTime === quizzes[i].popupTime) {
+      quizzes[i].ispopuped = true;
+      console.log("몇번째 문제인가?: ", i);
       popupQuiz(i);
       video.pause();
     }
