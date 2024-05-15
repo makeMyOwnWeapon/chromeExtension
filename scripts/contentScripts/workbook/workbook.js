@@ -88,14 +88,13 @@ function makeWorkbookHTML_TOBE() {
     }
     </style>
     <div style="width: 100%">
-        <div class="list-group quizsets" id="quizsets-container">
-        </div>
+        <div class="list-group quizsets" id="quizsets-container"></div>
         <div>
             <a class="btn create-quizsets-btn" style="color: #000000;" href='http://127.0.0.1:3002/create' target='_blank'>
                 문제집 만들기
             </a>
         </div>
-        <div id="congratulations-message" style="display: none; font-size: 24px; color: #000000; font-weight: bold; text-align: center;">
+        <div id="congratulations-message">
             <br />
             <br />
             수고하셨습니다!
@@ -120,7 +119,7 @@ function makeWorkbookHTML_TOBE() {
         <div>
         <video autoplay style="width: 100%;" id="web-cam" hidden></video>
     </div>
-    `;
+  `;
 }
 
 export function displayWorkbookContent() {

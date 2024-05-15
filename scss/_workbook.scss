@@ -156,7 +156,7 @@ $index-upper: 1000;
   user-select: none;
   cursor: pointer;
   border: 0.0625rem solid transparent;
-  background-color: rgb(0, 196, 113);
+  background-color: rgb(107, 191, 255);
   color: rgb(255, 255, 255);
 }
 
@@ -182,7 +182,7 @@ $index-upper: 1000;
   user-select: none;
   cursor: pointer;
   border: 0.0625rem solid transparent;
-  background-color: rgb(0, 104, 231);
+  background-color: rgb(107, 191, 255);
   color: rgb(255, 255, 255);
 }
 
@@ -208,8 +208,8 @@ $index-upper: 1000;
   user-select: none;
   cursor: pointer;
   border: 0.0625rem solid transparent;
-  background-color: rgb(255, 166, 0);
-  color: rgb(255, 255, 255);
+  background-color: rgb(248, 140, 140);
+  color: rgb(0, 0, 0);
 }
 
 .modal-content {
@@ -251,12 +251,18 @@ $index-upper: 1000;
         font-weight: bold;
       }
 
-      &.correct-answer {
-        background-color: rgb(103, 103, 255);
+      .answer-mark {
+        font-size: 18px;
+        font-weight: bold;
+        margin-left: 5px;
       }
 
-      &.wrong-answer {
-        background-color: rgb(248, 140, 140);
+      .correct {
+        color: green;
+      }
+
+      .wrong {
+        color: red;
       }
     }
 
@@ -386,5 +392,36 @@ $index-upper: 1000;
   &:disabled {
     background-color: #c7c4c4;
     color: white;
+  }
+}
+
+#navbarContent {
+  #congratulations-message {
+    display: none;
+    font-size: 24px;
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+    background-image: url("https://velog.velcdn.com/images/byk0316/post/3e392430-1753-489e-92e5-548d51495a07/image.png");
+    background-size: 30%, contain; // Adjust size for each image
+    background-repeat: no-repeat, no-repeat;
+    background-position: left bottom, right center;
+    position: relative;
+    padding: 20px; // Adjust padding as needed
+    z-index: 1; // Ensure the text is above the background
+  }
+
+  #congratulations-message::after {
+    content: "";
+    background-image: inherit;
+    background-size: 60%;
+    background-repeat: inherit;
+    background-position: inherit;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 50%;
+    transform: scaleX(-1); // Flip horizontally
   }
 }
