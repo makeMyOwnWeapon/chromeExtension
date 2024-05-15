@@ -1,29 +1,32 @@
 #navbarHeader {
-  padding: 20px;
+  display: flex;
+  justify-content: center;
 
   .close-button {
     position: absolute;
-    top: 1px;
-    right: 3px;
+    top: 3px;
+    right: 10px;
   }
 
   .header-content {
     display: flex;
     align-items: center;
-    padding-left: 40px; // Adjust this value to move content to the right
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    .header-image {
+      height: 55px;
+      width: 65px;
+      margin-right: 10px;
+    }
+  
+    .header-text {
+      font-size: 35px;
+      font-family: 'omyu_pretty';
+      color: #000000;
+      font-weight: bold;
+      margin: 0; // Corrected margin value
+    }
   }
 
-  .header-image {
-    height: 55px;
-    width: 65px;
-    margin-right: 10px;
-  }
-
-  .header-text {
-    font-size: 35px;
-    font-family: 'omyu_pretty';
-    color: #000000;
-    font-weight: bold;
-    margin: 0; // Corrected margin value
-  }
 }

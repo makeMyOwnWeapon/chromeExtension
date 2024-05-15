@@ -7,8 +7,8 @@ import { analyticsContext, getWebcamAndAddCaptureEvent, stopWebcam } from "./web
 function startAnalysis() {
     const video = workbookContext.videoElement;
     workbookContext.isAnalyzing = true;
+    video.style.display = "block";
     video.play();
-
     const quizsetsContainer = document.getElementById('quizsets-container');
     
     if (quizsetsContainer) {

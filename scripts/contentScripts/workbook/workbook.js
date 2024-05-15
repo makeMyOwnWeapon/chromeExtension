@@ -81,11 +81,6 @@ function updateWorkbookContent(content) {
 
 function makeWorkbookHTML_TOBE() {
   return `
-    <style>
-    .analysis-btn {
-        color: #000000;
-    }
-    </style>
     <div style="width: 100%">
         <div class="list-group quizsets" id="quizsets-container"></div>
         <div>
@@ -116,7 +111,7 @@ function makeWorkbookHTML_TOBE() {
             <span> 학습 종료 </span>
         </button>
         <div>
-        <video autoplay style="width: 100%;" id="web-cam" hidden></video>
+        <video autoplay style="width: 100%; display: none;" id="web-cam" hidden></video>
     </div>
   `;
 }

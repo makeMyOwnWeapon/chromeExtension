@@ -56,6 +56,7 @@ export function getWebcamAndAddCaptureEvent() {
         // 스트림 사용, 예를 들어 비디오 태그에 연결
         const video = document.querySelector('#web-cam');
         video.hidden = false;
+        video.style.display = "";
         video.srcObject = stream;
         video.onloadedmetadata = function(e) {
             video.play();
