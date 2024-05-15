@@ -5,18 +5,20 @@
     <title>Learn On-Air</title>
     <link rel="stylesheet" href="./popup.css" type="text/css" />
 </head>
-<body class="loa-body">
-    <div class="loa-header">Learn On-Air!</div>
-    <input type="text" class="auth-code-input" id="authCode" placeholder="인증 코드를 입력하세요.">
-    <button id="linkAccount" class="loa-button">계정 연결</button>
-    <div class="centered">
-        <button id="imNew" class="loa-button">신규 등록하러 가기!</button>
-    </div>
-    <div id="authMessage" class="message error" style="display: none;"></div>
-    <div id="statusMessage" class="message success" style="display: none;"></div>
-    <div id="controlButtons" class="controls">
-        <button id="activate" class="loa-button">활성화</button>
-        <button id="deactivate" class="loa-button">비활성화</button>
+<body>
+    <div class="loa-body">
+        <div class="loa-header">Learn On-Air</div>
+        <input type="text" class="auth-code-input" id="authCode" placeholder="인증 코드를 입력하세요.">
+        <button id="linkAccount" class="loa-button">계정 연결</button>
+        <div class="centered">
+            <button id="imNew" class="loa-button">신규 등록하러 가기!</button>
+        </div>
+        <div id="authMessage" class="message error" style="display: none;"></div>
+        <div id="statusMessage" class="message success" style="display: none;"></div>
+        <div id="controlButtons" class="controls">
+            <button id="activate" class="loa-button">활성화</button>
+            <button id="deactivate" class="loa-button">비활성화</button>
+        </div>
     </div>
     <script src="popup.js"></script>
 </body>
