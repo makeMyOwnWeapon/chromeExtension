@@ -193,17 +193,17 @@ export function popupQuiz(quizIdx) {
     );
     for (const choice of quiz.choices) {
       const choiceBtn = document.getElementById(`choice-${choice.choiceId}`);
+      const iconElement = document.createElement("i");
       if (choice.isAnswer) {
         choiceBtn.classList.add("correct-answer");
         // 정답인 경우에는 'O' 표시를 추가합니다.
-        choiceBtn.innerHTML +=
-          "<span class='answer-mark correct'>O정답O</span>";
+        iconElement.className = "bi bi-check-circle correct";
       } else if (!choice.isAnswer && selectedChoiceId === choice.choiceId) {
         choiceBtn.classList.add("wrong-answer");
         // 오답인 경우에는 'X' 표시를 추가합니다.
-        choiceBtn.innerHTML +=
-          "<span class='answer-mark wrong'>X틀렸습니다X</span>";
+        iconElement.className = "bi bi-x-circle wrong";
       }
+      choiceBtn.prepend(iconElement);
     }
   });
 }
