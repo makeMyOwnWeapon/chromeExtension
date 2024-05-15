@@ -108,7 +108,7 @@ export function refreshAnalysisBtn() {
                 removeInfoModalIfExist();
                 const temp = await getWebcamAndAddCaptureEvent();
                 analyticsContext.videoIntervalId = temp;
-                analysisStartBtn.innerHTML = '<span role="status">학습중</span>'	
+                analysisStartBtn.innerHTML = '<span role="status"><i class="bi bi-record-circle record"></i>학습중</span>'	
                 workbookContext.lectureHistoryId = response.lectureHistoryId;	
             }	
         );
