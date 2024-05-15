@@ -2,6 +2,46 @@ import '../../scss/main.scss';
 import { addLearningAssistantIcon, removeLearningAssistantIcon } from './icon/icon.js';
 import { toggleNavbarVisibility } from './navbar/navbar.js';
 
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.command === 'turnOn') {
+        addLearningAssistantIcon();
+        observeTextChange();
+        sendResponse({ result: "success" });
+
+    } else if (request.command === 'turnOff') {
+        removeLearningAssistantIcon();
+        disconnectObserver();
+        sendResponse({ result: "success" });
+    }
+});
+
+let observer;
+
+function observeTextChange() {
+    const targetNode = document.querySelector('.css-1vtpfoe');
+    if (!targetNode) return;
+
+    const config = { childList: true, characterData: true, subtree: true };
+
+    observer = new MutationObserver((mutationsList) => {
+        for (let mutation of mutationsList) {
+            if (mutation.type === 'characterData' || mutation.type === 'childList') {
+                window.location.reload();
+            }
+        }
+    });
+
+    observer.observe(targetNode, config);
+}
+
+function disconnectObserver() {
+    if (observer) {
+        observer.disconnect();
+        observer = null;
+    }
+}
+
+
 // chrome.storage.local.get('authToken', function(data) {
 //     if (data.authToken) {
 //         var icon = document.createElement('img');
@@ -68,14 +108,3 @@ import { toggleNavbarVisibility } from './navbar/navbar.js';
 //         };
 //     }
 // });
-
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    if (request.command === 'turnOn') {
-        addLearningAssistantIcon();
-        sendResponse({result: "success"});
-
-    } else if (request.command === 'turnOff') {
-        removeLearningAssistantIcon();
-        sendResponse({result: "success"});
-    }
-});
