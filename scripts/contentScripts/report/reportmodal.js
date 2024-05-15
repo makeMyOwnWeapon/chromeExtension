@@ -21,7 +21,7 @@ export function showReportModal() {
     }
     const subLectureId = workbookContext.subLectureId;
     const lectureHistoryId = workbookContext.lectureHistoryId;
-    setIframeUrl(`http://localhost:3002/reportstudentforextension/${Number(lectureHistoryId)}`);
+    setIframeUrl(`https://www.learn-on-air.site/reportstudentforextension/${Number(lectureHistoryId)}`);
 
 
     const dismissButton = document.getElementById('dismissButton');

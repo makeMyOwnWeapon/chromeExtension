@@ -85,7 +85,7 @@ export const LoaAxios = (() => {
 export const HOST = {
     local: 'http://localhost:3000',
     prod: 'https://api.learn-on-air.site'
-}.local;
+}.prod;
 
 export const IMAGE_PROCESSING_HOST = {
     local: 'http://localhost:8000',
