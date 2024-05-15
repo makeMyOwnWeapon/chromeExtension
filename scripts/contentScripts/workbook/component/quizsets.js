@@ -29,15 +29,21 @@ function renderQuizsetViews(quizsets) {
         return;
     }
 
-    const quizsetViews = quizsets.map((quizsetDto) => {
-        return QuizSetView(
-            quizsetDto.quizSetId,
-            quizsetDto.quizSetTitle,
-            quizsetDto.quizSetAuthor,
-            quizsetDto.recommendationCount,
-            quizsetDto.createdAt
-        )
-    })
+
+    const quizsetViews = quizsets
+        .sort((quizset1, quizset2) => {
+            return quizset2.recommendationCount - quizset1.recommendationCount
+        })
+        .slice(0, 3)
+        .map((quizsetDto) => {
+            return QuizSetView(
+                quizsetDto.quizSetId,
+                quizsetDto.quizSetTitle,
+                quizsetDto.quizSetAuthor,
+                quizsetDto.recommendationCount,
+                quizsetDto.createdAt
+            )
+        })
     quizsetsList.innerHTML = quizsetViews.join("\n");
 }
 
