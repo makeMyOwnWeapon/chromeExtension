@@ -19,11 +19,11 @@ export function toggleNavbarVisibility() {
 function createDraggableNavbar() {
     const navbar = document.createElement('div');
     navbar.id = 'learningAssistantNavbar';
-    navbar.className = 'css-nllztk';
+    // navbar.className = 'css-nllztk';
     navbar.style.width = '300px';
     navbar.style.position = 'fixed';
     navbar.style.top = '100px';
-    navbar.style.right = '10px';
+    navbar.style.left = 'calc(100% - 310px)'
     navbar.style.backgroundColor = '#f4f4f9';
     navbar.style.border = '1px solid #ccc';
     navbar.style.zIndex = '1000';
@@ -58,12 +58,12 @@ function createDraggableNavbar() {
         function moveAt(pageX, pageY) {
             let newX = pageX - shiftX;
             let newY = pageY - shiftY;
-            let windowWidth = document.documentElement.clientWidth;
-            let windowHeight = document.documentElement.clientHeight;
-            if (newX < 0) newX = 0;
-            if (newY < 0) newY = 0;
-            if (newX + navbar.offsetWidth > windowWidth) newX = windowWidth - navbar.offsetWidth;
-            if (newY + navbar.offsetHeight > windowHeight) newY = windowHeight - navbar.offsetHeight;
+            // let windowWidth = document.documentElement.clientWidth;
+            // let windowHeight = document.documentElement.clientHeight;
+            // if (newX < 0) newX = 0;
+            // if (newY < 0) newY = 0;
+            // if (newX + navbar.offsetWidth > windowWidth) newX = windowWidth - navbar.offsetWidth;
+            // if (newY + navbar.offsetHeight > windowHeight) newY = windowHeight - navbar.offsetHeight;
             
             navbar.style.left = newX + 'px';
             navbar.style.top = newY + 'px';
