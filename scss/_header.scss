@@ -1,0 +1,27 @@
+#navbarHeader {
+  padding: 20px;
+
+  .close-button {
+    position: absolute;
+    top: 1px;
+    right: 3px;
+  }
+
+  .header-content {
+    display: flex;
+    align-items: center;
+    padding-left: 40px; // Adjust this value to move content to the right
+  }
+
+  .header-image {
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  .header-text {
+    font-size: 24px;
+    color: #000000;
+    font-weight: bold;
+    margin: 0; // Corrected margin value
+  }
+}
