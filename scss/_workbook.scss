@@ -369,6 +369,10 @@ $index-upper: 1000;
       margin-bottom: 0; /* h2의 하단 여백 제거 */
     }
     
+    .recommendation-box {
+      position: absolute;
+      right: 0;
+    }
   }
 }
 
@@ -390,4 +394,9 @@ $index-upper: 1000;
     background-color: #c7c4c4;
     color: white;
   }
+}
+
+.record {
+  color: rgb(255, 101, 101);
+  margin-right: 5px;
 }

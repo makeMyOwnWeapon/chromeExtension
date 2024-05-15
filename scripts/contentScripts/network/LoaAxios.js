@@ -20,7 +20,7 @@ export const LoaAxios = (() => {
         });
     }
 
-    function _post(_url, _body, successHandler) {
+    function _post(_url, _body, successHandler, json = true) {
         chrome.storage.local.get('authToken', function(data) {
             if (!data.authToken) {
                 console.error("Doesn't have authToken");
@@ -36,7 +36,7 @@ export const LoaAxios = (() => {
                 body: JSON.stringify(_body)
             }
             chrome.runtime.sendMessage({
-                type: 'REST',
+                type: json ? 'REST' : 'TEXT',
                 url: _url,
                 options: options
             }, successHandler);

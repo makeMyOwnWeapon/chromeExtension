@@ -40,15 +40,15 @@ export function QuizSetView(
 ) {
     const elementId = `quizset-${quizsetId}`;
     return `
-        <button class="list-group-item quizset" id="${elementId}">
+        <div class="list-group-item quizset" id="${elementId}">
             <div class="quizset-title-container">
                 <h2 class="quizset-title">${quizSetTitle}</h2>
-                <span><i class="bi bi-hand-thumbs-up-fill" id="recommendation-btn"></i> ${recommendationCount}</span>
+                <div class="recommendation-box"><i class="bi bi-hand-thumbs-up" id="recommendation-btn"></i> <span id="recommendation-count">${recommendationCount}</span></div>
             </div>
-            <p class="author-nickname">${quizSetAuthor} <span class="create-at">${formatDate(
-        createAt
-    )}</span></p>
-        </button>
+            <p class="author-nickname">
+                ${quizSetAuthor} <span class="create-at">${formatDate(createAt)}</span>
+            </p>
+        </div>
         `;
 }
 
@@ -104,7 +104,6 @@ export function QuizSetController(quizsetId) {
                 workbookContext.curQuizzes.forEach((quiz) => {
                     quiz.isPopuped = false;
                 })
-                console.log("workbookContext.curQuizzes",workbookContext.curQuizzes);
                 printQuizPopupTime();
                 renderPopupTimeCarrot();
             }
