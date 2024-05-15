@@ -91,7 +91,7 @@ function sendQuizResultAndRender(
     goBackBtn.type = "button";
     goBackBtn.id = "go-back-btn";
     goBackBtn.className = "go-back-btn";
-    goBackBtn.innerText = "돌아가기";
+    goBackBtn.innerText = "문제 나왔던 부분 다시듣기";
     goBackBtn.addEventListener("click", () => {
       if (quizIdx == 0) {
         video.currentTime = 0;
@@ -191,14 +191,19 @@ export function popupQuiz(quizIdx) {
       selectedChoiceId, // 선택한 답안의 ID도 함께 전달
       isCorrect // 정답 여부도 함께 전달
     );
-    //선택한 답안이 정답이면 버튼 색상을 파란색으로, 아니면 빨간색으로 변경
     for (const choice of quiz.choices) {
       const choiceBtn = document.getElementById(`choice-${choice.choiceId}`);
+      const iconElement = document.createElement("i");
       if (choice.isAnswer) {
         choiceBtn.classList.add("correct-answer");
+        // 정답인 경우에는 'O' 표시를 추가합니다.
+        iconElement.className = "bi bi-check-circle correct";
       } else if (!choice.isAnswer && selectedChoiceId === choice.choiceId) {
         choiceBtn.classList.add("wrong-answer");
+        // 오답인 경우에는 'X' 표시를 추가합니다.
+        iconElement.className = "bi bi-x-circle wrong";
       }
+      choiceBtn.prepend(iconElement);
     }
   });
 }
