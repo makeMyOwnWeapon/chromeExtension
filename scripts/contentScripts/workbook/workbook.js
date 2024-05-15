@@ -11,7 +11,6 @@ import {
 
 export const workbookContext = {
   curQuizzes: [],
-  //solvedQuizzes: [],
   videoElement: null,
   isAnalyzing: false,
   selectedQuizsetId: null,

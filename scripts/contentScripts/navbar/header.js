@@ -8,7 +8,7 @@ export function createNavbarHeader() {
             </div>
             <div class="header-content">
                 <img src="https://velog.velcdn.com/images/byk0316/post/610f9bb7-4ab7-4be9-b24c-14d22ef4ebd3/image.png" class="header-image">
-                <p class="header-text">Let's LOA!</p>
+                <p class="header-text">LOA</p>
             </div>
             <br>
             `;

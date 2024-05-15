@@ -21,7 +21,7 @@ function renderQuizsetViews(quizsets) {
             <button class="list-group-item quizset ai-based" id="ai-based-quizset">
                 <div class="quizset-title-container">
                     <h2 class="quizset-title">AI를 활용한 문제집</h2>
-                    <img src="https://velog.velcdn.com/images/byk0316/post/610f9bb7-4ab7-4be9-b24c-14d22ef4ebd3/image.png">
+                    <img class="loa-logo" src="https://velog.velcdn.com/images/byk0316/post/610f9bb7-4ab7-4be9-b24c-14d22ef4ebd3/image.png">
                 </div>
                 <p class="author-nickname">LOA AI</p>
             </button>
