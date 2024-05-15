@@ -84,18 +84,18 @@ function makeWorkbookHTML_TOBE() {
   return `
     <style>
     .analysis-btn {
-        color: #6a1b9a;
+        color: #000000;
     }
     </style>
     <div style="width: 100%">
         <div class="list-group quizsets" id="quizsets-container">
         </div>
         <div>
-            <a class="btn create-quizsets-btn" style="color: #6a1b9a;" href='http://127.0.0.1:3002/create' target='_blank'>
+            <a class="btn create-quizsets-btn" style="color: #000000;" href='http://127.0.0.1:3002/create' target='_blank'>
                 문제집 만들기
             </a>
         </div>
-        <div id="congratulations-message" style="display: none; font-size: 24px; color: #6a1b9a; font-weight: bold; text-align: center;">
+        <div id="congratulations-message" style="display: none; font-size: 24px; color: #000000; font-weight: bold; text-align: center;">
             <br />
             <br />
             수고하셨습니다!
@@ -105,7 +105,7 @@ function makeWorkbookHTML_TOBE() {
         <div id='popuptime-preview'>
             <div id="popuptimes-view" class="position-relative m-4"></div>
             <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%; background-color: #6a1b9a;"></div>
+                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%; background-color: #91a8ff;"></div>
             </div>
         </div>
         <div>
