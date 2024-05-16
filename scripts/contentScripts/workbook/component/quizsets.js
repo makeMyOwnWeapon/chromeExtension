@@ -54,7 +54,7 @@ function QuizsetsController(subLectureURL) {
             `${HOST}/api/quizsets?subLectureUrl=${encodedUrl}`,
             (response) => {
                 renderQuizsetViews(response);
-                addQuizFetcher();
+                addQuizFetcher(); 
                 addRecommendationSender();
             }
         );
@@ -75,6 +75,9 @@ function QuizsetsController(subLectureURL) {
 
     function addRecommendationSender() {
         const recoBtn = document.getElementById('recommendation-btn');
+        if (!recoBtn) {
+            return;
+        }
         const recoCount = document.getElementById('recommendation-count');
         const quizset = recoBtn.closest('.quizset');
         recoBtn.addEventListener('click', (event) => {
