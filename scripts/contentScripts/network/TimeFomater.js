@@ -5,5 +5,5 @@ export function formatDate(date) {
     const h = date.getHours().toString().padStart(2, '0');
     const min = date.getMinutes().toString().padStart(2, '0');
     const s = date.getSeconds().toString().padStart(2, '0');
-    return `${y}-${m}-${d}T${h}:${min}:${s}`;
+    return `${y}${m}${d} ${h}:${min}:${s}`;
 }
