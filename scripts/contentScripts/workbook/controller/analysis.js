@@ -1,5 +1,6 @@
 import { createAndPopupModalWithHTML } from "../../modal/modal";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
+import { formatDate } from "../../network/TimeFomater";
 import { showReportModal } from "../../report/reportmodal";
 import { workbookContext } from "../workbook";
 import { analyticsContext, getWebcamAndAddCaptureEvent, stopWebcam } from "./webcam";
@@ -80,7 +81,9 @@ export function isAnalyzing() {
 }
 
 export function refreshAnalysisBtn() {
+    //const startedAt = formatDate(new Date());
     const analysisStartBtn = document.getElementById("analysis-start-btn");
+
     analysisStartBtn.addEventListener('click', () => {
         if (isAnalyzing()) {
             return;
@@ -92,31 +95,31 @@ export function refreshAnalysisBtn() {
         `;
 
         const postData = {
-            subLectureId : workbookContext.subLectureId
+            //startedAt: startedAt,
+            subLectureId: workbookContext.subLectureId
         };
 
         LoaAxios.post(
             `${HOST}/api/lecture/sub-lecture/history`,
             postData,
-            async (response) => {	
-                if (!response.lectureHistoryId) {	
-                    analysisStartBtn.innerHTML = '<span role="status">재시도</span>'	
-                    analysisStartBtn.disabled = false;	
-                    return;	
+            async (response) => {    
+                if (!response.lectureHistoryId) {    
+                    analysisStartBtn.innerHTML = '<span role="status">재시도</span>'    
+                    analysisStartBtn.disabled = false;    
+                    return;    
                 }
                 startAnalysis();
                 removeInfoModalIfExist();
                 const temp = await getWebcamAndAddCaptureEvent();
                 analyticsContext.videoIntervalId = temp;
-                analysisStartBtn.innerHTML = '<span role="status"><i class="bi bi-record-circle record"></i>학습중</span>'	
-                workbookContext.lectureHistoryId = response.lectureHistoryId;	
-            }	
+                analysisStartBtn.innerHTML = '<span role="status"><i class="bi bi-record-circle record"></i>학습중</span>'    
+                workbookContext.lectureHistoryId = response.lectureHistoryId;    
+            }    
         );
-    })
+    });
 
     const analysisEndBtn = document.getElementById("analysis-end-btn");
     analysisEndBtn.addEventListener('click', () => {
-
         if (!isAnalyzing()) {
             return;
         }
@@ -126,26 +129,29 @@ export function refreshAnalysisBtn() {
             <span role="status">학습 종료중</span>
         `;
 
+        //const endedAt = formatDate(new Date());
+
         const patchData = {
-            lectureHistoryId : workbookContext.lectureHistoryId
+            lectureHistoryId: workbookContext.lectureHistoryId,
+            //endedAt: endedAt
         };
 
-        LoaAxios.patch(	
+        LoaAxios.patch(
             `${HOST}/api/lecture/sub-lecture/history/`, patchData,
-            (response) => {	
-                if (response.lectureHistoryId !== workbookContext.lectureHistoryId) {	
-                    analysisEndBtn.innerHTML = '<span> 종료 실패 </span>'	
+            (response) => {    
+                if (response.lectureHistoryId !== workbookContext.lectureHistoryId) {    
+                    analysisEndBtn.innerHTML = '<span> 종료 실패 </span>'    
                     return;
                 }
                 endAnalysis();
                 clearInterval(analyticsContext.videoIntervalId);
                 stopWebcam();
-                analysisStartBtn.innerHTML = '<span> 학습 시작 </span>'	
-                analysisStartBtn.disabled = false;	
-                analysisEndBtn.innerHTML = '<span> 학습 종료 </span>'	
-                analysisEndBtn.disabled = false;	
-                removeInfoModalIfExist();	
-            }	
+                analysisStartBtn.innerHTML = '<span> 학습 시작 </span>'    
+                analysisStartBtn.disabled = false;    
+                analysisEndBtn.innerHTML = '<span> 학습 종료 </span>'    
+                analysisEndBtn.disabled = false;    
+                removeInfoModalIfExist();    
+            }
         );
-    })
+    });
 }
