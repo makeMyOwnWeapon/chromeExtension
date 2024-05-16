@@ -81,11 +81,6 @@ function updateWorkbookContent(content) {
 
 function makeWorkbookHTML_TOBE() {
   return `
-    <style>
-    .analysis-btn {
-        color: #000000;
-    }
-    </style>
     <div style="width: 100%">
         <div class="list-group quizsets" id="quizsets-container"></div>
         <div>

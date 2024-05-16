@@ -1,5 +1,6 @@
 import { createAndPopupModalWithHTML } from "../../modal/modal";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
+import { formatDate } from "../../network/TimeFomater";
 import { showReportModal } from "../../report/reportmodal";
 import { pauseLectureVideo, playLectureVideo, workbookContext } from "../workbook";
 import { analyticsContext, getWebcamAndAddCaptureEvent, stopWebcam, toggleWebcam } from "./webcam";
@@ -96,7 +97,9 @@ export function isAnalyzing() {
 }
 
 export function refreshAnalysisBtn() {
+    //const startedAt = formatDate(new Date());
     const analysisStartBtn = document.getElementById("analysis-start-btn");
+
     analysisStartBtn.addEventListener('click', () => {
         if (isAnalyzing()) {
             return;
@@ -108,6 +111,7 @@ export function refreshAnalysisBtn() {
         `;
 
         const postData = {
+            //startedAt: startedAt,
             subLectureId: workbookContext.subLectureId
         };
 
@@ -129,11 +133,10 @@ export function refreshAnalysisBtn() {
                 playLectureVideo();
             }
         );
-    })
+    });
 
     const analysisEndBtn = document.getElementById("analysis-end-btn");
     analysisEndBtn.addEventListener('click', () => {
-
         if (!isAnalyzing()) {
             return;
         }
@@ -143,8 +146,11 @@ export function refreshAnalysisBtn() {
             <span role="status">학습 종료중</span>
         `;
 
+        //const endedAt = formatDate(new Date());
+
         const patchData = {
-            lectureHistoryId: workbookContext.lectureHistoryId
+            lectureHistoryId: workbookContext.lectureHistoryId,
+            //endedAt: endedAt
         };
 
         LoaAxios.patch(
@@ -165,7 +171,7 @@ export function refreshAnalysisBtn() {
                 removeInfoModalIfExist();
             }
         );
-    })
+    });
 }
 
 export function setAnalysisType(analysisType) {

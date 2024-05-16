@@ -91,3 +91,8 @@ export const IMAGE_PROCESSING_HOST = {
     local: 'http://localhost:8000',
     prod: 'https://api.learn-on-air.site:8000'
 }.prod;
+
+export const REPORT_PROCESSING_HOST = {
+    local: 'http://localhost:3002',
+    prod: 'https://www.learn-on-air.site/'
+}.local;
