@@ -1,0 +1,10 @@
+#webcam {
+  transform: scaleX(-1);
+  &.fine {
+    border: rgb(132 233 190) solid 2px;
+  }
+
+  &.strange {
+    border: rgb(255, 101, 101) solid 2px;
+  }
+}

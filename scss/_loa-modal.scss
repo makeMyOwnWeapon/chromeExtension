@@ -1,0 +1,16 @@
+#dismissButton {
+  background-color: white;
+  color: rgb(107, 191, 255);
+  padding: 10px 20px; 
+  margin: 8px 0;
+  border: 2px solid rgb(107, 191, 255);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.1s, width 0.3s ease-in-out;
+  width: auto;
+  
+  &:hover {
+    background-color: rgb(107, 191, 255);
+    color: white;
+  }
+}
