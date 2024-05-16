@@ -116,7 +116,7 @@ function makeWorkbookHTML_TOBE() {
             <span> 학습 종료 </span>
         </button>
         <div>
-        <video autoplay style="width: 100%;" id="web-cam" hidden></video>
+        <video autoplay style="width: 100%; display: none;" id="web-cam"></video>
     </div>
   `;
 }
@@ -125,4 +125,12 @@ export function displayWorkbookContent() {
   updateWorkbookContent(makeWorkbookHTML_TOBE());
   addQuizsetsAndRender(URLParser.parseWithoutTab(document.location.href));
   refreshAnalysisBtn();
+}
+
+export function playLectureVideo() {
+  workbookContext.videoElement.play();
+}
+
+export function pauseLectureVideo() {
+  workbookContext.videoElement.pause();
 }

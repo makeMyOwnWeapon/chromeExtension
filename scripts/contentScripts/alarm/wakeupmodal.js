@@ -4,6 +4,7 @@ import { formatDate } from '../network/TimeFomater.js';
 import { analyticsContext } from '../workbook/controller/webcam.js';
 import { playSound, stopSound } from './sound.js';
 import { workbookContext } from '../workbook/workbook.js'
+import { ANALYSIS_TYPE, setAnalysisType } from '../workbook/controller/analysis.js';
 
 export function showWakeUpModal() {
     let modal = document.getElementById("analysis-info-modal");
@@ -21,7 +22,7 @@ export function showWakeUpModal() {
         `,
         bodyHTML : `
         <div class="modal-body">
-            <button id="dismissButton" style="background-color: #4CAF50; color: white; padding: 10px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer; transition: transform 0.1s, width 0.3s ease-in-out; width: auto;">알람 끄기</button>
+            <button id="dismissButton">알람 끄기</button>
         </div>
         `
     });
@@ -44,17 +45,8 @@ export function showWakeUpModal() {
         modal.remove();
         stopSound();
         video.play();
+        setAnalysisType(ANALYSIS_TYPE.DEFAULT);
     };
-    dismissButton.onmouseover = function() {
-        this.style.backgroundColor = '#45a049';
-    };
-    dismissButton.onmousedown = function() {
-        this.style.transform = 'translate(2px, 2px)';
-    };
-    dismissButton.onmouseup = function() {
-        this.style.transform = 'translate(0, 0)';
-    };
-
     playSound();
 }
 

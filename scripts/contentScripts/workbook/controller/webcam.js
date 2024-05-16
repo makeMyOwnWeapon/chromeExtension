@@ -2,6 +2,7 @@ import { showWakeUpModal } from "../../alarm/wakeupmodal";
 import { showLeaveSeatModal } from "../../leaveSeat/leaveSeat";
 import { IMAGE_PROCESSING_HOST, LoaAxios } from "../../network/LoaAxios";
 import { formatDate } from "../../network/TimeFomater";
+import { ANALYSIS_TYPE, setAnalysisType } from "./analysis";
 
 export const analyticsContext = {
   startedAt: null,
@@ -31,13 +32,23 @@ function captureAndSendImages(video) {
                 analyticsContext.sleepCount = 0;
                 analyticsContext.existCount = 0;
               }
-              if(analyticsContext.sleepCount == 5){
-                  analyticsContext.startedAt = formatDate(new Date());
-                  showWakeUpModal();
+              if(analyticsContext.sleepCount >= 5){
+                analyticsContext.startedAt = formatDate(new Date());
+                showWakeUpModal();
+                setAnalysisType(ANALYSIS_TYPE.SLEEP);
               }
-              else if(analyticsContext.existCount == 5){
-                  analyticsContext.startedAt = formatDate(new Date());
-                  showLeaveSeatModal();
+              else if (analyticsContext.sleepCount >= 3) {
+                setAnalysisType(ANALYSIS_TYPE.PRE_SLEEP);
+              }
+              else if(analyticsContext.existCount >= 5){
+                analyticsContext.startedAt = formatDate(new Date());
+                showLeaveSeatModal();
+                setAnalysisType(ANALYSIS_TYPE.LEAVE_SEAT);
+              }
+              else if(analyticsContext.existCount >= 3){
+                setAnalysisType(ANALYSIS_TYPE.PRE_LEAVE_SEAT);
+              } else {
+                setAnalysisType(ANALYSIS_TYPE.DEFAULT);
               }
         }
       );
@@ -45,26 +56,22 @@ function captureAndSendImages(video) {
   };
 
   const intervalId = setInterval(capture, 1000);
-//   setTimeout(capture, 2000); // 2초 뒤 영상을 백엔드로 전송
   return intervalId;
 }
 
-
-export function getWebcamAndAddCaptureEvent() {
-  return navigator.mediaDevices.getUserMedia({ video: true })
-    .then(function(stream) {
-        // 스트림 사용, 예를 들어 비디오 태그에 연결
-        const video = document.querySelector('#web-cam');
-        video.hidden = false;
-        video.srcObject = stream;
-        video.onloadedmetadata = function(e) {
-            video.play();
-        };
-        return captureAndSendImages(video)
-    })
-    .catch(function(err) {
-        console.log("getUserMedia Error: " + err);
-    });   
+export async function getWebcamAndAddCaptureEvent() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    const video = document.querySelector('#web-cam');
+    video.hidden = false;
+    video.srcObject = stream;
+    video.onloadedmetadata = function (e) {
+      video.play();
+    };
+    return captureAndSendImages(video);
+  } catch (err) {
+    console.log("getUserMedia Error: " + err);
+  }   
 }
 
 export function stopWebcam() {
@@ -73,5 +80,10 @@ export function stopWebcam() {
         const tracks = video.srcObject.getTracks();
         tracks.forEach(track => track.stop());
     }
+}
+
+export function toggleWebcam(state) {
+  const webcam = document.getElementById("web-cam");
+  webcam.style.display = state ? "block" : "none";
 }
 

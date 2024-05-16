@@ -1,6 +1,7 @@
 import { createAndPopupModalWithHTML } from '../modal/modal.js'; 
 import { LoaAxios, HOST } from '../network/LoaAxios.js';
 import { formatDate } from '../network/TimeFomater.js';
+import { ANALYSIS_TYPE, setAnalysisType } from '../workbook/controller/analysis.js';
 import { analyticsContext } from '../workbook/controller/webcam.js';
 import { workbookContext } from '../workbook/workbook.js'
 
@@ -20,7 +21,7 @@ export function showLeaveSeatModal() {
         `,
         bodyHTML : `
         <div class="modal-body">
-            <button id="dismissButton" style="background-color: #4CAF50; color: white; padding: 10px 20px; margin: 8px 0; border: none; border-radius: 4px; cursor: pointer; transition: transform 0.1s, width 0.3s ease-in-out; width: auto;">재개하기</button>
+            <button id="dismissButton">재개하기</button>
         </div>
         `
     });
@@ -42,15 +43,7 @@ export function showLeaveSeatModal() {
         analyticsContext.endedAt = null;
         modal.remove();
         video.play();
-    };
-    dismissButton.onmouseover = function() {
-        this.style.backgroundColor = '#45a049';
-    };
-    dismissButton.onmousedown = function() {
-        this.style.transform = 'translate(2px, 2px)';
-    };
-    dismissButton.onmouseup = function() {
-        this.style.transform = 'translate(0, 0)';
+        setAnalysisType(ANALYSIS_TYPE.DEFAULT);
     };
 }
 
