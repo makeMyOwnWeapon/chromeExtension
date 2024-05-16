@@ -1,4 +1,4 @@
-import { HOST } from '../network/LoaAxios.js';
+import { REPORT_PROCESSING_HOST } from '../network/LoaAxios.js';
 import { workbookContext } from '../workbook/workbook.js';
 
 export function showReportModal() {
@@ -20,7 +20,7 @@ export function showReportModal() {
     }
     const subLectureId = workbookContext.subLectureId;
     const lectureHistoryId = workbookContext.lectureHistoryId;
-    setIframeUrl(`${HOST}/reportstudentforextension/${Number(lectureHistoryId)}`);
+    setIframeUrl(`${REPORT_PROCESSING_HOST}/reportstudentforextension/${Number(lectureHistoryId)}`);
 
 
     const dismissButton = document.getElementById('dismissButton');
