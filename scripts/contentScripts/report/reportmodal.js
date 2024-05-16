@@ -1,8 +1,7 @@
+import { HOST } from '../network/LoaAxios.js';
 import { workbookContext } from '../workbook/workbook.js';
 
 export function showReportModal() {
- 
-
 
     const videoContainer = document.querySelector('.shaka-video-container');
     const modal = document.createElement('div');
@@ -21,7 +20,7 @@ export function showReportModal() {
     }
     const subLectureId = workbookContext.subLectureId;
     const lectureHistoryId = workbookContext.lectureHistoryId;
-    setIframeUrl(`https://www.learn-on-air.site/reportstudentforextension/${Number(lectureHistoryId)}`);
+    setIframeUrl(`${HOST}/reportstudentforextension/${Number(lectureHistoryId)}`);
 
 
     const dismissButton = document.getElementById('dismissButton');
