@@ -97,7 +97,7 @@ export function isAnalyzing() {
 }
 
 export function refreshAnalysisBtn() {
-    //const startedAt = formatDate(new Date());
+    const startedAt = formatDate(new Date());
     const analysisStartBtn = document.getElementById("analysis-start-btn");
 
     analysisStartBtn.addEventListener('click', () => {
@@ -111,7 +111,7 @@ export function refreshAnalysisBtn() {
         `;
 
         const postData = {
-            //startedAt: startedAt,
+            startedAt: startedAt,
             subLectureId: workbookContext.subLectureId
         };
 
@@ -146,11 +146,11 @@ export function refreshAnalysisBtn() {
             <span role="status">학습 종료중</span>
         `;
 
-        //const endedAt = formatDate(new Date());
+        const endedAt = formatDate(new Date());
 
         const patchData = {
             lectureHistoryId: workbookContext.lectureHistoryId,
-            //endedAt: endedAt
+            endedAt: endedAt
         };
 
         LoaAxios.patch(
