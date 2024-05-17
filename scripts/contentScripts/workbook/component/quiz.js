@@ -74,8 +74,8 @@ async function sendQuizResultAndRender(
     return;
   }
   const isCorrect = isAnswer(selectedChoiceId, quizIdx);
-  saveQuizResult(selectedChoiceId, isCorrect, solvedDuration);
   isCorrect ? await correctSound.play() : await wrongSound.play();
+  saveQuizResult(selectedChoiceId, isCorrect, solvedDuration);
   const modalFooter = quizModal.querySelector(".modal-footer");
   modalFooter.innerHTML = ""; // 제출하기 버튼 제거
 
