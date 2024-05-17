@@ -1,6 +1,11 @@
 import { workbookContext } from "../workbook";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
 
+const popupSound = new Audio(chrome.runtime.getURL('sounds/quiz-popup.mp3'));
+const timeTickingSound = new Audio(chrome.runtime.getURL('sounds/quiz-time-ticking.mp3'));
+const correctSound = new Audio(chrome.runtime.getURL('sounds/quiz-correct.mp3'));
+const wrongSound = new Audio(chrome.runtime.getURL('sounds/quiz-wrong.mp3'));
+
 function QuizView(instruction) {
   return `
         <div class="modal-content center">
@@ -56,14 +61,13 @@ function isAnswer(choiceId, quizIdx) {
  * @param {HTMLElement} quizModal 현재 떠있는 문제 모달창
  * @param {HTMLElement} video 현재 보고 있는 강의 영상
  */
-function sendQuizResultAndRender(
+async function sendQuizResultAndRender(
   quizIdx,
   choices,
   quizModal,
   video,
   solvedDuration
 ) {
-  // TODO: 문제 결과 저장 로직 추가 (+정답 결과 보여주기)
   const selectedChoiceId = getSelectedChoiceId(choices);
   if (selectedChoiceId === null) {
     alert("답안을 선택해주세요.");
@@ -71,7 +75,7 @@ function sendQuizResultAndRender(
   }
   const isCorrect = isAnswer(selectedChoiceId, quizIdx);
   saveQuizResult(selectedChoiceId, isCorrect, solvedDuration);
-
+  isCorrect ? await correctSound.play() : await wrongSound.play();
   const modalFooter = quizModal.querySelector(".modal-footer");
   modalFooter.innerHTML = ""; // 제출하기 버튼 제거
 
@@ -132,6 +136,13 @@ async function saveQuizResult(choiceId, isCorrect, solvedDuration) {
       }
     }
   );
+}
+
+async function addPopupSideEffect() {
+  const quizModalContent = document.querySelector("#quiz-modal .modal-content")
+  quizModalContent.classList.add("reveal");
+  await popupSound.play();
+  await timeTickingSound.play();
 }
 
 export function popupQuiz(quizIdx) {
@@ -217,6 +228,7 @@ export function popupQuizEventHandler() {
     if (quizzes[i].isPopuped === false && parsedTime === quizzes[i].popupTime) {
       quizzes[i].isPopuped = true;
       popupQuiz(i);
+      setTimeout(addPopupSideEffect, 500);
       video.pause();
     }
   }
