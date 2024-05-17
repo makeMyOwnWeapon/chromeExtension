@@ -122,8 +122,8 @@ export function AIQuizSetController() {
         if (quizsetBtn.classList.contains("selected")) {
             return;
         }
-        if (!popupAIQuizInfo()) {
-            showCreateLoadingModal();
+        if (!popupAIQuizInfo(showCreateLoadingModal())) {
+            
             return;
         }
         quizsetBtn.classList.add(select() ? "selected" : "");
