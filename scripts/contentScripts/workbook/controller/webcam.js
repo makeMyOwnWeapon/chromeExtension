@@ -17,7 +17,7 @@ function captureAndSendImages(video) {
   const context = canvas.getContext('2d');
   const capture = () => {
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    if(!document.querySelector("#quiz-modal")) {
+    if(!document.querySelector("#quiz-modal") && !document.querySelector("#analysis-info-modal")) {
       LoaAxios.postFile(
         `${IMAGE_PROCESSING_HOST}/api/image-process/image`,
         canvas.toDataURL('image/jpeg'), 
