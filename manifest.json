@@ -9,10 +9,8 @@
     "storage",
     "notifications",
     "http://localhost/*",
-    "https://www.learn-on-air.site",
-    "https://api.learn-on-air.site"
-    
-
+    "https://www.learn-on-air.site/*",
+    "https://api.learn-on-air.site:8000/*"
   ],
   "action": {
     "default_popup": "./src/popup.html",
@@ -20,7 +18,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["sounds/alarm.mp3"],
+      "resources": ["sounds/*", "images/*"],
       "matches": ["<all_urls>"]
     }
   ],
@@ -34,7 +32,9 @@
     {
       "js": ["dist/contentScript.bundle.js"],
       "matches": [
-        "http://*/*", "https://*/*"
+        "https://www.inflearn.com/course/lecture?courseSlug=*", 
+        "https://www.learn-on-air.site/*",
+        "https://api.learn-on-air.site:8000/*"
       ]
     }
   ],
