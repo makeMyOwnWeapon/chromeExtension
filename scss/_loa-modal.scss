@@ -16,11 +16,14 @@ $index-upper: 1000;
   border-radius: 10px;
   padding: 20px;
   width: 80%;
-  height: 50%;
+  height: auto;
+  font-family: omyu_pretty;
 
   .modal-header {
     font-weight: bold;
     color: black;
+    text-align: center;
+    font-size: 40px;
   }
 
   .modal-body {
@@ -28,11 +31,13 @@ $index-upper: 1000;
     flex-direction: column;
 
     .btn {
+      font-family: inherit;
       background: white;
       border: 1px solid #ddd;
       border-radius: 5px;
       padding: 10px 15px;
       margin-top: 10px;
+      font-size: 30px;
 
       &:first-child {
         margin-top: 5px;
@@ -84,6 +89,7 @@ $index-upper: 1000;
   .modal-footer {
     display: flex;
     justify-content: center;
+    height: 10%;
   }
 }
 
@@ -93,7 +99,7 @@ $index-upper: 1000;
   align-items: center;
 
   .modal-content {
-    height: 80%;
+    height: auto;
     transform: translateY(100%);
     opacity: 0;
     &.reveal {
@@ -102,10 +108,11 @@ $index-upper: 1000;
       opacity: 1;
     }
   }
-
 }
 
 #dismissButton {
+  font-family: omyu_pretty;
+  font-size: 1.6rem;
   background-color: white;
   color: rgb(107, 191, 255);
   padding: 10px 20px; 
@@ -120,4 +127,45 @@ $index-upper: 1000;
     background-color: rgb(107, 191, 255);
     color: white;
   }
+}
+#submit-btn {
+  padding: 0px 1.125rem;
+  height: 2.25rem;
+  font-family: omyu_pretty;
+  font-size: 1.6rem;
+  cursor: pointer;
+  border: 0.0625rem solid transparent;
+  border-radius: 0.5rem;
+  background-color: rgb(107, 191, 255);
+  color: rgb(255, 255, 255);
+}
+
+#continue-btn {
+  padding: 0px 1.125rem;
+  height: 2.25rem;
+  font-family: omyu_pretty;
+  font-size: 1.6rem;
+  cursor: pointer;
+  border: 0.0625rem solid transparent;
+  border-radius: 0.5rem;
+  background-color: rgb(107, 191, 255);
+  color: rgb(255, 255, 255);
+}
+
+#go-back-btn {
+  padding: 0px 1.125rem;
+  height: 2.25rem;
+  font-family: omyu_pretty;
+  font-size: 1.6rem;
+  cursor: pointer;
+  border: 0.0625rem solid;
+  border-radius: 0.5rem;
+  background-color: rgb(255, 255, 255);
+  color: rgb(107, 191, 255);
+  margin-left: 10px;
+}
+
+.choice-btn {
+  padding-top: 100px; /* 선택지 버튼의 위쪽 패딩을 늘려 텍스트를 아래로 내립니다. */
+  padding-bottom: 10px; /* 선택지 버튼의 아래쪽 패딩을 늘려 텍스트를 아래로 내립니다. */
 }
