@@ -83,11 +83,6 @@ function makeWorkbookHTML_TOBE() {
   return `
     <div style="width: 100%">
         <div class="list-group quizsets" id="quizsets-container"></div>
-        <div>
-            <a class="btn create-quizsets-btn" style="color: #000000;" href='http://127.0.0.1:3002/create' target='_blank'>
-                문제집 만들기
-            </a>
-        </div>
         <div id="congratulations-message">
             <br />
             <br />
@@ -110,7 +105,7 @@ function makeWorkbookHTML_TOBE() {
         <button class="btn analysis-btn" id="analysis-end-btn">
             <span> 학습 종료 </span>
         </button>
-        <div>
+        </div>
         <video autoplay style="width: 100%; display: none;" id="web-cam"></video>
     </div>
   `;
