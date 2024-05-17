@@ -3,45 +3,110 @@ import { loadDefaultElementsForWorkbook } from '../workbook/workbook.js';
 
 const handler = {
     set(target, key, value) {
-      target[key] = value;
-      if (value) {
-        loadDefaultElementsForWorkbook();
-      }
-      return true;
-    }  
+        target[key] = value;
+        if (value) {
+            loadDefaultElementsForWorkbook();
+        }
+        return true;
+    }
 };
 
-const LOA = new Proxy({isActive: false}, handler);
+const LOA = new Proxy({ isActive: false }, handler);
 
 export function addLearningAssistantIcon() {
     if (!LOA.isActive) {
-        const sideBar = document.querySelector('.css-zl1inp').parentNode;
-        const li = document.createElement('li');
-        li.className = 'css-zl1inp';
-        li.id = 'learningAssistantIcon';
-        li.innerHTML = `
-            <button class="mantine-UnstyledButton-root mantine-Button-root mantine-syxma7" type="button">
-                <div class="mantine-1yjkc96 mantine-Button-inner">
-                    <span class="mantine-1vgkxjh mantine-Button-label">
-                        <img src="https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FrsQP1%2FbtsGY1xO42N%2FHguDHJehMxoHTt2PoSter1%2Fimg.png">
-                        <p class="mantine-Text-root mantine-qjo01i">학습 보조</p>
-                    </span>
-                </div>
-            </button>
-        `;
-        const emptySpaceBetweenHelpIcon = document.getElementsByClassName('css-1gfm3uk')[0];
-        sideBar.insertBefore(li, emptySpaceBetweenHelpIcon);
-        li.querySelector('button').addEventListener('click', function() {
+        const icon = document.createElement('img');
+        icon.src = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FBVZ1P%2FbtsHujJOGgh%2FRbPh8Ec0BVWWpsP1sf7VUk%2Fimg.png';
+        icon.id = 'learningAssistantIcon';
+        icon.style.position = 'fixed';
+        icon.style.top = '10px';
+        icon.style.right = '40px';
+        icon.style.width = '90px';
+        icon.style.height = '110px';
+        icon.style.zIndex = '1000';
+        icon.style.cursor = 'pointer';
+
+        const label = document.createElement('div');
+        label.id = 'learningAssistantLabel';
+        label.innerText = 'LOA';
+        label.style.position = 'fixed';
+        label.style.top = '120px';
+        label.style.right = '40px';
+        label.style.width = '90px';
+        label.style.height = '23px';
+        label.style.backgroundColor = 'white';
+        label.style.border = '1px solid black';
+        label.style.borderRadius = '10px';
+        label.style.display = 'flex';
+        label.style.justifyContent = 'center';
+        label.style.alignItems = 'center';
+        label.style.zIndex = '999';
+        label.style.color = '#007BFF';
+        label.style.fontFamily = 'Arial, sans-serif';
+
+        document.body.appendChild(icon);
+        document.body.appendChild(label);
+
+        icon.addEventListener('click', function() {
             toggleNavbarVisibility();
         });
+
+        icon.onmousedown = function(event) {
+            if (event.button === 2) return;
+
+            event.preventDefault();
+            let shiftX = event.clientX - icon.getBoundingClientRect().left;
+            let shiftY = event.clientY - icon.getBoundingClientRect().top;
+
+            icon.src = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FmFV94%2FbtsHtH5L7cw%2FWe4wvySmHAUv8m4ANiWesk%2Fimg.png';
+
+            function moveAt(pageX, pageY) {
+                let newX = pageX - shiftX;
+                let newY = pageY - shiftY;
+                let windowWidth = document.documentElement.clientWidth;
+                let windowHeight = document.documentElement.clientHeight;
+
+                if (newX < 0) newX = 0;
+                if (newY < 0) newY = 0;
+                if (newX + icon.offsetWidth > windowWidth) newX = windowWidth - icon.offsetWidth;
+                if (newY + icon.offsetHeight > windowHeight) newY = windowHeight - icon.offsetHeight;
+
+                icon.style.left = newX + 'px';
+                icon.style.top = newY + 'px';
+                label.style.left = newX + 'px';
+                label.style.top = (newY + icon.offsetHeight) + 'px';
+            }
+
+            function onMouseMove(event) {
+                moveAt(event.pageX, event.pageY);
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+
+            function resetIcon() {
+                document.removeEventListener('mousemove', onMouseMove);
+                icon.onmouseup = null;
+                icon.onmouseleave = null;
+                icon.oncontextmenu = null;
+                icon.src = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FBVZ1P%2FbtsHujJOGgh%2FRbPh8Ec0BVWWpsP1sf7VUk%2Fimg.png';
+            }
+
+            icon.onmouseup = resetIcon;
+            icon.onmouseleave = resetIcon;
+            icon.oncontextmenu = resetIcon;
+        };
+
         LOA.isActive = true;
     }
 }
 
 export function removeLearningAssistantIcon() {
     const iconElement = document.getElementById('learningAssistantIcon');
+    const labelElement = document.getElementById('learningAssistantLabel');
     if (iconElement) {
-        iconElement.remove(); // ID를 사용하여 아이콘 요소 제거
-        LOA.isActive = false;  // 상태를 비활성화로 설정
+        iconElement.remove();
+        if (labelElement) labelElement.remove();
+        LOA.isActive = false;
+        chrome.storage.local.set({ iconDisabled: true });
     }
 }

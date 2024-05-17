@@ -8,9 +8,7 @@
     "tabs",
     "storage",
     "notifications",
-    "http://localhost/*",
-    "https://www.learn-on-air.site",
-    "https://api.learn-on-air.site"
+    "https://www.inflearn.com/*"
     
 
   ],
