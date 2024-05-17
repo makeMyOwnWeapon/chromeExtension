@@ -5,7 +5,9 @@ import { ANALYSIS_TYPE, setAnalysisType } from '../workbook/controller/analysis.
 import { analyticsContext } from '../workbook/controller/webcam.js';
 import { workbookContext } from '../workbook/workbook.js'
 
-export function showLeaveSeatModal() {
+const leaveSeatSound = new Audio(chrome.runtime.getURL('sounds/leave-out.mp3'));
+
+export async function showLeaveSeatModal() {
     let modal = document.getElementById("analysis-info-modal");
     
     if (modal) {
@@ -26,6 +28,7 @@ export function showLeaveSeatModal() {
         `
     });
     modal.id = "analysis-info-modal";
+    await leaveSeatSound.play();
     const dismissButton = document.getElementById('dismissButton');
     dismissButton.onclick = function() {
         analyticsContext.endedAt = formatDate(new Date());
@@ -46,7 +49,3 @@ export function showLeaveSeatModal() {
         setAnalysisType(ANALYSIS_TYPE.DEFAULT);
     };
 }
-
-document.addEventListener('DOMContentLoaded', function() {
-    showLeaveSeatModal();
-});
