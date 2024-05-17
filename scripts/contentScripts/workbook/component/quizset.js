@@ -1,6 +1,7 @@
 import { HOST, LoaAxios } from "../../network/LoaAxios";
 import { workbookContext } from "../workbook";
 import { SubtitleContentsRequest, loadSubtitles } from "../../subtitle/subtitle";
+import { showCreateLoadingModal } from "../../modal/quizcreateloadingmodal";
 
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -121,7 +122,8 @@ export function AIQuizSetController() {
         if (quizsetBtn.classList.contains("selected")) {
             return;
         }
-        if (!popupAIQuizInfo()) {
+        if (!popupAIQuizInfo(showCreateLoadingModal())) {
+            
             return;
         }
         quizsetBtn.classList.add(select() ? "selected" : "");
