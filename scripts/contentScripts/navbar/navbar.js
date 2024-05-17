@@ -1,7 +1,8 @@
 import { createNavbarHeader } from './header.js';
 import { createNavbarFooter } from './footer.js';
-import { displaySummaryContent } from '../summary/summary.js';
 import { displayWorkbookContent } from '../workbook/workbook.js';
+
+let observer;
 
 export function toggleNavbarVisibility() {
     const navbar = document.getElementById('learningAssistantNavbar');
@@ -19,7 +20,6 @@ export function toggleNavbarVisibility() {
 function createDraggableNavbar() {
     const navbar = document.createElement('div');
     navbar.id = 'learningAssistantNavbar';
-    // navbar.className = 'css-nllztk';
     navbar.style.width = '300px';
     navbar.style.position = 'fixed';
     navbar.style.top = '100px';
@@ -58,13 +58,7 @@ function createDraggableNavbar() {
         function moveAt(pageX, pageY) {
             let newX = pageX - shiftX;
             let newY = pageY - shiftY;
-            // let windowWidth = document.documentElement.clientWidth;
-            // let windowHeight = document.documentElement.clientHeight;
-            // if (newX < 0) newX = 0;
-            // if (newY < 0) newY = 0;
-            // if (newX + navbar.offsetWidth > windowWidth) newX = windowWidth - navbar.offsetWidth;
-            // if (newY + navbar.offsetHeight > windowHeight) newY = windowHeight - navbar.offsetHeight;
-            
+
             navbar.style.left = newX + 'px';
             navbar.style.top = newY + 'px';
         }
@@ -95,25 +89,35 @@ function createDraggableNavbar() {
         };
     };
     
-    
+    observeTextChange();
     document.body.appendChild(navbar);
     displayWorkbookContent();
-    // setupButtonHandlers();
 }
 
-// function setupButtonHandlers() {
-//     const summaryButton = document.getElementById('summaryButton');
-//     const workbookButton = document.getElementById('workbookButton');
-//     // const openIconButton = document.getElementById('openIcon');
-//     // const closeIconButton = document.getElementById('closeIcon');
-//     //if (summaryButton && workbookButton && openIconButton && closeIconButton) {
-//     if (summaryButton && workbookButton) {
-//         summaryButton.onclick = displaySummaryContent;
-//         workbookButton.onclick = displayWorkbookContent;
-//         // openIconButton.onclick = displaySummaryContent;
-//         // closeIconButton.onclick = displaySummaryContent;
-//     } else {
-//         console.error('One or more elements are missing');
-//     }
 
-// }
+function observeTextChange() {
+    const targetNode = document.querySelector('.css-1vtpfoe');
+    if (!targetNode) return;
+
+    const config = { childList: true, characterData: true, subtree: true };
+
+    observer = new MutationObserver((mutationsList) => {
+        for (let mutation of mutationsList) {
+            if (mutation.type === 'characterData' || mutation.type === 'childList') {
+                window.location.reload();
+            }
+        }
+    });
+
+    observer.observe(targetNode, config);
+}
+
+export function disconnectObserver() {
+    if (observer) {
+        observer.disconnect();
+        observer = null;
+    }
+    else {
+        console.log('disconnectObersever Error')
+    }
+}
