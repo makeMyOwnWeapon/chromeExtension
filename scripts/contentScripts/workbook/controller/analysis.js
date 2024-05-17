@@ -13,6 +13,12 @@ export const ANALYSIS_TYPE = {
     DEFAULT: 99
 }
 
+const preSleepImg = chrome.runtime.getURL('images/pre-sleep.png');
+const sleepImg = chrome.runtime.getURL('images/sleep.png');
+const preLeaveSeatImg = chrome.runtime.getURL('images/pre-leave-seat.png');
+const leaveSeatImg = chrome.runtime.getURL('images/leave-seat.png');
+const defaultImg = chrome.runtime.getURL("images/default.png");
+
 function startAnalysis() {
     workbookContext.isAnalyzing = true;
     const quizsetsContainer = document.getElementById('quizsets-container');
@@ -54,7 +60,7 @@ function removeInfoModalIfExist() {
 function addAnalysisBoard() {
     const analysisBoard = document.createElement("div");
     analysisBoard.id = "analysis-board";
-    analysisBoard.innerHTML = "<span id='analysis-status-icon'>🟢</span> <span id='analysis-status-text'>상태 감지중</span>";
+    analysisBoard.innerHTML = `<span id='analysis-status-icon'><img src=${defaultImg} class='status-img'></span> <span id='analysis-status-text'>상태 감지중</span>`;
     workbookContext.videoElement.parentNode.prepend(analysisBoard);
 }
 
@@ -180,27 +186,27 @@ export function setAnalysisType(analysisType) {
     const webCam = document.getElementById('web-cam');
     switch (analysisType) {
         case ANALYSIS_TYPE.PRE_SLEEP:
-            statusIcon.innerText = "🥱"
+            statusIcon.innerHTML = `<img src=${preSleepImg} class='status-img' style='animation: blink-img 0.5s infinite;'>`;
             statusText.innerText = "졸음 경보";
             webCam.className = 'pre-sleep';
             break;
         case ANALYSIS_TYPE.SLEEP:
-            statusIcon.innerText = "😴"
+            statusIcon.innerHTML = `<img src=${sleepImg} class='status-img'>`;
             statusText.innerText = "졸음 감지";
             webCam.className = 'sleep';
             break;
         case ANALYSIS_TYPE.PRE_LEAVE_SEAT:
-            statusIcon.innerText = "🫨"
+            statusIcon.innerHTML = `<img src=${preLeaveSeatImg} class='status-img' style='animation: blink-img 0.5s infinite;'>`;
             statusText.innerText = "자리 이탈 경보";
             webCam.className = 'pre-leave-seat';
             break;
         case ANALYSIS_TYPE.LEAVE_SEAT:
-            statusIcon.innerText = "🫥"
+            statusIcon.innerHTML = `<img src=${leaveSeatImg} class='status-img'>`;
             statusText.innerText = "자리 이탈";
             webCam.className = 'leave-seat';
             break;
         default:
-            statusIcon.innerText = "🟢"
+            statusIcon.innerHTML = `<img src=${defaultImg} class='status-img'>`;
             statusText.innerText = "상태 감지중";
             webCam.className = 'default';
             break;

@@ -91,11 +91,18 @@ $index-upper: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
-  transition: all 0.5s;
-  
+
   .modal-content {
     height: 80%;
+    transform: translateY(100%);
+    opacity: 0;
+    &.reveal {
+      transform: translateY(0);
+      transition: all 1.0s;
+      opacity: 1;
+    }
   }
+
 }
 
 #dismissButton {
