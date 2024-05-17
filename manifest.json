@@ -8,9 +8,10 @@
     "tabs",
     "storage",
     "notifications",
-    "https://www.inflearn.com/*"
+    "http://localhost/*",
+    "https://www.learn-on-air.site",
+    "https://api.learn-on-air.site"
     
-
   ],
   "action": {
     "default_popup": "./src/popup.html",

@@ -23,7 +23,7 @@ export function addLearningAssistantIcon() {
         icon.style.right = '40px';
         icon.style.width = '90px';
         icon.style.height = '110px';
-        icon.style.zIndex = '1000';
+        icon.style.zIndex = '1001';
         icon.style.cursor = 'pointer';
 
         const label = document.createElement('div');
@@ -40,7 +40,7 @@ export function addLearningAssistantIcon() {
         label.style.display = 'flex';
         label.style.justifyContent = 'center';
         label.style.alignItems = 'center';
-        label.style.zIndex = '999';
+        label.style.zIndex = '1000';
         label.style.color = '#007BFF';
         label.style.fontFamily = 'Arial, sans-serif';
 
