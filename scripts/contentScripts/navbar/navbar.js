@@ -20,33 +20,16 @@ export function toggleNavbarVisibility() {
 function createDraggableNavbar() {
     const navbar = document.createElement('div');
     navbar.id = 'learningAssistantNavbar';
-    navbar.style.width = '300px';
-    navbar.style.position = 'fixed';
-    navbar.style.top = '100px';
-    navbar.style.left = 'calc(100% - 310px)'
-    navbar.style.backgroundColor = '#f4f4f9';
-    navbar.style.border = '1px solid #ccc';
-    navbar.style.zIndex = '1000';
-    navbar.style.textAlign = 'center';
-    navbar.style.display = 'flex';
-    navbar.style.flexDirection = 'column';
-    navbar.style.borderRadius = '8px';
-    navbar.style.boxShadow = '0 4px 8px rgba(0,0,0,0.1)';
-    navbar.style.zIndex = '1000';
-
     const header = createNavbarHeader();
     navbar.appendChild(header);
 
     const contentDiv = document.createElement('div');
     contentDiv.id = 'navbarContent';
-    contentDiv.style.padding = '10px 20px 20px 20px';
-    contentDiv.style.height = '100%';
     navbar.appendChild(contentDiv);
 
     const footer = createNavbarFooter();
     footer.style.position = 'static';
     navbar.appendChild(footer);
-
 
     navbar.onmousedown = function(event) {
         if (event.button === 2) return;
