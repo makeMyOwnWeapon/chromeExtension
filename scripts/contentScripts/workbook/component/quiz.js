@@ -100,7 +100,8 @@ async function sendQuizResultAndRender(
       if (quizIdx == 0) {
         video.currentTime = 0;
       } else {
-        video.currentTime = workbookContext.curQuizzes[quizIdx - 1].popupTime;
+        video.currentTime =
+          workbookContext.curQuizzes[quizIdx - 1].popupTime + 1;
       }
       quizModal.remove();
       video.play();
@@ -230,6 +231,9 @@ export function popupQuizEventHandler() {
       popupQuiz(i);
       setTimeout(addPopupSideEffect, 500);
       video.pause();
+    }
+    if (parsedTime === quizzes[i].popupTime + 1) {
+      quizzes[i].isPopuped = false;
     }
   }
 }

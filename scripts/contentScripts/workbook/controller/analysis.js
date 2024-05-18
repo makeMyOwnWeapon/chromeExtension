@@ -1,4 +1,5 @@
 import { createAndPopupModalWithHTML } from "../../modal/modal";
+import { createNavbarFooter } from "../../navbar/footer";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
 import { formatDate } from "../../network/TimeFomater";
 import { showReportModal } from "../../report/reportmodal";
@@ -22,8 +23,18 @@ const defaultImg = chrome.runtime.getURL("images/default.png");
 function startAnalysis() {
     workbookContext.isAnalyzing = true;
     const quizsetsContainer = document.getElementById('quizsets-container');
-
     if (quizsetsContainer) {
+        const footer = document.querySelector('.loa-navbar-footer');
+        if (footer) {
+            footer.remove();
+        }
+        const header = document.getElementById('navbarHeader');
+        if (header) {
+            const closeButton = header.querySelector('.close-button');
+            header.innerHTML = '';
+            header.appendChild(closeButton);
+        }
+
         quizsetsContainer.style.display = 'none';
         toggleWebcam(true);
         addAnalysisBoard();
@@ -46,9 +57,16 @@ function endAnalysis() {
         analysisStartBtn.style.display = 'none';
         congratulationsMessage.style.display = 'block';
     }
+
+    const navbar = document.getElementById('learningAssistantNavbar');
+    if (navbar) {
+        const footer = createNavbarFooter();
+        footer.style.position = 'static';
+        navbar.appendChild(footer);
+    }
+
     showReportModal();
 }
-
 
 function removeInfoModalIfExist() {
     const modal = document.getElementById('analysis-info-modal');
@@ -66,7 +84,9 @@ function addAnalysisBoard() {
 
 function removeAnalysisBoard() {
     const analysisBoard = document.querySelector('#analysis-board');
-    analysisBoard.remove();
+    if (analysisBoard) {
+        analysisBoard.remove();
+    }
 }
 
 export function addAnalysisInfoModalIfNotAnalyzing() {
