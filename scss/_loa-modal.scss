@@ -1,4 +1,118 @@
+$index-normal: 1;
+$index-upper: 1000;
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: $index-upper;
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.modal-content {
+  background: white;
+  border-radius: 10px;
+  padding: 20px;
+  width: 80%;
+  height: auto;
+  font-family: omyu_pretty;
+
+  .modal-header {
+    font-weight: bold;
+    color: black;
+    text-align: center;
+    font-size: 40px;
+  }
+
+  .modal-body {
+    display: flex;
+    flex-direction: column;
+
+    .btn {
+      font-family: inherit;
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px 15px;
+      margin-top: 10px;
+      font-size: 30px;
+
+      &:first-child {
+        margin-top: 5px;
+      }
+
+      &:last-child {
+        margin-bottom: 30px;
+      }
+
+      &:hover {
+        background: #e5f3e8;
+        font-weight: bold;
+      }
+
+      &.selected {
+        background: #cef0d7;
+        font-weight: bold;
+      }
+
+      .answer-mark {
+        font-size: 18px;
+        font-weight: bold;
+        margin-left: 5px;
+      }
+
+      .correct {
+        color: green;
+        margin-right: 3%;
+        font-size: 1.1rem;
+      }
+
+      .wrong {
+        color: red;
+        margin-right: 3%;
+        font-size: 1.1rem;
+      }
+    }
+
+    .input-answer {
+      background: white;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      padding: 10px 15px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: center;
+    height: 10%;
+  }
+}
+
+#quiz-modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal-content {
+    height: auto;
+    transform: translateY(100%);
+    opacity: 0;
+    &.reveal {
+      transform: translateY(0);
+      transition: all 1.0s;
+      opacity: 1;
+    }
+  }
+}
+
 #dismissButton {
+  font-family: omyu_pretty;
+  font-size: 1.6rem;
   background-color: white;
   color: rgb(107, 191, 255);
   padding: 10px 20px; 
@@ -13,4 +127,51 @@
     background-color: rgb(107, 191, 255);
     color: white;
   }
+}
+
+.wakeup-video {
+  width: 100%;
+  height: 50vh;
+}
+
+#submit-btn {
+  padding: 0px 1.125rem;
+  height: 2.25rem;
+  font-family: omyu_pretty;
+  font-size: 1.6rem;
+  cursor: pointer;
+  border: 0.0625rem solid transparent;
+  border-radius: 0.5rem;
+  background-color: rgb(107, 191, 255);
+  color: rgb(255, 255, 255);
+}
+
+#continue-btn {
+  padding: 0px 1.125rem;
+  height: 2.25rem;
+  font-family: omyu_pretty;
+  font-size: 1.6rem;
+  cursor: pointer;
+  border: 0.0625rem solid transparent;
+  border-radius: 0.5rem;
+  background-color: rgb(107, 191, 255);
+  color: rgb(255, 255, 255);
+}
+
+#go-back-btn {
+  padding: 0px 1.125rem;
+  height: 2.25rem;
+  font-family: omyu_pretty;
+  font-size: 1.6rem;
+  cursor: pointer;
+  border: 0.0625rem solid;
+  border-radius: 0.5rem;
+  background-color: rgb(255, 255, 255);
+  color: rgb(107, 191, 255);
+  margin-left: 10px;
+}
+
+.choice-btn {
+  padding-top: 100px; /* 선택지 버튼의 위쪽 패딩을 늘려 텍스트를 아래로 내립니다. */
+  padding-bottom: 10px; /* 선택지 버튼의 아래쪽 패딩을 늘려 텍스트를 아래로 내립니다. */
 }
