@@ -53,7 +53,7 @@ function loadCurSubLectureId() {
     if (response.subLectureId) {
       workbookContext.subLectureId = response.subLectureId;
       return;
-    }
+    }    
     LoaAxios.post(
       `${HOST}/api/lecture/main-lecture/${mainLectureTitle}/sub-lecture`,
       {

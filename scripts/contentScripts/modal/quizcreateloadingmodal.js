@@ -17,7 +17,7 @@ export function showCreateLoadingModal() {
     setIframeUrl(`${REPORT_PROCESSING_HOST}/aicreate`);
 
 
-    const dismissButton = modal.querySelector('.close'); // 변경된 부분
+    const dismissButton = modal.querySelector('.close');
     dismissButton.onclick = function() {
         modal.remove();
     };
@@ -28,5 +28,3 @@ export function showCreateLoadingModal() {
 
     return closeModal;
 }
-
-//통신 안되면 quizset.js의 popupAIQuizInfo을 alert로 변경하면 실행됨.
