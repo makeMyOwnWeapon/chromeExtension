@@ -1,7 +1,7 @@
 import { createAndPopupModalWithHTML } from "../../modal/modal";
 import { createNavbarFooter } from "../../navbar/footer";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
-import { formatDate } from "../../network/TimeFomater";
+import { formatDate } from "../../utils/TimeFomater";
 import { showReportModal } from "../../report/reportmodal";
 import { pauseLectureVideo, playLectureVideo, workbookContext } from "../workbook";
 import { analyticsContext, getWebcamAndAddCaptureEvent, stopWebcam, toggleWebcam } from "./webcam";
