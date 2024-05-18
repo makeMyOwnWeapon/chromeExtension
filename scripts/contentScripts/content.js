@@ -1,5 +1,6 @@
 import '../../scss/main.scss';
 import { addLearningAssistantIcon, removeLearningAssistantIcon } from './icon/icon.js';
+"use strict"
 
 window.onload = function() {
     chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {

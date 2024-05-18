@@ -69,7 +69,7 @@ export async function getWebcamAndAddCaptureEvent() {
     };
     return captureAndSendImages(video);
   } catch (err) {
-    console.log("getUserMedia Error: " + err);
+    console.error("getUserMedia Error: " + err);
   }   
 }
 
