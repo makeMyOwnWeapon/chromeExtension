@@ -2,7 +2,7 @@ import { createAndPopupModalWithHTML } from '../modal/modal.js';
 import { LoaAxios, HOST } from '../network/LoaAxios.js';
 import { formatDate } from '../network/TimeFomater.js';
 import { ANALYSIS_TYPE, setAnalysisType } from '../workbook/controller/analysis.js';
-import { analyticsContext } from '../workbook/controller/webcam.js';
+import { analyticsContext, initializeStatusCount } from '../workbook/controller/webcam.js';
 import { workbookContext } from '../workbook/workbook.js'
 
 const leaveSeatSound = new Audio(chrome.runtime.getURL('sounds/leave-out.mp3'));
@@ -46,6 +46,7 @@ export async function showLeaveSeatModal() {
         analyticsContext.endedAt = null;
         modal.remove();
         video.play();
+        initializeStatusCount(0);
         setAnalysisType(ANALYSIS_TYPE.DEFAULT);
     };
 }

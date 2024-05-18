@@ -1,7 +1,7 @@
 import { createAndPopupModalWithHTML } from '../modal/modal.js';
 import { LoaAxios, HOST } from '../network/LoaAxios.js';
 import { formatDate } from '../network/TimeFomater.js';
-import { analyticsContext } from '../workbook/controller/webcam.js';
+import { analyticsContext, initializeStatusCount } from '../workbook/controller/webcam.js';
 import { workbookContext } from '../workbook/workbook.js'
 import { ANALYSIS_TYPE, setAnalysisType } from '../workbook/controller/analysis.js';
 
@@ -52,6 +52,7 @@ export function showWakeUpModal() {
         analyticsContext.endedAt = null;
         modal.remove();
         video.play();
+        initializeStatusCount(0);
         setAnalysisType(ANALYSIS_TYPE.DEFAULT);
     };
 }
