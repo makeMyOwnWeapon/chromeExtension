@@ -3,22 +3,24 @@ import { addLearningAssistantIcon, removeLearningAssistantIcon } from './icon/ic
 "use strict"
 
 window.onload = function() {
-    chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-        if (request.command === 'turnOn') {
-            chrome.storage.local.set({ iconDisabled: false }, function() {
-                addLearningAssistantIcon();
+    setTimeout(function() {
+        chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+            if (request.command === 'turnOn') {
+                chrome.storage.local.set({ iconDisabled: false }, function() {
+                    addLearningAssistantIcon();
+                    sendResponse({ result: "success" });
+                });
+            } else if (request.command === 'turnOff') {
+                removeLearningAssistantIcon();
+                disconnectObserver();
                 sendResponse({ result: "success" });
-            });
-        } else if (request.command === 'turnOff') {
-            removeLearningAssistantIcon();
-            disconnectObserver();
-            sendResponse({ result: "success" });
-        }
-    });
+            }
+        });
 
-    chrome.storage.local.get(['authToken', 'iconDisabled'], function (data) {
-        if (data.authToken && !data.iconDisabled) {
-            addLearningAssistantIcon();
-        }
-    });
+        chrome.storage.local.get(['authToken', 'iconDisabled'], function (data) {
+            if (data.authToken && !data.iconDisabled) {
+                addLearningAssistantIcon();
+            }
+        });
+    }, 1000);
 };

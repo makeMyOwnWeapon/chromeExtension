@@ -29,7 +29,13 @@ function formatDate(dateString) {
 function PopuptimeCarrotView(popuptime) {
     const totalTime = workbookContext.videoElement.duration;
     const timeRatio = parseInt((popuptime / totalTime) * 100);
-    return `<i class="bi bi-caret-down-fill position-absolute start-${timeRatio}"></i>`;
+    const minutes = Math.floor(popuptime / 60);
+    const seconds = popuptime % 60;
+    const timeString = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    return `
+        <i class="bi bi-caret-down-fill position-absolute start-${timeRatio}" data-popup-time="${popuptime}">
+            <span class="popup-time">${timeString}</span>
+        </i>`;
 }
 
 export function QuizSetView(
@@ -63,6 +69,16 @@ export function renderPopupTimeCarrot() {
             return PopuptimeCarrotView(quiz.popupTime);
         })
         .join("\n");
+
+    // 모든 <i> 요소에 클릭 이벤트 리스너 추가
+    const caretElements = popuptimesView.querySelectorAll(".bi-caret-down-fill");
+    caretElements.forEach((caretElement) => {
+        caretElement.addEventListener("click", () => {
+            const popupTime = parseInt(caretElement.getAttribute("data-popup-time"));
+            workbookContext.videoElement.currentTime = popupTime - 1;
+            workbookContext.videoElement.play();
+        });
+    });
 }
 
 export function sweepQuizset(quizsetId) {
@@ -104,7 +120,8 @@ export function QuizSetController(quizsetId) {
                 workbookContext.curQuizzes = response;
                 workbookContext.curQuizzes.forEach((quiz) => {
                     quiz.isPopuped = false;
-                })
+                    quiz.isSended = false;
+                });
                 printQuizPopupTime();
                 renderPopupTimeCarrot();
             }
@@ -130,7 +147,7 @@ export function AIQuizSetController() {
 
         let numberOfQuizzes;
         if (durationInMinutes < 5) {
-            return []
+            return [];
         } else if (durationInMinutes <= 10) {
             numberOfQuizzes = 1;
         } else if (durationInMinutes <= 60) {
@@ -148,7 +165,11 @@ export function AIQuizSetController() {
     async function select(callback) {
         const video = workbookContext.videoElement;
         quizRequestTimes = calculateRequestTimes(parseInt(video.duration));
-        console.log(quizRequestTimes.map((time) => { return `${parseInt(time / 60)}:${time % 60}` }));
+        console.log(
+            quizRequestTimes.map((time) => {
+                return `${parseInt(time / 60)}:${time % 60}`;
+            })
+        );
         if (quizRequestTimes.length === 0) {
             return;
         }
@@ -199,12 +220,14 @@ export function AIQuizSetController() {
                         workbookContext.curQuizzes.push(response);
                         workbookContext.curQuizzes.forEach((quiz) => {
                             quiz.isPopuped = false;
-                        })
+                            quiz.isSended = false;
+                        });
                         resolve();
                     } else {
                         reject('invalid response');
                     }
-                })
+                }
+            );
         });
     }
 

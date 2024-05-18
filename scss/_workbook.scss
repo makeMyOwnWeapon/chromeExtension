@@ -278,3 +278,34 @@ $position-values: (
   color: rgb(255, 101, 101);
   margin-right: 5px;
 }
+
+.bi-caret-down-fill {
+  transition: transform 0.3s, color 0.3s;
+}
+
+.bi-caret-down-fill:hover {
+  transform: scale(1.5);
+  color: red; /* 원하는 색으로 변경 */
+}
+
+.bi-caret-down-fill {
+  position: relative;
+}
+
+.popup-time {
+  display: none;
+  position: absolute;
+  bottom: 20px; /* Adjust as necessary */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #ffffff; /* Optional: Background color for better visibility */
+  color: #000000; /* Optional: Text color for better visibility */
+  padding: 2px 5px; /* Optional: Padding for better readability */
+  border-radius: 3px; /* Optional: Rounded corners */
+  font-size: 12px; /* Optional: Font size */
+}
+
+.bi-caret-down-fill:hover .popup-time {
+  display: block;
+}
+
