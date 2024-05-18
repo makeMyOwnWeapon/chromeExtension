@@ -29,7 +29,7 @@ function formatDate(dateString) {
 function PopuptimeCarrotView(popuptime) {
     const totalTime = workbookContext.videoElement.duration;
     const timeRatio = parseInt((popuptime / totalTime) * 100);
-    return `<i class="bi bi-caret-down-fill position-absolute start-${timeRatio}"></i>`;
+    return `<i class="bi bi-caret-down-fill position-absolute start-${timeRatio}" data-popup-time="${popuptime}"></i>`;
 }
 
 export function QuizSetView(
@@ -63,6 +63,15 @@ export function renderPopupTimeCarrot() {
             return PopuptimeCarrotView(quiz.popupTime);
         })
         .join("\n");
+    // 모든 <i> 요소에 클릭 이벤트 리스너 추가
+    const caretElements = popuptimesView.querySelectorAll(".bi-caret-down-fill");
+    caretElements.forEach((caretElement) => {
+      caretElement.addEventListener("click", () => {
+        const popupTime = parseInt(caretElement.getAttribute("data-popup-time"));
+        workbookContext.videoElement.currentTime = popupTime - 1;
+        workbookContext.videoElement.pause();
+      });
+    });
 }
 
 export function sweepQuizset(quizsetId) {
