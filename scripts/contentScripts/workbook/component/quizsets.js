@@ -1,6 +1,7 @@
 import { QuizSetController, QuizSetView, renderPopupTimeCarrot, markQuizset, AIQuizSetController } from "./quizset";
 import { workbookContext } from "../workbook";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
+import { URLParser } from "../../network/URLParser";
 
 export function addQuizsetsAndRender(subLectureURL) {
     QuizsetsController(subLectureURL);
@@ -16,22 +17,22 @@ function markQuizsetIfPrevSeleceted() {
 
 function renderQuizsetViews(quizsets) {
     const quizsetsList = document.getElementById("quizsets-container");
+    addAIQuizSetCreateBtnIfNotExistIn(quizsets);
     if (!quizsets.length) {
         quizsetsList.innerHTML = `
-            <button class="list-group-item quizset ai-based" id="ai-based-quizset">
-                <div class="quizset-title-container">
-                    <h2 class="quizset-title">AI를 활용한 문제집</h2>
-                    <img class="loa-logo" src="https://velog.velcdn.com/images/byk0316/post/610f9bb7-4ab7-4be9-b24c-14d22ef4ebd3/image.png">
-                </div>
-                <p class="author-nickname">LOA AI</p>
-            </button>
+            <p>문제집이 없어요!</p>
+            <p>아래 버튼을 통해 생성해보세요</p>
             `
         return;
     }
-
-
     const quizsetViews = quizsets
         .sort((quizset1, quizset2) => {
+            if (quizset1.quizSetAuthor === 'LOA AI') {
+                return -1;
+            }
+            if (quizset2.quizSetAuthor === 'LOA AI') {
+                return 1;
+            }
             return quizset2.recommendationCount - quizset1.recommendationCount
         })
         .slice(0, 3)
@@ -45,6 +46,25 @@ function renderQuizsetViews(quizsets) {
             )
         })
     quizsetsList.innerHTML = quizsetViews.join("\n");
+}
+
+function addAIQuizSetCreateBtnIfNotExistIn(quizsets) {
+    for (let index = 0; index < quizsets.length; index++) {
+        const quizset = quizsets[index];
+        if (quizset.quizSetAuthor === 'LOA AI') {
+            return;
+        }    
+    }
+    const navFooter = document.querySelector(".loa-navbar-footer");
+    const aiQuizsetCreateBtn = document.createElement("button");
+    aiQuizsetCreateBtn.className = "btn create-quizset-btn ai-based";
+    aiQuizsetCreateBtn.id = "ai-based-create-quizset-btn";
+    aiQuizsetCreateBtn.innerText = "AI 문제집 자동 생성";
+    aiQuizsetCreateBtn.addEventListener('click', async () => {
+        await AIQuizSetController()();
+        addQuizsetsAndRender(URLParser.parseWithoutTab(document.location.href));
+    })
+    navFooter.prepend(aiQuizsetCreateBtn);
 }
 
 function QuizsetsController(subLectureURL) {
@@ -69,14 +89,9 @@ function QuizsetsController(subLectureURL) {
     function addQuizFetcher() {
         const quizsets = document.getElementsByClassName('quizset');
         for(let quizset of quizsets) {
-            if (quizset.classList.contains("ai-based")) {
-                quizset.addEventListener('click', AIQuizSetController());
-                continue;
-            }
             const quizsetId = quizset.id.split("-")[1];
             quizset.addEventListener('click', QuizSetController(quizsetId));
         }
-        
     }
 
     function addRecommendationSender() {

@@ -146,6 +146,11 @@ $position-values: (
   &:hover {
     background-color: #f0f0f0; // 호버링시 배경색 변경
   }
+
+  &.ai-based {
+    padding: 0.7rem 1rem; // 버튼 내부 여백 설정
+    font-weight: bold;
+  }
 }
 
 .quizset {

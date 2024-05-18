@@ -1,7 +1,6 @@
 import { REPORT_PROCESSING_HOST } from '../network/LoaAxios.js';
 
 export function showCreateLoadingModal() {
-
     const videoContainer = document.querySelector('.shaka-video-container');
     const modal = document.createElement('div');
     modal.classList.add('overlay');
@@ -26,7 +25,8 @@ export function showCreateLoadingModal() {
     function closeModal() {
         modal.remove();
     }
-    setTimeout(closeModal, 2000); // 모달이 2초 후에 자동으로 닫히도록 변경
+
+    return closeModal;
 }
 
 //통신 안되면 quizset.js의 popupAIQuizInfo을 alert로 변경하면 실행됨.
