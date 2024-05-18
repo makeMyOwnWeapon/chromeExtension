@@ -232,7 +232,7 @@ export function popupQuizEventHandler() {
       setTimeout(addPopupSideEffect, 500);
       video.pause();
     }
-    if (parsedTime === quizzes[i].popupTime + 1) {
+    if (parsedTime !== quizzes[i].popupTime) {
       quizzes[i].isPopuped = false;
     }
   }
