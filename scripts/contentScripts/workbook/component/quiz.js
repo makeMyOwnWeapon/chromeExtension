@@ -62,6 +62,7 @@ function isAnswer(choiceId, quizIdx) {
  * @param {HTMLElement} video 현재 보고 있는 강의 영상
  */
 async function sendQuizResultAndRender(
+  isSended,
   quizIdx,
   choices,
   quizModal,
@@ -75,7 +76,13 @@ async function sendQuizResultAndRender(
   }
   const isCorrect = isAnswer(selectedChoiceId, quizIdx);
   isCorrect ? await correctSound.play() : await wrongSound.play();
-  saveQuizResult(selectedChoiceId, isCorrect, solvedDuration);
+
+  if(!isSended){
+    saveQuizResult(selectedChoiceId, isCorrect, solvedDuration);
+    workbookContext.curQuizzes[quizIdx].isSended = true;
+  }
+    
+  
   const modalFooter = quizModal.querySelector(".modal-footer");
   modalFooter.innerHTML = ""; // 제출하기 버튼 제거
 
@@ -195,6 +202,7 @@ export function popupQuiz(quizIdx) {
     }
     const isCorrect = isAnswer(selectedChoiceId, quizIdx);
     sendQuizResultAndRender(
+      quiz.isSended,
       quizIdx,
       choicesContainer.childNodes,
       quizModal,

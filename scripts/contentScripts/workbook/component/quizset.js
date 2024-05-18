@@ -120,6 +120,7 @@ export function QuizSetController(quizsetId) {
                 workbookContext.curQuizzes = response;
                 workbookContext.curQuizzes.forEach((quiz) => {
                     quiz.isPopuped = false;
+                    quiz.isSended = false;
                 });
                 printQuizPopupTime();
                 renderPopupTimeCarrot();
@@ -224,6 +225,7 @@ export function AIQuizSetController() {
                         workbookContext.curQuizzes.push(response);
                         workbookContext.curQuizzes.forEach((quiz) => {
                             quiz.isPopuped = false;
+                            quiz.isSended = false;
                         });
                         resolve();
                     } else {
