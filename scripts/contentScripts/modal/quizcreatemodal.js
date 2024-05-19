@@ -93,6 +93,7 @@ export async function showCreateModal() {
             };
         }
     }
+    await loadDefaultElementsForWorkbook();
     const closeModalHandler = showCreateLoadingModal();
     await AIQuizSetControllerForExtension(closeModalHandler);
     await setIframeUrl(`${REPORT_PROCESSING_HOST}/createforextension`);
