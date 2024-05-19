@@ -39,6 +39,7 @@ function startAnalysis() {
         toggleWebcam(true);
         addAnalysisBoard();
     }
+    document.getElementById("analysis-end-btn").style.display='';
 }
 
 function endAnalysis() {
