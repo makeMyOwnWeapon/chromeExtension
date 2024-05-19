@@ -1,14 +1,16 @@
+chrome.storage.local.get('authToken', function(data) {
+    console.log('Stored token:', data.authToken);
+});
+
 import { toggleNavbarVisibility } from '../navbar/navbar.js';
 import { HOST, LoaAxios, REPORT_PROCESSING_HOST } from '../network/LoaAxios.js';
 import { SubtitleContentsRequest, loadSubtitles } from '../subtitle/subtitle.js';
 import { loadDefaultElementsForWorkbook, workbookContext } from '../workbook/workbook.js';
 
 let iframeQuizzes = [];
-
-
+let quizRequestTimes = [];
 
 export async function showCreateModal() {
-    
     const currentURL = window.location.href;
 
     const courseTitleElement = document.querySelector('.css-1pqj6dl');
@@ -18,7 +20,6 @@ export async function showCreateModal() {
     const courseTitle = courseTitleElement ? courseTitleElement.textContent : 'N/A';
     const subCourseTitle = subCourseTitleElement ? subCourseTitleElement.textContent : 'N/A';
     const playTime = playTimeElement ? playTimeElement.textContent : 'N/A';
-
 
     const videoContainer = document.querySelector('.shaka-video-container');
     if (!videoContainer) {
@@ -74,26 +75,40 @@ export async function showCreateModal() {
         if (iframe) {
             iframe.src = url;
             iframe.onload = function() {
-                const data = {
-                    courseTitle,
-                    subCourseTitle,
-                    playTime,
-                    currentURL,
-                    iframeQuizzes,
-                };
-                iframe.contentWindow?.postMessage(data, '*');
+                chrome.storage.local.get('authToken', function(data) {
+                    const token = data.authToken;
+                    const dataToSend = {
+                        courseTitle,
+                        subCourseTitle,
+                        playTime,
+                        currentURL,
+                        iframeQuizzes,
+                        authToken: token,
+                        quizRequestTimes
+                    };
+                    iframe.contentWindow?.postMessage(dataToSend, '*');
+                });
             };
         }
     }
+
     await AIQuizSetControllerForExtension();
     await setIframeUrl(`${REPORT_PROCESSING_HOST}/createforextension`);
-
 }
 
+window.addEventListener('message', (e) => {
+
+    if (e.data.functionName === 'closeModal') {
+        const modal = document.querySelector('.overlay');
+        if (modal) {
+            modal.remove();
+        }
+    }
+});
+
 async function AIQuizSetControllerForExtension() {
-    let quizRequestTimes = [];
-    let lastRequestTimeIdx = 0;
     
+    let lastRequestTimeIdx = 0;
 
     function calculateRequestTimes(durationInSeconds) {
         let quizRequestTimes = [];
@@ -144,10 +159,9 @@ async function AIQuizSetControllerForExtension() {
             response.popupTime > 0
         );
     }
-    
+
     async function fetchAllQuiz() {
         for (let i = 0; i < quizRequestTimes.length; i++) {
-            await console.log(quizRequestTimes);
             await fetchQuiz(i);
         }
     }
@@ -157,7 +171,7 @@ async function AIQuizSetControllerForExtension() {
             const reqTime = quizRequestTimes[i];
             const prevReqTime = lastRequestTimeIdx === i ? 0 : quizRequestTimes[lastRequestTimeIdx];
             lastRequestTimeIdx = i;
-            
+
             // 콜백을 사용하여 비동기 처리
             LoaAxios.post(
                 `${HOST}/api/quizsets/llm/nosave`,
@@ -167,7 +181,6 @@ async function AIQuizSetControllerForExtension() {
                     popupTime: reqTime,
                 },
                 (response) => {
-                    console.log('response = ', response);
                     if (hasAllProperties(response)) {
                         iframeQuizzes.push(response);
                         resolve();
@@ -181,9 +194,6 @@ async function AIQuizSetControllerForExtension() {
             throw error;
         });
     }
-    
-    
-    
 
     return select();
 }
