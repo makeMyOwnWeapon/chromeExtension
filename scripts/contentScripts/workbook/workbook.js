@@ -98,14 +98,10 @@ function makeWorkbookHTML_TOBE() {
             </div>
         </div>
         <div>
-        <button class="btn analysis-btn" id="analysis-start-btn" ${
-          isAnalyzing() ? "disabled" : ""
-        }>
+        <button class="btn analysis-btn" id="analysis-start-btn" style=display:none>
             <span> ${isAnalyzing() ? "학습중" : "학습 시작"} </span>
         </button>
-        <button class="btn analysis-btn" id="analysis-end-btn" style="${
-          isAnalyzing() ? "" : "display: none;"
-        }">
+        <button class="btn analysis-btn" id="analysis-end-btn" style=display:none>
             <span> 학습 종료 </span>
         </button>
         </div>

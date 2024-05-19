@@ -101,6 +101,7 @@ export function QuizSetController(quizsetId) {
         fetchQuizzes(quizsetId);
         sweepQuizset(workbookContext.selectedQuizsetId);
         markQuizset(quizsetId);
+        document.getElementById("analysis-start-btn").style.display='';
     };
 
     // For Debugging
