@@ -115,6 +115,44 @@ async function sendQuizResultAndRender(
     });
     modalFooter.appendChild(goBackBtn);
   }
+    // '해설보기' 버튼 추가
+    const commentaryBtn = document.createElement("button");
+    commentaryBtn.type = "button";
+    commentaryBtn.id = "commentary-btn";
+    commentaryBtn.className = "commentary-btn";
+    commentaryBtn.innerText = "해설보기";
+    // '해설보기' 버튼 클릭 이벤트 핸들러
+    commentaryBtn.addEventListener("click", () => {
+      // 새로운 모달을 생성
+      const newModal = document.createElement("div");
+      newModal.classList.add("overlay");
+      newModal.innerHTML = `
+        <div class="modal-content center">
+          <div class="modal-body">
+            ${workbookContext.curQuizzes[quizIdx].commentary}
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="close-button">닫기</button>
+          </div>
+        </div>
+      `;
+
+      // 닫기 버튼 클릭 이벤트 핸들러
+      const closeButton = newModal.querySelector(".close-button");
+      closeButton.addEventListener("click", () => {
+        newModal.remove();
+        video.play();
+      });
+
+      // 기존의 퀴즈 모달을 제거
+      quizModal.remove();
+
+      // 새로 생성한 모달을 화면에 추가
+      const videoContainer = document.querySelector(".shaka-video-container");
+      videoContainer.parentNode.appendChild(newModal);
+    });
+
+    modalFooter.appendChild(commentaryBtn);
 }
 
 // 선택한 선택지의 id를 반환하는 함수
