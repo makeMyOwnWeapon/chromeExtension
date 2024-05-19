@@ -5,7 +5,7 @@ chrome.storage.local.get('authToken', function(data) {
 import { toggleNavbarVisibility } from '../navbar/navbar.js';
 import { HOST, LoaAxios, REPORT_PROCESSING_HOST } from '../network/LoaAxios.js';
 import { SubtitleContentsRequest, loadSubtitles } from '../subtitle/subtitle.js';
-import { loadDefaultElementsForWorkbook, workbookContext } from '../workbook/workbook.js';
+import { displayWorkbookContent, loadDefaultElementsForWorkbook, workbookContext } from '../workbook/workbook.js';
 import { showCreateLoadingModal } from './quizcreateloadingmodal.js';
 
 let iframeQuizzes = [];
@@ -104,6 +104,8 @@ window.addEventListener('message', (e) => {
         const modal = document.querySelector('.overlay');
         if (modal) {
             alert('문제 생성 완료!!');
+            loadDefaultElementsForWorkbook();
+            displayWorkbookContent();
             modal.remove();
         }
     }
