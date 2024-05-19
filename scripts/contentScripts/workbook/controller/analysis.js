@@ -1,7 +1,7 @@
 import { createAndPopupModalWithHTML } from "../../modal/modal";
 import { createNavbarFooter } from "../../navbar/footer";
 import { LoaAxios, HOST } from "../../network/LoaAxios";
-import { formatDate } from "../../network/TimeFomater";
+import { formatDate } from "../../utils/TimeFomater";
 import { showReportModal } from "../../report/reportmodal";
 import { pauseLectureVideo, playLectureVideo, workbookContext } from "../workbook";
 import { analyticsContext, getWebcamAndAddCaptureEvent, stopWebcam, toggleWebcam } from "./webcam";
@@ -97,9 +97,9 @@ export function addAnalysisInfoModalIfNotAnalyzing() {
     workbookContext.videoElement.pause();
     const modal = createAndPopupModalWithHTML({
         bodyHTML: `
-            <div class="modal-body">
-                학습 보조 아이콘-Workbook을 통해 학습 시작 버튼을 눌러주세요
-            </div>
+        <p>
+            로아 아이콘<img class="loa-logo" src="https://velog.velcdn.com/images/byk0316/post/610f9bb7-4ab7-4be9-b24c-14d22ef4ebd3/image.png"/>을 통해 학습을 시작해주세요
+        </p>
         `
     });
     modal.id = "analysis-info-modal";
@@ -111,9 +111,9 @@ export function addAnalysisInfoModalIfAnalysisDone() {
     }
     const modal = createAndPopupModalWithHTML({
         bodyHTML: `
-            <div class="modal-body">
-            학습 보조 아이콘에서 학습 종료 버튼을 누르면 결과가 저장됩니다!
-            </div>
+        <p>
+            로아 아이콘<img class="loa-logo" src="https://velog.velcdn.com/images/byk0316/post/610f9bb7-4ab7-4be9-b24c-14d22ef4ebd3/image.png"/>을 통해 학습을 종료해주세요
+        </p>
         `
     });
     modal.id = "analysis-info-modal";

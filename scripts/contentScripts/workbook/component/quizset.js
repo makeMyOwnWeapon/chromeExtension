@@ -132,17 +132,13 @@ export function QuizSetController(quizsetId) {
 
 export function AIQuizSetController() {
     let quizRequestTimes = [];
-    let lastRequestTimeIdx = 0;
 
-    const onclickHandler = (event) => {
-        const quizsetBtn = event.target.closest(".quizset");
-        if (quizsetBtn.classList.contains("selected")) {
+    const onclickHandler = async (event) => {
+        if (!popupAIQuizInfo()) {
             return;
         }
-        if (!popupAIQuizInfo(showCreateLoadingModal())) {
-            return;
-        }
-        quizsetBtn.classList.add(select() ? "selected" : "");
+        const closeModalHandler = showCreateLoadingModal();
+        await select(closeModalHandler);
     };
 
     function calculateRequestTimes(durationInSeconds) {
@@ -166,7 +162,7 @@ export function AIQuizSetController() {
         return quizRequestTimes;
     }
 
-    async function select() {
+    async function select(callback) {
         const video = workbookContext.videoElement;
         quizRequestTimes = calculateRequestTimes(parseInt(video.duration));
         console.log(
@@ -175,11 +171,11 @@ export function AIQuizSetController() {
             })
         );
         if (quizRequestTimes.length === 0) {
-            return false;
+            return;
         }
         await loadSubtitles();
-        fetchAllQuiz();
-        return true;
+        await fetchAllQuiz();
+        callback();
     }
 
     function popupAIQuizInfo() {
@@ -211,8 +207,7 @@ export function AIQuizSetController() {
     function fetchQuiz(i) {
         return new Promise((resolve, reject) => {
             const reqTime = quizRequestTimes[i];
-            const prevReqTime = lastRequestTimeIdx === i ? 0 : quizRequestTimes[lastRequestTimeIdx];
-            lastRequestTimeIdx = i;
+            const prevReqTime = i ? quizRequestTimes[i - 1] : 0;
             LoaAxios.post(
                 `${HOST}/api/quizsets/llm`,
                 {

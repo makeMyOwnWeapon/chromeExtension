@@ -1,7 +1,7 @@
 import { showWakeUpModal } from "../../alarm/wakeupmodal";
 import { showLeaveSeatModal } from "../../leaveSeat/leaveSeat";
 import { IMAGE_PROCESSING_HOST, LoaAxios } from "../../network/LoaAxios";
-import { formatDate } from "../../network/TimeFomater";
+import { formatDate } from "../../utils/TimeFomater";
 import { ANALYSIS_TYPE, setAnalysisType } from "./analysis";
 
 export const analyticsContext = {
@@ -69,7 +69,7 @@ export async function getWebcamAndAddCaptureEvent() {
     };
     return captureAndSendImages(video);
   } catch (err) {
-    console.log("getUserMedia Error: " + err);
+    console.error("getUserMedia Error: " + err);
   }   
 }
 

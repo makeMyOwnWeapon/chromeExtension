@@ -1,6 +1,6 @@
 import { createAndPopupModalWithHTML } from '../modal/modal.js'; 
 import { LoaAxios, HOST } from '../network/LoaAxios.js';
-import { formatDate } from '../network/TimeFomater.js';
+import { formatDate } from '../utils/TimeFomater.js';
 import { ANALYSIS_TYPE, setAnalysisType } from '../workbook/controller/analysis.js';
 import { analyticsContext, initializeStatusCount } from '../workbook/controller/webcam.js';
 import { workbookContext } from '../workbook/workbook.js'

@@ -44,7 +44,8 @@ function loadCurSubLectureId() {
   const url = encodeURIComponent(
     URLParser.parseWithoutTab(document.location.href)
   );
-  const title = document.querySelector(".css-1vtpfoe").innerText;
+  const titleElement = document.querySelector(".css-1vtpfoe") ?? document.querySelector('.css-wfwwyr .mantine-Text-root');
+  const title = titleElement.innerText;
   const mainLectureTitle = encodeURIComponent(
     URLParser.getParam(document.location.href, "courseSlug")
   );
@@ -52,7 +53,7 @@ function loadCurSubLectureId() {
     if (response.subLectureId) {
       workbookContext.subLectureId = response.subLectureId;
       return;
-    }
+    }    
     LoaAxios.post(
       `${HOST}/api/lecture/main-lecture/${mainLectureTitle}/sub-lecture`,
       {
