@@ -6,7 +6,6 @@ import { toggleNavbarVisibility } from '../navbar/navbar.js';
 import { HOST, LoaAxios, REPORT_PROCESSING_HOST } from '../network/LoaAxios.js';
 import { SubtitleContentsRequest, loadSubtitles } from '../subtitle/subtitle.js';
 import { loadDefaultElementsForWorkbook, workbookContext } from '../workbook/workbook.js';
-import { showCreateLoadingModal } from './quizcreateloadingmodal.js';
 
 let iframeQuizzes = [];
 let quizRequestTimes = [];
@@ -22,13 +21,12 @@ export async function showCreateModal() {
     const subCourseTitle = subCourseTitleElement ? subCourseTitleElement.textContent : 'N/A';
     const playTime = playTimeElement ? playTimeElement.textContent : 'N/A';
 
-    const videoContainer = document.createElement('div');
-    document.body.appendChild(videoContainer);
+    const videoContainer = document.querySelector('.shaka-video-container');
     if (!videoContainer) {
         console.error('Video container not found');
         return;
     }
-    function setIframeUrl(url) {
+
     const modal = document.createElement('div');
     modal.classList.add('overlay');
     modal.innerHTML = `
@@ -72,7 +70,7 @@ export async function showCreateModal() {
         }
     });
 
-    
+    function setIframeUrl(url) {
         const iframe = document.getElementById('iframeContent');
         if (iframe) {
             iframe.src = url;
@@ -93,8 +91,8 @@ export async function showCreateModal() {
             };
         }
     }
-    const closeModalHandler = showCreateLoadingModal();
-    await AIQuizSetControllerForExtension(closeModalHandler);
+
+    await AIQuizSetControllerForExtension();
     await setIframeUrl(`${REPORT_PROCESSING_HOST}/createforextension`);
 }
 
@@ -103,13 +101,12 @@ window.addEventListener('message', (e) => {
     if (e.data.functionName === 'closeModal') {
         const modal = document.querySelector('.overlay');
         if (modal) {
-            alert('문제 생성 완료!!');
             modal.remove();
         }
     }
 });
 
-async function AIQuizSetControllerForExtension(callback) {
+async function AIQuizSetControllerForExtension() {
     
     let lastRequestTimeIdx = 0;
 
@@ -144,14 +141,8 @@ async function AIQuizSetControllerForExtension(callback) {
         if (quizRequestTimes.length === 0) {
             return false;
         }
-        function delay(ms) {
-            return new Promise(resolve => setTimeout(resolve, ms));
-        }
-
         await loadSubtitles();
         await fetchAllQuiz();
-        await delay(3000); // 10초 딜레이 주는 함수
-        callback();
         return true;
     }
 
@@ -202,7 +193,6 @@ async function AIQuizSetControllerForExtension(callback) {
             console.error('Error fetching quiz:', error);
             throw error;
         });
-        
     }
 
     return select();
