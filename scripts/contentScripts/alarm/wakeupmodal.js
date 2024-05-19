@@ -22,7 +22,7 @@ export function showWakeUpModal() {
         bodyHTML: `
         <div class="modal-body">
             <video autoplay loop class='wakeup-video'>
-                <source src='${chrome.runtime.getURL('videos/wakeup.mp4')}' type="video/mp4"></source>
+                <source src='${chrome.runtime.getURL('videos/wakeup_subtitle.mp4')}' type="video/mp4"></source>
             </video>
         </div>
         `,
