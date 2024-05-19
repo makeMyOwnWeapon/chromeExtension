@@ -23,8 +23,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('linkAccount').addEventListener('click', function() {
         var authCode = document.getElementById('authCode').value;
-        // var url = `http://localhost:3000/api/auth/extension`;
-        var url = `https://api.learn-on-air.site/api/auth/extension`;
+        var url = `http://localhost:3000/api/auth/extension`;
+        // var url = `https://api.learn-on-air.site/api/auth/extension`;
 
         if (this.textContent === "계정 연결") {
             fetch(url, {
@@ -64,7 +64,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('imNew').addEventListener('click', function() {
-        chrome.tabs.update({url: 'https://www.learn-on-air.site/main'});
+        // chrome.tabs.update({url: 'https://www.learn-on-air.site/main'});
+        chrome.tabs.update({url: 'http://localhost:3000/main'});
     });
 
     document.getElementById('activate').addEventListener('click', function() {
