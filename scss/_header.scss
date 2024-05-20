@@ -9,24 +9,28 @@
   }
 
   .header-content {
-    display: flex;
-    align-items: center;
+    position: relative; /* Ensures the positioning context for the child elements */
     padding-top: 10px;
     padding-bottom: 10px;
+    text-align: center; /* Centers the text and image */
 
     .header-image {
-      height: 55px;
-      width: 65px;
-      margin-right: 10px;
-    }
+      position: absolute; /* Positions the image absolutely */
+      top: -60px; /* Adjusts the position of the image upwards */
+      left: 50%;
+      transform: translateX(-50%); /* Centers the image horizontally */
+      height: 120px;
+      width: 130px;
+  }
   
     .header-text {
       font-size: 35px;
       font-family: 'omyu_pretty';
-      color: #000000;
       font-weight: bold;
-      margin: 0; // Corrected margin value
+      margin-top: 30px; /* Adjust the margin to position the text below the image */
+      color: rgb(0, 0, 0);
+      text-shadow: -1.5px -1.5px 0 #ffffff, 1.5px -1.5px 0 #ffffff, -1.5px 1.5px 0 #ffffff, 1.5px 1.5px 0 #ffffff;
     }
-  }
+}
 
 }

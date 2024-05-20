@@ -15,24 +15,28 @@ export function showWakeUpModal() {
     video.pause();
     modal = createAndPopupModalWithHTML({
         headerHTML: `
-        <div class="modal-header header-text">
+        <div class="modal-header sleep-modal-header header-text">
+        <img src="https://velog.velcdn.com/images/byk0316/post/5f89557b-72ba-4821-9552-41a3401d8f73/image.png" alt="loa img" class="header-image">
             <p>졸음이 감지되었습니다!!!</p>
         </div>
         `,
         bodyHTML: `
-        <div class="modal-body">
+        <div class="modal-body sleep-modal-body">
             <video autoplay loop class='wakeup-video'>
                 <source src='${chrome.runtime.getURL('videos/wakeup_subtitle.mp4')}' type="video/mp4"></source>
             </video>
         </div>
         `,
         footerHTML: `
-        <div class="modal-footer">
-            <button id="dismissButton">알람 끄기</button>
+        <div class="modal-footer sleep-modal-footer">
+            <button id="dismissButton">
+                <i class="bi bi-caret-right-fill"></i> 재개하기
+            </button>
         </div>
         `
     });
     modal.id = "analysis-info-modal";
+    modal.classList.add('analysis-sleep');
     const dismissButton = document.getElementById('dismissButton');
     dismissButton.onclick = function () {
         analyticsContext.endedAt = formatDate(new Date());

@@ -17,17 +17,21 @@ export async function showLeaveSeatModal() {
     video.pause();
     modal = createAndPopupModalWithHTML({
         headerHTML : `
-        <div class="modal-header">
+        <div class="modal-header leave-modal-header">
+        <img src="https://velog.velcdn.com/images/byk0316/post/5f89557b-72ba-4821-9552-41a3401d8f73/image.png" alt="loa img" class="header-image">
             <p>자리이탈이 감지되었습니다.</p>
         </div>
         `,
         bodyHTML : `
-        <div class="modal-body">
-            <button id="dismissButton">재개하기</button>
+        <div class="modal-footer leave-modal-footer">
+            <button id="dismissButton">
+                <i class="bi bi-caret-right-fill"></i> 재개하기
+            </button>
         </div>
         `
     });
     modal.id = "analysis-info-modal";
+    modal.classList.add('analysis-leave');
     await leaveSeatSound.play();
     const dismissButton = document.getElementById('dismissButton');
     dismissButton.onclick = function() {

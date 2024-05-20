@@ -7,8 +7,8 @@ export function createNavbarHeader() {
                 &#10005; <!-- HTML entity for the letter 'X' -->
             </div>
             <div class="header-content">
-                <img src="https://velog.velcdn.com/images/byk0316/post/610f9bb7-4ab7-4be9-b24c-14d22ef4ebd3/image.png" class="header-image">
-                <p class="header-text">LOA</p>
+                <img src="https://velog.velcdn.com/images/byk0316/post/5f89557b-72ba-4821-9552-41a3401d8f73/image.png" class="header-image">
+                <p class="header-text">LEARN ON-AIR</p>
             </div>
             <br>
             `;
