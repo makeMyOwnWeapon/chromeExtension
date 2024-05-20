@@ -19,6 +19,8 @@ const sleepImg = chrome.runtime.getURL('images/sleep.png');
 const preLeaveSeatImg = chrome.runtime.getURL('images/pre-leave-seat.png');
 const leaveSeatImg = chrome.runtime.getURL('images/leave-seat.png');
 const defaultImg = chrome.runtime.getURL("images/default.png");
+const scrim_container = document.querySelector('.shaka-scrim-container');
+
 
 function startAnalysis() {
     workbookContext.isAnalyzing = true;
@@ -190,11 +192,14 @@ export function setAnalysisType(analysisType) {
     const statusIcon = document.getElementById('analysis-status-icon');
     const statusText = document.getElementById('analysis-status-text');
     const webCam = document.getElementById('web-cam');
+    const shaka_side_container = document.querySelector('.shaka-server-side-ad-container');
+
     switch (analysisType) {
         case ANALYSIS_TYPE.PRE_SLEEP:
             statusIcon.innerHTML = `<img src=${preSleepImg} class='status-img' style='animation: blink-img 0.5s infinite;'>`;
             statusText.innerText = "졸음 경보";
             webCam.className = 'pre-sleep';
+            shaka_side_container.classList.add('pre-sleep');
             break;
         case ANALYSIS_TYPE.SLEEP:
             statusIcon.innerHTML = `<img src=${sleepImg} class='status-img'>`;
@@ -205,6 +210,7 @@ export function setAnalysisType(analysisType) {
             statusIcon.innerHTML = `<img src=${preLeaveSeatImg} class='status-img' style='animation: blink-img 0.5s infinite;'>`;
             statusText.innerText = "자리 이탈 경보";
             webCam.className = 'pre-leave-seat';
+            shaka_side_container.classList.add('pre-leave-seat');
             break;
         case ANALYSIS_TYPE.LEAVE_SEAT:
             statusIcon.innerHTML = `<img src=${leaveSeatImg} class='status-img'>`;
@@ -215,6 +221,9 @@ export function setAnalysisType(analysisType) {
             statusIcon.innerHTML = `<img src=${defaultImg} class='status-img'>`;
             statusText.innerText = "상태 감지중";
             webCam.className = 'default';
+            shaka_side_container.classList.remove('pre-sleep');
+            shaka_side_container.classList.remove('pre-leave-seat');
+
             break;
     }
 }
