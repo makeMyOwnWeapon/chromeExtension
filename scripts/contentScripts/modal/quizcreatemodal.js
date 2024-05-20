@@ -83,14 +83,8 @@ export async function showCreateModal() {
                         authToken: token,
                         quizRequestTimes
                     };
-                    
-                    window.addEventListener('message', (e) => {
-                        if (e.data.functionName === 'requiredata') {
-                        console.log('post iframe data', dataToSend);
-                        iframe.contentWindow?.postMessage(dataToSend, '*');
-                        }
-                    });
-                    
+                    console.log('post iframe data', dataToSend);
+                    iframe.contentWindow?.postMessage(dataToSend, '*');
                 });
             };
         }
