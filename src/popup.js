@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('imNew').addEventListener('click', function() {
-        chrome.tabs.update({url: 'https://www.learn-on-air.site/main'});
+        chrome.tabs.update({url: 'https://www.learn-on-air.site/introduce'});
     });
 
     document.getElementById('activate').addEventListener('click', function() {
