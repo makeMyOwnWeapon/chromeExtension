@@ -17,55 +17,60 @@ export async function showCreateModal() {
     const subCourseTitle = subCourseTitleElement ? subCourseTitleElement.textContent : 'N/A';
     const playTime = playTimeElement ? playTimeElement.textContent : 'N/A';
 
-    const videoContainer = document.createElement('div');
-    document.body.appendChild(videoContainer);
+
+    function setIframeUrl(url) {
+    const videoContainer = document.getElementById('course-body');
+    const videoLocation = document.getElementById('player-container');
     if (!videoContainer) {
         console.error('Video container not found');
         return;
-    }
-    function setIframeUrl(url) {
+    }    
+
     const modal = document.createElement('div');
     modal.classList.add('overlay');
     modal.innerHTML = `
         <div class="draggable-header"></div>
         <iframe id="iframeContent" class="close" src="" style="width:100%; height:100%;"></iframe>
     `;
+    videoLocation.style.width = '50%';
+
     videoContainer.appendChild(modal);
+    modal.style.left = '50%';
     modal.style.width = '50%';
-    modal.style.height = '100%';
+    modal.style.height = '95%';
     modal.style.position = 'absolute';
 
-    const draggableHeader = modal.querySelector('.draggable-header');
-    let isDragging = false;
-    let startX = 0;
-    let startY = 0;
+    // const draggableHeader = modal.querySelector('.draggable-header');
+    // let isDragging = false;
+    // let startX = 0;
+    // let startY = 0;
 
-    draggableHeader.style.position = 'absolute';
-    draggableHeader.style.width = '100%';
-    draggableHeader.style.height = '30px';
-    draggableHeader.style.top = '0';
-    draggableHeader.style.left = '0';
-    draggableHeader.style.cursor = 'move';
-    draggableHeader.style.backgroundColor = '#ccc';
+    // draggableHeader.style.position = 'absolute';
+    // draggableHeader.style.width = '100%';
+    // draggableHeader.style.height = '30px';
+    // draggableHeader.style.top = '0';
+    // draggableHeader.style.left = '0';
+    // draggableHeader.style.cursor = 'move';
+    // draggableHeader.style.backgroundColor = '#ccc';
 
-    draggableHeader.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        startX = e.clientX - modal.offsetLeft;
-        startY = e.clientY - modal.offsetTop;
-    });
+    // draggableHeader.addEventListener('mousedown', (e) => {
+    //     isDragging = true;
+    //     startX = e.clientX - modal.offsetLeft;
+    //     startY = e.clientY - modal.offsetTop;
+    // });
 
-    document.addEventListener('mousemove', (e) => {
-        if (isDragging) {
-            modal.style.left = `${e.clientX - startX}px`;
-            modal.style.top = `${e.clientY - startY}px`;
-        }
-    });
+    // document.addEventListener('mousemove', (e) => {
+    //     if (isDragging) {
+    //         modal.style.left = `${e.clientX - startX}px`;
+    //         modal.style.top = `${e.clientY - startY}px`;
+    //     }
+    // });
 
-    document.addEventListener('mouseup', () => {
-        if (isDragging) {
-            isDragging = false;
-        }
-    });
+    // document.addEventListener('mouseup', () => {
+    //     if (isDragging) {
+    //         isDragging = false;
+    //     }
+    // });
 
     
         const iframe = document.getElementById('iframeContent');
@@ -85,6 +90,8 @@ export async function showCreateModal() {
                     };
                     console.log('post iframe data', dataToSend);
                     iframe.contentWindow?.postMessage(dataToSend, '*');
+                    
+
                 });
             };
         }
@@ -104,6 +111,7 @@ window.addEventListener('message', (e) => {
             loadDefaultElementsForWorkbook();
             displayWorkbookContent();
             modal.remove();
+            videoLocation.style.width = '100%';
         }
     }
 });
