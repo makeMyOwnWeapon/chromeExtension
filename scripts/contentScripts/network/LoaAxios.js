@@ -1,3 +1,5 @@
+import { env } from "../../../env";
+
 export const LoaAxios = (() => {
     function _get(_url, successHandler, json = true) {
         chrome.storage.local.get('authToken', function(data) {
@@ -85,7 +87,7 @@ export const LoaAxios = (() => {
 export const HOST = {
     local: 'http://localhost:3000',
     prod: 'https://api.learn-on-air.site'
-}.prod;
+}[env];
 
 export const IMAGE_PROCESSING_HOST = {
     local: 'http://localhost:8000',
@@ -95,4 +97,6 @@ export const IMAGE_PROCESSING_HOST = {
 export const REPORT_PROCESSING_HOST = {
     local: 'http://localhost:3002',
     prod: 'https://www.learn-on-air.site'
-}.prod;
+}[env];
+
+console.log("LoaAxios ", HOST, REPORT_PROCESSING_HOST);

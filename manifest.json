@@ -14,11 +14,12 @@
   ],
   "action": {
     "default_popup": "./src/popup.html",
-    "default_icon": "images/icon-16.png"
+    "default_icon": "images/icon-16.png",
+    "script": ["popup.mjs"]
   },
   "web_accessible_resources": [
     {
-      "resources": ["sounds/*", "images/*", "videos/*"],
+      "resources": ["sounds/*", "images/*", "videos/*, env.js, popup.mjs"],
       "matches": ["<all_urls>"]
     }
   ],
