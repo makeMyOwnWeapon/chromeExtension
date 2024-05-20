@@ -83,6 +83,7 @@ export async function showCreateModal() {
                         authToken: token,
                         quizRequestTimes
                     };
+                    console.log('post iframe data', dataToSend);
                     iframe.contentWindow?.postMessage(dataToSend, '*');
                 });
             };
@@ -90,8 +91,8 @@ export async function showCreateModal() {
     }
     await loadDefaultElementsForWorkbook();
     const closeModalHandler = showQuizCreateLoadingModal();
-    await AIQuizSetControllerForExtension(closeModalHandler);
-    await setIframeUrl(`${REPORT_PROCESSING_HOST}/createforextension`);
+    await AIQuizSetControllerForExtension([closeModalHandler, setIframeUrl]);
+    // await setIframeUrl(`${REPORT_PROCESSING_HOST}/createforextension`);
 }
 
 window.addEventListener('message', (e) => {
@@ -107,7 +108,7 @@ window.addEventListener('message', (e) => {
     }
 });
 
-async function AIQuizSetControllerForExtension(callback) {
+async function AIQuizSetControllerForExtension(callbacks) {
     
     let lastRequestTimeIdx = 0;
 
@@ -148,8 +149,9 @@ async function AIQuizSetControllerForExtension(callback) {
 
         await loadSubtitles();
         await fetchAllQuiz();
-        await delay(3000); // 10초 딜레이 주는 함수
-        callback();
+        await delay(10); // 10초 딜레이 주는 함수
+        callbacks[0](); // close modal
+        callbacks[1](`${REPORT_PROCESSING_HOST}/createforextension`); // send message
         return true;
     }
 
@@ -171,6 +173,7 @@ async function AIQuizSetControllerForExtension(callback) {
         for (let i = 0; i < quizRequestTimes.length; i++) {
             await fetchQuiz(i);
         }
+        return true
     }
 
     async function fetchQuiz(i) {
