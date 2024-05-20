@@ -1,6 +1,6 @@
 import { REPORT_PROCESSING_HOST } from '../network/LoaAxios.js';
 
-export function showReportCreateLoadingModal() {
+export function showQuizCreateLoadingModal() {
     const videoContainer = document.querySelector('.shaka-video-container');
     const modal = document.createElement('div');
     modal.classList.add('overlay');
@@ -14,7 +14,7 @@ export function showReportCreateLoadingModal() {
             iframe.src = url;
         }
     }
-    setIframeUrl(`${REPORT_PROCESSING_HOST}/aireportcreate`);
+    setIframeUrl(`${REPORT_PROCESSING_HOST}/aiquizcreate`);
 
 
     const dismissButton = modal.querySelector('.close');

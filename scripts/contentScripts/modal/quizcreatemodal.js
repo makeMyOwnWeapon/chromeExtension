@@ -1,12 +1,7 @@
-chrome.storage.local.get('authToken', function(data) {
-    console.log('Stored token:', data.authToken);
-});
-
-import { toggleNavbarVisibility } from '../navbar/navbar.js';
 import { HOST, LoaAxios, REPORT_PROCESSING_HOST } from '../network/LoaAxios.js';
 import { SubtitleContentsRequest, loadSubtitles } from '../subtitle/subtitle.js';
 import { displayWorkbookContent, loadDefaultElementsForWorkbook, workbookContext } from '../workbook/workbook.js';
-import { showCreateLoadingModal } from './quizcreateloadingmodal.js';
+import { showQuizCreateLoadingModal } from './reportcreateloadingmodal.js';
 
 let iframeQuizzes = [];
 let quizRequestTimes = [];
@@ -94,7 +89,7 @@ export async function showCreateModal() {
         }
     }
     await loadDefaultElementsForWorkbook();
-    const closeModalHandler = showCreateLoadingModal();
+    const closeModalHandler = showQuizCreateLoadingModal();
     await AIQuizSetControllerForExtension(closeModalHandler);
     await setIframeUrl(`${REPORT_PROCESSING_HOST}/createforextension`);
 }

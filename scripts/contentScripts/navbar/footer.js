@@ -1,4 +1,3 @@
-import { showCreateLoadingModal } from "../modal/quizcreateloadingmodal";
 import { showCreateModal } from "../modal/quizcreatemodal";
 import { REPORT_PROCESSING_HOST } from "../network/LoaAxios";
 
@@ -13,7 +12,6 @@ export function createNavbarFooter() {
 
   const createQuizsetsBtn = footer.querySelector("#createQuizsetsBtn");
 async function stepstart(){
-  // await showCreateLoadingModal();
   await showCreateModal();
 }
 

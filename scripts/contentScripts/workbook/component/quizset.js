@@ -1,7 +1,7 @@
 import { HOST, LoaAxios } from "../../network/LoaAxios";
 import { workbookContext } from "../workbook";
 import { SubtitleContentsRequest, loadSubtitles } from "../../subtitle/subtitle";
-import { showCreateLoadingModal } from "../../modal/quizcreateloadingmodal";
+import { showQuizCreateLoadingModal } from "../../modal/reportcreateloadingmodal";
 
 function formatDate(dateString) {
     const date = new Date(dateString);
@@ -138,7 +138,7 @@ export function AIQuizSetController() {
         if (!popupAIQuizInfo()) {
             return;
         }
-        const closeModalHandler = showCreateLoadingModal();
+        const closeModalHandler = showQuizCreateLoadingModal();
         await select(closeModalHandler);
     };
 
