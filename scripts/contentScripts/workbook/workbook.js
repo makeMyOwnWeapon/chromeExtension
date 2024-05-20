@@ -5,7 +5,6 @@ import { addQuizsetsAndRender } from "./component/quizsets";
 import {
   isAnalyzing,
   refreshAnalysisBtn,
-  addAnalysisInfoModalIfNotAnalyzing,
   addAnalysisInfoModalIfAnalysisDone,
 } from "./controller/analysis";
 
@@ -26,10 +25,6 @@ export function loadDefaultElementsForWorkbook() {
 function loadVideoElement() {
   workbookContext.videoElement = document.getElementsByTagName("video")[0];
   workbookContext.videoElement.pause();
-  workbookContext.videoElement.addEventListener(
-    "play",
-    addAnalysisInfoModalIfNotAnalyzing
-  );
   workbookContext.videoElement.addEventListener(
     "ended",
     addAnalysisInfoModalIfAnalysisDone

@@ -29,7 +29,8 @@ class Subtitle {
 }
 
 export class SubtitleContentsRequest {
-  MAX_SIZE = 1000;
+  static MAX_SIZE = 1000;
+  
   constructor() {
     this.buffer = []
     this.size = 0
@@ -40,6 +41,7 @@ export class SubtitleContentsRequest {
       return;
     }
     this.buffer.push(content);
+    this.size += content.length;
   }
 
   getRangeSubtitleContents(prevReqTime, reqTime) {
@@ -48,7 +50,6 @@ export class SubtitleContentsRequest {
       const subtitle = subtitles[i];
       if (subtitle.includes(prevReqTime, reqTime)) {
         this.insert(subtitle.toString());
-        this.size += subtitle.size();
       }
     }
     return this.toString();
