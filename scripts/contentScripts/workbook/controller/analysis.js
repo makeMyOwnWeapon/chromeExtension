@@ -90,21 +90,6 @@ function removeAnalysisBoard() {
     }
 }
 
-export function addAnalysisInfoModalIfNotAnalyzing() {
-    if (isAnalyzing()) {
-        return;
-    }
-    workbookContext.videoElement.pause();
-    const modal = createAndPopupModalWithHTML({
-        bodyHTML: `
-        <p>
-            로아 아이콘<img class="loa-logo" src="https://velog.velcdn.com/images/byk0316/post/610f9bb7-4ab7-4be9-b24c-14d22ef4ebd3/image.png"/>을 통해 학습을 시작해주세요
-        </p>
-        `
-    });
-    modal.id = "analysis-info-modal";
-}
-
 export function addAnalysisInfoModalIfAnalysisDone() {
     if (!isAnalyzing()) {
         return;
