@@ -86,9 +86,8 @@ async function sendQuizResultAndRender(
     
   
   const modalFooter = quizModal.querySelector(".modal-footer");
-  modalFooter.innerHTML = ""; // 제출하기 버튼 제거
+  modalFooter.innerHTML = "";
 
-  // '계속 진행하기' 버튼 추가
   const continueBtn = document.createElement("button");
   continueBtn.type = "button";
   continueBtn.id = "continue-btn";
@@ -117,19 +116,16 @@ async function sendQuizResultAndRender(
     });
     modalFooter.appendChild(goBackBtn);
   }
-    // '해설보기' 버튼 추가
     const commentaryBtn = document.createElement("button");
     commentaryBtn.type = "button";
     commentaryBtn.id = "commentary-btn";
     commentaryBtn.className = "commentary-btn";
     commentaryBtn.innerText = "해설보기";
-    // '해설보기' 버튼 클릭 이벤트 핸들러
     commentaryBtn.addEventListener("click", () => {
-      // 새로운 모달을 생성
       const newModal = document.createElement("div");
       newModal.classList.add("overlay");
       newModal.innerHTML = `
-        <div class="modal-content center">
+        <div class="modal-content commentary center">
           <div class="modal-body">
             ${workbookContext.curQuizzes[quizIdx].commentary}
           </div>
@@ -139,7 +135,6 @@ async function sendQuizResultAndRender(
         </div>
       `;
 
-      // 닫기 버튼 클릭 이벤트 핸들러
       const closeButton = newModal.querySelector(".close-button");
       closeButton.addEventListener("click", () => {
         newModal.remove();
@@ -147,9 +142,8 @@ async function sendQuizResultAndRender(
       });
 
       // 기존의 퀴즈 모달을 제거
-      quizModal.remove();
+      // quizModal.remove();
 
-      // 새로 생성한 모달을 화면에 추가
       const videoContainer = document.querySelector(".shaka-video-container");
       videoContainer.parentNode.appendChild(newModal);
     });
@@ -164,10 +158,9 @@ function getSelectedChoiceId(choices) {
       return parseInt(choice.id.split("-")[1]);
     }
   }
-  return null; // 선택한 선택지가 없는 경우 null 반환
+  return null;
 }
 
-// 퀴즈 결과를 서버에 저장하는 함수 (예시)
 async function saveQuizResult(choiceId, isCorrect, solvedDuration) {
   // 서버에 선택한 선택지의 id와 정답 여부를 전송하여 저장
   LoaAxios.post(
@@ -197,9 +190,7 @@ export function popupQuiz(quizIdx) {
   // 팝업창이 띄워진 시점의 시간
   const popupTime = new Date().getTime();
   const quizzes = workbookContext.curQuizzes;
-
   const quiz = quizzes[quizIdx];
-
   const quizModal = createQuizModal();
 
   quizModal.innerHTML = QuizView(quiz.instruction);
@@ -256,11 +247,11 @@ export function popupQuiz(quizIdx) {
       const iconElement = document.createElement("i");
       if (choice.isAnswer) {
         choiceBtn.classList.add("correct-answer");
-        // 정답인 경우에는 'O' 표시를 추가합니다.
+        // 정답인 경우에는 'O' 표시를 추가
         iconElement.className = "bi bi-check-circle correct";
       } else if (!choice.isAnswer && selectedChoiceId === choice.choiceId) {
         choiceBtn.classList.add("wrong-answer");
-        // 오답인 경우에는 'X' 표시를 추가합니다.
+        // 오답인 경우에는 'X' 표시를 추가
         iconElement.className = "bi bi-x-circle wrong";
       }
       choiceBtn.prepend(iconElement);
@@ -268,9 +259,9 @@ export function popupQuiz(quizIdx) {
 
     const modalContent = quizModal.querySelector(".modal-content");
     if (isCorrect) {
-      modalContent.style.backgroundColor = "#5CFF42"; // 초록색 배경
+      modalContent.style.backgroundColor = "#5CFF42";
     } else {
-      modalContent.style.backgroundColor = "#FF4242"; // 빨간색 배경
+      modalContent.style.backgroundColor = "#FF4242";
     }
 
   });

@@ -39,39 +39,6 @@ export async function showCreateModal() {
     modal.style.width = '50%';
     modal.style.height = '95%';
     modal.style.position = 'absolute';
-
-    // const draggableHeader = modal.querySelector('.draggable-header');
-    // let isDragging = false;
-    // let startX = 0;
-    // let startY = 0;
-
-    // draggableHeader.style.position = 'absolute';
-    // draggableHeader.style.width = '100%';
-    // draggableHeader.style.height = '30px';
-    // draggableHeader.style.top = '0';
-    // draggableHeader.style.left = '0';
-    // draggableHeader.style.cursor = 'move';
-    // draggableHeader.style.backgroundColor = '#ccc';
-
-    // draggableHeader.addEventListener('mousedown', (e) => {
-    //     isDragging = true;
-    //     startX = e.clientX - modal.offsetLeft;
-    //     startY = e.clientY - modal.offsetTop;
-    // });
-
-    // document.addEventListener('mousemove', (e) => {
-    //     if (isDragging) {
-    //         modal.style.left = `${e.clientX - startX}px`;
-    //         modal.style.top = `${e.clientY - startY}px`;
-    //     }
-    // });
-
-    // document.addEventListener('mouseup', () => {
-    //     if (isDragging) {
-    //         isDragging = false;
-    //     }
-    // });
-
     
         const iframe = document.getElementById('iframeContent');
         if (iframe) {
@@ -101,7 +68,6 @@ export async function showCreateModal() {
                             }
                         }
                     
-                    
                         if (e.data.functionName === 'closeModal') {
                             const modal = document.querySelector('.overlay');
                             if (modal) {
@@ -121,10 +87,7 @@ export async function showCreateModal() {
     await loadDefaultElementsForWorkbook();
     const closeModalHandler = showQuizCreateLoadingModal();
     await AIQuizSetControllerForExtension([closeModalHandler, setIframeUrl]);
-    // await setIframeUrl(`${REPORT_PROCESSING_HOST}/createforextension`);
 }
-
-
 
 async function AIQuizSetControllerForExtension(callbacks) {
     
@@ -167,9 +130,9 @@ async function AIQuizSetControllerForExtension(callbacks) {
 
         await loadSubtitles();
         await fetchAllQuiz();
-        await delay(10); // 10초 딜레이 주는 함수
-        callbacks[0](); // close modal
-        callbacks[1](`${REPORT_PROCESSING_HOST}/createforextension`); // send message
+        await delay(10);
+        callbacks[0]();
+        callbacks[1](`${REPORT_PROCESSING_HOST}/createforextension`);
         return true;
     }
 
@@ -200,7 +163,6 @@ async function AIQuizSetControllerForExtension(callbacks) {
             const prevReqTime = lastRequestTimeIdx === i ? 0 : quizRequestTimes[lastRequestTimeIdx];
             lastRequestTimeIdx = i;
 
-            // 콜백을 사용하여 비동기 처리
             LoaAxios.post(
                 `${HOST}/api/quizsets/llm/nosave`,
                 {

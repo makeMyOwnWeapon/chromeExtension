@@ -6,7 +6,6 @@ import { showQuizCreateLoadingModal } from "../../modal/reportcreateloadingmodal
 function formatDate(dateString) {
     const date = new Date(dateString);
     const currentDate = new Date();
-
     const diffInMilliseconds = currentDate - date;
     const diffInSeconds = diffInMilliseconds / 1000;
     const diffInMinutes = diffInSeconds / 60;
@@ -123,7 +122,6 @@ export function QuizSetController(quizsetId) {
                     quiz.isPopuped = false;
                     quiz.isSended = false;
                 });
-                printQuizPopupTime();
                 renderPopupTimeCarrot();
             }
         );
@@ -144,8 +142,7 @@ export function AIQuizSetController() {
 
     function calculateRequestTimes(durationInSeconds) {
         let quizRequestTimes = [];
-        const durationInMinutes = durationInSeconds / 60; // 3000 / 60 = 50
-
+        const durationInMinutes = durationInSeconds / 60;
         let numberOfQuizzes;
         if (durationInMinutes < 5) {
             return [];

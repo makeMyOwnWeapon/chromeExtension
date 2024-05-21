@@ -109,10 +109,10 @@ $position-values: (
     align-items: center;
 
     i {
-      font-size: 1rem; /* 기본 크기 설정 */
-      transition: font-size 0.3s ease; /* 호버링시 크기 변화를 위한 transition 설정 */
+      font-size: 1rem;
+      transition: font-size 0.3s ease;
       margin-bottom: -3rem;
-      transform-origin: center; // 가운데를 기준으로 변환
+      transform-origin: center;
       color: black;
 
       &:first-child {
@@ -120,13 +120,13 @@ $position-values: (
       }
 
       &:last-child {
-        left: 1rem; /* 예시로 간격 설정 */
+        left: 1rem;
       }
     }
 
     &:hover {
       i {
-        font-size: 1.5rem; /* 호버링시 크기 증가 */
+        font-size: 1.5rem;
       }
     }
   }
@@ -134,21 +134,21 @@ $position-values: (
 
 .create-quizset-btn {
   display: inline-block;
-  padding: 0.5rem 1rem; /* 버튼 내부 여백 설정 */
+  padding: 0.5rem 1rem;
   border: 3px solid #01BCC8;
-  background-color: #0190B2; /* 배경색 설정 */
-  text-decoration: none; /* 링크 기본 스타일 제거 */
-  color: #fff; /* 텍스트 색상 설정 */
-  border-radius: 4px; /* 버튼 모서리를 둥글게 설정 */
+  background-color: #0190B2;
+  text-decoration: none;
+  color: #fff;
+  border-radius: 4px;
   font-family: 'omyu_pretty';
-  font-weight: bold; /* 텍스트를 굵게 설정 */
+  font-weight: bold;
 
   &:hover {
-    background-color: #017997; /* 호버링시 배경색 변경 */
+    background-color: #017997;
   }
 
   &.ai-based {
-    padding: 0.7rem 1rem; // 버튼 내부 여백 설정
+    padding: 0.7rem 1rem;
     font-weight: bold;
   }
 }
@@ -157,14 +157,14 @@ $position-values: (
   display: flex;
   justify-content: space-between;
   align-items: center;
-  cursor: pointer; /* 호버링 가능하도록 커서 설정 */
+  cursor: pointer;
 
   &:hover {
-    background-color: #f0f0f0; /* 호버링시 배경색 변경 */
+    background-color: #f0f0f0;
   }
 
   &.selected {
-    background-color: #f6f6f6; /* 선택시 배경색 변경 */
+    background-color: #f6f6f6;
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2) inset;
   }
 
@@ -179,17 +179,17 @@ $position-values: (
 
   p.author-nickname {
     font-family: 'omyu_pretty';
-    font-size: 1.2rem; /* 큰 글씨 크기 설정 */
+    font-size: 1.2rem;
     display: flex;
-    justify-content: flex-start; /* 왼쪽 정렬 설정 */
+    justify-content: flex-start;
     align-items: center;
-    margin-bottom: 0; /* p의 하단 여백 제거 */
+    margin-bottom: 0;
   }
 
   span.create-at {
-    margin-left: auto; /* 오른쪽으로 붙이기 */
-    color: gray; /* 회색 글자 색상 설정 */
-    font-size: 0.8rem; /* 작은 글씨 크기 설정 */
+    margin-left: auto;
+    color: gray;
+    font-size: 0.8rem;
   }
 
   .quizset-title-container {
@@ -198,9 +198,9 @@ $position-values: (
     .quizset-title {
       float: left; 
       font-family: 'omyu_pretty';
-      font-size: 1.5rem; /* 큰 글씨 크기 설정 */
-      margin-right: 10px; /* h2와 span 사이의 간격 조정 */
-      margin-bottom: 0; /* h2의 하단 여백 제거 */
+      font-size: 1.5rem;
+      margin-right: 10px;
+      margin-bottom: 0;
       width: 80%;
       text-align: left; 
     }
@@ -220,12 +220,12 @@ $position-values: (
     font-weight: bold;
     text-align: center;
     background-image: url("https://velog.velcdn.com/images/byk0316/post/3e392430-1753-489e-92e5-548d51495a07/image.png");
-    background-size: 30%, contain; // Adjust size for each image
+    background-size: 30%, contain;
     background-repeat: no-repeat, no-repeat;
     background-position: left bottom, right center;
     position: relative;
-    padding: 20px; // Adjust padding as needed
-    z-index: 1; // Ensure the text is above the background
+    padding: 20px;
+    z-index: 1;
   }
 
   #congratulations-message::after {
@@ -239,7 +239,7 @@ $position-values: (
     right: 0;
     bottom: 0;
     left: 50%;
-    transform: scaleX(-1); // Flip horizontally
+    transform: scaleX(-1);
   }
 }
 
@@ -251,12 +251,12 @@ $position-values: (
     font-weight: bold;
     text-align: center;
     background-image: url("https://velog.velcdn.com/images/byk0316/post/3e392430-1753-489e-92e5-548d51495a07/image.png");
-    background-size: 30%, contain; // Adjust size for each image
+    background-size: 30%, contain;
     background-repeat: no-repeat, no-repeat;
     background-position: left bottom, right center;
     position: relative;
-    padding: 20px; // Adjust padding as needed
-    z-index: 1; // Ensure the text is above the background
+    padding: 20px;
+    z-index: 1;
   }
 
   #congratulations-message::after {
@@ -270,7 +270,7 @@ $position-values: (
     right: 0;
     bottom: 0;
     left: 50%;
-    transform: scaleX(-1); // Flip horizontally
+    transform: scaleX(-1);
   }
 }
 
@@ -282,26 +282,26 @@ $position-values: (
 .bi-caret-down-fill {
   transition: transform 0.3s, color 0.3s;
   position: relative;
-  cursor: pointer; /* 마우스를 올렸을 때 커서 모양 변경 */
+  cursor: pointer;
 }
 
 .bi-caret-down-fill:hover {
   transform: scale(1.5);
-  color: red; /* 원하는 색으로 변경 */
+  color: red;
 }
 
 
 .popup-time {
   display: none;
   position: absolute;
-  bottom: 20px; /* Adjust as necessary */
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background-color: #ffffff; /* Optional: Background color for better visibility */
-  color: #000000; /* Optional: Text color for better visibility */
-  padding: 2px 5px; /* Optional: Padding for better readability */
-  border-radius: 3px; /* Optional: Rounded corners */
-  font-size: 12px; /* Optional: Font size */
+  background-color: #ffffff;
+  color: #000000;
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-size: 12px;
 }
 
 .bi-caret-down-fill:hover .popup-time {
@@ -309,6 +309,6 @@ $position-values: (
 }
 
 .list-group-item.quizset {
-  border: 3px solid #00A7B1; /* 테두리 색 및 굵기 설정 */
-  border-radius:8px; /* 테두리를 둥글게 설정 */
+  border: 3px solid #00A7B1;
+  border-radius:8px;
 }

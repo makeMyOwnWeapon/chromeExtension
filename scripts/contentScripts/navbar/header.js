@@ -1,7 +1,7 @@
 export function createNavbarHeader() {
   const header = document.createElement("div");
   header.id = "navbarHeader";
-  header.classList.add("navbar-header"); // Add class name
+  header.classList.add("navbar-header");
   header.innerHTML = `
             <div class="close-button" style="cursor: pointer;">
                 &#10005; <!-- HTML entity for the letter 'X' -->

@@ -9,16 +9,16 @@
   }
 
   .header-content {
-    position: relative; /* Ensures the positioning context for the child elements */
+    position: relative;
     padding-top: 10px;
     padding-bottom: 10px;
-    text-align: center; /* Centers the text and image */
+    text-align: center;
 
     .header-image {
-      position: absolute; /* Positions the image absolutely */
-      top: -60px; /* Adjusts the position of the image upwards */
+      position: absolute;
+      top: -60px;
       left: 50%;
-      transform: translateX(-50%); /* Centers the image horizontally */
+      transform: translateX(-50%);
       height: 120px;
       width: 130px;
   }
@@ -27,7 +27,7 @@
       font-size: 35px;
       font-family: 'omyu_pretty';
       font-weight: bold;
-      margin-top: 30px; /* Adjust the margin to position the text below the image */
+      margin-top: 30px;
       color: rgb(0, 0, 0);
       text-shadow: -1.5px -1.5px 0 #ffffff, 1.5px -1.5px 0 #ffffff, -1.5px 1.5px 0 #ffffff, 1.5px 1.5px 0 #ffffff;
     }

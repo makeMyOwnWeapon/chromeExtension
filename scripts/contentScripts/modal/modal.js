@@ -19,7 +19,7 @@ export function createAndPopupModalWithElement({headerElement = undefined, bodyE
     footer.appendChild(footerElement);
 
     modal.classList.add('overlay');
-    try { // 헤더, 바디, 풋터 중 하나라도 없는 경우를 배제시킴.
+    try {
         modal.appendChild(header);
         modal.appendChild(body);
         modal.appendChild(footer);
