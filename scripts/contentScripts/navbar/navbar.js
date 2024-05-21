@@ -5,15 +5,21 @@ import { displayWorkbookContent } from '../workbook/workbook.js';
 let observer;
 
 export function toggleNavbarVisibility() {
+    const loaIcon = document.querySelector("#learningAssistantIcon");
     const navbar = document.getElementById('learningAssistantNavbar');
     if (navbar) {
         if (navbar.style.zIndex === '1000') {
             navbar.style.zIndex = '-1';
         } else {
             navbar.style.zIndex = '1000';
+            navbar.style.left = loaIcon.style.left;
+            navbar.style.top = loaIcon.style.top;
         }
     } else {
         createDraggableNavbar();
+        const navbar = document.getElementById('learningAssistantNavbar');
+        navbar.style.left = loaIcon.style.left;
+        navbar.style.top = loaIcon.style.top;
     }
 }
 

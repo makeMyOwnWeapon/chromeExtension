@@ -3,7 +3,7 @@ export function createNavbarHeader() {
   header.id = "navbarHeader";
   header.classList.add("navbar-header"); // Add class name
   header.innerHTML = `
-            <div class="close-button" style="cursor: pointer;">
+            <div class="close-button" id="navbar-close-button" style="cursor: pointer;">
                 &#10005; <!-- HTML entity for the letter 'X' -->
             </div>
             <div class="header-content">
@@ -13,9 +13,16 @@ export function createNavbarHeader() {
             <br>
             `;
 
-  const closeButton = header.querySelector(".close-button");
+  const closeButton = header.querySelector("#navbar-close-button");
   closeButton.onclick = function () {
-    document.getElementById("learningAssistantNavbar").style.zIndex = "-1";
+    const navBar = document.querySelector("#learningAssistantNavbar");
+    navBar.style.zIndex = "-1";
+    const loaIcon = document.querySelector("#learningAssistantIcon");
+    const loaIconLabel = document.querySelector("#learningAssistantLabel");
+    loaIcon.classList.remove("fade", "hidden");
+    loaIconLabel.classList.remove("fade", "hidden");
+    loaIcon.style.top = navBar.style.top;
+    loaIcon.style.left = navBar.style.left;
   };
 
   return header;
