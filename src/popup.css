@@ -5,37 +5,58 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Jua';
+  src: url('https://cdn.jsdelivr.net/gh/webfontworld/jua/Jua-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  background-color: rgb(144, 220, 245);
+}
+
 .loa-header {
-  font-family: 'omyu_pretty';
-  font-size: 35px;
-  color: rgb(0, 0, 0);
+  font-family: 'Jua';
+  font-size: 37px;
+  color: white;
   padding: 20px 0;
   font-weight: bold;
+  text-shadow: 
+    -2px -2px 0 #0098c6, 2px -2px 0 #0098c6, 
+    -2px 2px 0 #0098c6, 2px 2px 0 #0098c6;
+  margin-top: 2%;
+  margin-bottom: 13%;
 }
 
 .loa-body {
   font-family: 'omyu_pretty';
-  background-color: rgb(236, 236, 236);
+  background-color: rgba(255, 255, 255, 0.7);
   border-radius: 30px;
   text-align: center;
-  width: 300px;
+  width: 270px;
+  margin: 10px;
+  padding: 10px;
+  padding-top: 5px;
+  padding-bottom: 20px;
+  height: 290px;
 }
 
 .loa-button {
   font-family: 'omyu_pretty';
   font-size: 20px;
-  background-color: rgb(255, 255, 255);
-  color: rgb(0, 0, 0);
+  background-color: rgb(0, 143, 255);
+  color: rgb(255, 255, 255);
   padding: 10px 20px;
   margin: 8px 0;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  transition: transform 0.1s;
+  transition: transform 0.1s, background-color 0.1s;
 }
 
 .loa-button:hover {
-  background-color: rgb(222, 222, 222);
+  background-color: rgb(0, 88, 184);
 }
 
 .loa-button:active {
@@ -67,13 +88,20 @@
   background-color: rgb(0, 0, 0);
 }
 
-.controls,
-.centered {
+.controls {
   display: none;
   margin-top: 10px;
+}
+
+.controls button {
+  margin: 4px 0;
 }
 
 .centered {
   display: flex;
   justify-content: center;
+}
+
+.centered button {
+  margin: 4px 0;
 }

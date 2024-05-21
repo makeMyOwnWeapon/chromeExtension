@@ -19,7 +19,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["sounds/*", "images/*", "videos/*, env.js, popup.mjs"],
+      "resources": ["sounds/*", "images/*", "videos/*", "env.js", "popup.mjs"],
       "matches": ["<all_urls>"]
     }
   ],
