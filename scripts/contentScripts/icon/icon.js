@@ -38,6 +38,9 @@ export function addLearningAssistantIcon() {
         document.body.appendChild(label);
 
         icon.addEventListener('click', function() {
+            if (icon.classList.contains("fade")) {
+                return;
+            }
             addFadeOut(icon);
             addFadeOut(label);
             toggleNavbarVisibility();
