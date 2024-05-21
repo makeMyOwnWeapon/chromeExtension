@@ -8,7 +8,7 @@ const SERVER_URL = {
 document.addEventListener('DOMContentLoaded', function() {
     function updateLinkButton(isConnected) {
         var linkButton = document.getElementById('linkAccount');
-        linkButton.textContent = isConnected ? "연결 끊기" : "계정 연결";
+        linkButton.textContent = isConnected ? "연결 해제" : "계정 연결";
     }
 
     function toggleNewAccountButton(display) {
