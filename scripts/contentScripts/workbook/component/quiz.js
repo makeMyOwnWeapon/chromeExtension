@@ -9,8 +9,10 @@ const wrongSound = new Audio(chrome.runtime.getURL('sounds/quiz-wrong.mp3'));
 function QuizView(instruction) {
   return `
         <div class="modal-content center">
+            <span class="learn-on-air">LEARN ON-AIR</span>
             <div class="modal-header">  
               <h1 class="modal-title">${instruction}</h1>
+              <img src="https://velog.velcdn.com/images/byk0316/post/5f89557b-72ba-4821-9552-41a3401d8f73/image.png" alt="Image" class="header-image">
             </div>
             <div class="modal-body" id="choices-container">
             </div>
@@ -263,6 +265,14 @@ export function popupQuiz(quizIdx) {
       }
       choiceBtn.prepend(iconElement);
     }
+
+    const modalContent = quizModal.querySelector(".modal-content");
+    if (isCorrect) {
+      modalContent.style.backgroundColor = "#5CFF42"; // 초록색 배경
+    } else {
+      modalContent.style.backgroundColor = "#FF4242"; // 빨간색 배경
+    }
+
   });
 }
 
