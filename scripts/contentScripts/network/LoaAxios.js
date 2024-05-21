@@ -98,5 +98,3 @@ export const REPORT_PROCESSING_HOST = {
     local: 'http://localhost:3002',
     prod: 'https://www.learn-on-air.site'
 }[env];
-
-console.log("LoaAxios ", HOST, REPORT_PROCESSING_HOST);

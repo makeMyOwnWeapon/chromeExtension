@@ -123,7 +123,6 @@ export function QuizSetController(quizsetId) {
                     quiz.isPopuped = false;
                     quiz.isSended = false;
                 });
-                printQuizPopupTime();
                 renderPopupTimeCarrot();
             }
         );
@@ -166,11 +165,6 @@ export function AIQuizSetController() {
     async function select(callback) {
         const video = workbookContext.videoElement;
         quizRequestTimes = calculateRequestTimes(parseInt(video.duration));
-        console.log(
-            quizRequestTimes.map((time) => {
-                return `${parseInt(time / 60)}:${time % 60}`;
-            })
-        );
         if (quizRequestTimes.length === 0) {
             return;
         }
