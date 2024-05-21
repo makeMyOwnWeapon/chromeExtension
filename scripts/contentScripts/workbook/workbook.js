@@ -89,7 +89,7 @@ function makeWorkbookHTML_TOBE() {
         <div id='popuptime-preview'>
             <div id="popuptimes-view" class="position-relative m-4"></div>
             <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%; background-color: #91a8ff;"></div>
+                <div id="popuptime-progress-bar" class="progress-bar progress-bar-striped" style="width: 100%; background-color: #91a8ff;"></div>
             </div>
         </div>
         <div>
