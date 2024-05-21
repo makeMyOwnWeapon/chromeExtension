@@ -42,6 +42,7 @@ function startAnalysis() {
         addAnalysisBoard();
     }
     document.getElementById("analysis-end-btn").style.display='';
+    document.querySelector("#popuptime-progress-bar").classList.add("progress-bar-animated");
 }
 
 function endAnalysis() {
@@ -67,7 +68,7 @@ function endAnalysis() {
         footer.style.position = 'static';
         navbar.appendChild(footer);
     }
-
+    document.querySelector("#popuptime-progress-bar").classList.remove("progress-bar-animated");
     showReportModal();
 }
 
@@ -223,7 +224,6 @@ export function setAnalysisType(analysisType) {
             webCam.className = 'default';
             shaka_side_container.classList.remove('pre-sleep');
             shaka_side_container.classList.remove('pre-leave-seat');
-
             break;
     }
 }

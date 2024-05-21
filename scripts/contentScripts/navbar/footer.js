@@ -11,16 +11,15 @@ export function createNavbarFooter() {
   `;
 
   const createQuizsetsBtn = footer.querySelector("#createQuizsetsBtn");
-async function stepstart(){
-  await showCreateModal();
-}
-
+  async function stepstart() {
+    await showCreateModal();
+  }
 
   if (createQuizsetsBtn) {
     createQuizsetsBtn.addEventListener("click", async (event) => {
       event.preventDefault();
       await stepstart();
-      
+      document.querySelector("#navbar-close-button").click();
     });
   }
 

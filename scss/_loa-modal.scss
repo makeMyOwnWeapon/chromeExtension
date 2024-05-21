@@ -17,7 +17,7 @@ $index-upper: 1000;
   padding: 20px;
   width: 80%;
   height: auto;
-  font-family: omyu_pretty;
+  font-family: 'omyu_pretty';
 
   .modal-header {
     font-weight: bold;
@@ -157,7 +157,7 @@ $index-upper: 1000;
 }
 
 #dismissButton {
-  font-family: omyu_pretty;
+  font-family: 'omyu_pretty';
   font-size: 1.6rem;
   background-color: white;
   color: rgb(107, 191, 255);
@@ -183,7 +183,7 @@ $index-upper: 1000;
 #submit-btn {
   padding: 0px 1.125rem;
   height: 2.25rem;
-  font-family: omyu_pretty;
+  font-family: 'omyu_pretty';
   font-size: 1.6rem;
   cursor: pointer;
   border: 0.0625rem solid transparent;
@@ -195,7 +195,7 @@ $index-upper: 1000;
 #continue-btn {
   padding: 0px 1.125rem;
   height: 2.25rem;
-  font-family: omyu_pretty;
+  font-family: 'omyu_pretty';
   font-size: 1.6rem;
   cursor: pointer;
   border: 0.0625rem solid transparent;
@@ -207,7 +207,7 @@ $index-upper: 1000;
 #go-back-btn {
   padding: 0px 1.125rem;
   height: 2.25rem;
-  font-family: omyu_pretty;
+  font-family: 'omyu_pretty';
   font-size: 1.6rem;
   cursor: pointer;
   border: 0.0625rem solid;
@@ -220,7 +220,7 @@ $index-upper: 1000;
 #commentary-btn {
   padding: 0px 1.125rem;
   height: 2.25rem;
-  font-family: omyu_pretty;
+  font-family: 'omyu_pretty';
   font-size: 1.6rem;
   cursor: pointer;
   border: 0.0625rem solid rgb(107, 191, 255);
@@ -253,7 +253,7 @@ $index-upper: 1000;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    font-family: omyu_pretty;
+    font-family: ''omyu_pretty'';
     position: relative;
   }
   &.analysis-sleep .modal-content{
@@ -263,7 +263,7 @@ $index-upper: 1000;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
     font-family: omyu_pretty;
-    position: relative;
+    position: relative; /* 이미지 위치 조정을 위한 상대 위치 */
   }
 
   .modal-content {
@@ -374,7 +374,7 @@ $index-upper: 1000;
     }
 
     .close-button {
-      font-family: omyu_pretty;
+      font-family: 'omyu_pretty';
       font-size: 1.6rem;
       cursor: pointer;
       border: 0.1rem solid rgb(107, 191, 255);

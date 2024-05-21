@@ -1,0 +1,35 @@
+#learningAssistantIcon {
+  position: fixed;
+  top: 10px;
+  right: 40px;
+  width: 90px;
+  height: 110px;
+  z-index: 1001;
+  cursor: pointer;
+}
+
+#learningAssistantLabel {
+  position: fixed;
+  top: 120px;
+  right: 40px;
+  width: 90px;
+  height: 23px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  color: #007BFF;
+  font-family: 'omyu_pretty';
+}
+
+.fade {
+  transition: opacity 1s linear;
+  opacity: 0;
+}
+
+.hidden {
+  display: none;
+}

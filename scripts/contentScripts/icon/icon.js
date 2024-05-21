@@ -10,44 +10,39 @@ const handler = {
         return true;
     }
 };
-
 const LOA = new Proxy({ isActive: false }, handler);
+
+function addFadeOut(element) {
+    element.classList.add('fade');
+    element.addEventListener('transitionend', function handleTransitionEnd() {
+        if (getComputedStyle(element).opacity === '0') {
+            element.classList.add('hidden');
+            element.removeEventListener('transitionend', handleTransitionEnd);
+        }
+    });
+}
 
 export function addLearningAssistantIcon() {
     if (!LOA.isActive) {
         const icon = document.createElement('img');
         icon.src = 'https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FBVZ1P%2FbtsHujJOGgh%2FRbPh8Ec0BVWWpsP1sf7VUk%2Fimg.png';
         icon.id = 'learningAssistantIcon';
-        icon.style.position = 'fixed';
-        icon.style.top = '10px';
-        icon.style.right = '40px';
-        icon.style.width = '90px';
-        icon.style.height = '110px';
-        icon.style.zIndex = '1001';
-        icon.style.cursor = 'pointer';
+        icon.className = 'learningAssistantIcon';
 
         const label = document.createElement('div');
         label.id = 'learningAssistantLabel';
         label.innerText = 'LOA';
-        label.style.position = 'fixed';
-        label.style.top = '120px';
-        label.style.right = '40px';
-        label.style.width = '90px';
-        label.style.height = '23px';
-        label.style.backgroundColor = 'white';
-        label.style.border = '1px solid black';
-        label.style.borderRadius = '10px';
-        label.style.display = 'flex';
-        label.style.justifyContent = 'center';
-        label.style.alignItems = 'center';
-        label.style.zIndex = '1000';
-        label.style.color = '#007BFF';
-        label.style.fontFamily = 'Arial, sans-serif';
+        label.className = 'learningAssistantLabel';
 
         document.body.appendChild(icon);
         document.body.appendChild(label);
 
         icon.addEventListener('click', function() {
+            if (icon.classList.contains("fade")) {
+                return;
+            }
+            addFadeOut(icon);
+            addFadeOut(label);
             toggleNavbarVisibility();
         });
 
