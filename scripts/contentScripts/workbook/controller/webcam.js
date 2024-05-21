@@ -31,20 +31,20 @@ function captureAndSendImages(video) {
               else{
                 initializeStatusCount(0);
               }
-              if(analyticsContext.sleepCount >= 5){
+              if(analyticsContext.sleepCount >= 6){
                 analyticsContext.startedAt = formatDate(new Date());
                 showWakeUpModal();
                 setAnalysisType(ANALYSIS_TYPE.SLEEP);
               }
-              else if (analyticsContext.sleepCount >= 3) {
+              else if (analyticsContext.sleepCount >= 4) {
                 setAnalysisType(ANALYSIS_TYPE.PRE_SLEEP);
               }
-              else if(analyticsContext.existCount >= 5){
+              else if(analyticsContext.existCount >= 6){
                 analyticsContext.startedAt = formatDate(new Date());
                 showLeaveSeatModal();
                 setAnalysisType(ANALYSIS_TYPE.LEAVE_SEAT);
               }
-              else if(analyticsContext.existCount >= 3){
+              else if(analyticsContext.existCount >= 4){
                 setAnalysisType(ANALYSIS_TYPE.PRE_LEAVE_SEAT);
               } else {
                 setAnalysisType(ANALYSIS_TYPE.DEFAULT);
