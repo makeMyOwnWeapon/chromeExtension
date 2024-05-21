@@ -91,6 +91,28 @@ export async function showCreateModal() {
                     console.log('post iframe data', dataToSend);
                     iframe.contentWindow?.postMessage(dataToSend, '*');
                     
+                    window.addEventListener('message', (e) => {
+
+                        if (e.data.functionName === 'exitModal') {
+                            const modal = document.querySelector('.overlay');
+                            if (modal) {
+                                modal.remove();
+                                videoLocation.style.width = '100%';
+                            }
+                        }
+                    
+                    
+                        if (e.data.functionName === 'closeModal') {
+                            const modal = document.querySelector('.overlay');
+                            if (modal) {
+                                alert('문제 생성 완료!!');
+                                loadDefaultElementsForWorkbook();
+                                displayWorkbookContent();
+                                modal.remove();
+                                videoLocation.style.width = '100%';
+                            }
+                        }
+                    });
 
                 });
             };
@@ -102,19 +124,7 @@ export async function showCreateModal() {
     // await setIframeUrl(`${REPORT_PROCESSING_HOST}/createforextension`);
 }
 
-window.addEventListener('message', (e) => {
 
-    if (e.data.functionName === 'closeModal') {
-        const modal = document.querySelector('.overlay');
-        if (modal) {
-            alert('문제 생성 완료!!');
-            loadDefaultElementsForWorkbook();
-            displayWorkbookContent();
-            modal.remove();
-            videoLocation.style.width = '100%';
-        }
-    }
-});
 
 async function AIQuizSetControllerForExtension(callbacks) {
     
