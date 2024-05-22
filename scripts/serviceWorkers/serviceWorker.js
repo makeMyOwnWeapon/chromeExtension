@@ -45,9 +45,9 @@ function base64ToBlob(base64, mimeType) {
     return new Blob([byteArray], {type: mimeType});
   }
 
-  chrome.webRequest.onCompleted.addListener(
+chrome.webRequest.onCompleted.addListener(
     function(details) {
-      if (details.type === "xmlhttprequest" && details.url.includes("json")) {
+      if (details.type === "xmlhttprequest") {
         fetch(details.url)
           .then(response => response.json())
           .then(data => {
@@ -58,6 +58,6 @@ function base64ToBlob(base64, mimeType) {
           .catch(error => console.error('Error fetching JSON:', error));
       }
     },
-    { urls: ["<all_urls>"] }
-  );
+    { urls: ["https://www.inflearn.com/subtitles/*/json"] }
+);
   

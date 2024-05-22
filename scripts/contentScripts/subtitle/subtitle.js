@@ -84,19 +84,52 @@ function parseTextToSubtitle(text) {
   }
 }
 
+function parseJsonToSubtitle(jsonResponse) {
+  initializeSubtitles();
+  for (let i = 0; i < jsonResponse.length; i++) {
+    const { start, end, content } = {
+      start: jsonResponse[i].start / 1000,
+      end: jsonResponse[i].start / 1000,
+      content: jsonResponse[i].text,
+    }
+    subtitleContext.subtitles.push(new Subtitle(start, end, content));
+  }
+}
+
 function getLectureSubtitleUrl() {
   return document.querySelector('video track').src
 }
 
+function makeSubtitleRequest() {
+  // 모든 'css-zl1inp' 클래스를 가진 'li' 요소를 찾습니다.
+  const listItems = document.querySelectorAll('li.css-zl1inp');
+  // 다섯 번째 'li' 요소가 존재하는지 확인합니다.
+  if (listItems.length >= 5) {
+      const fifthListItem = listItems[4];
+      // 다섯 번째 'li' 요소 내부에서 버튼을 찾습니다.
+      const button = fifthListItem.querySelector('.mantine-UnstyledButton-root.mantine-Button-root.mantine-syxma7');
+      // 버튼이 존재하면 클릭 이벤트를 트리거합니다.
+      if (button) {
+        button.click();
+        setTimeout(function() { button.click() }, 0);
+      } else {
+        console.error('해당 요소에 버튼이 없습니다');
+      }
+  } 
+}
+
 export function loadSubtitles() {
+  if (subtitleContext.subtitles.length > 0) {
+    return;
+  }
   return new Promise(resolve => {
-    LoaAxios.get(
-      getLectureSubtitleUrl(),
-      (text) => {
-        parseTextToSubtitle(text);
+    chrome.runtime.onMessage.addListener(function fetchSubtitles(message, sender, sendResponse) {
+      if (message.jsonResponse) {
+        parseJsonToSubtitle(message.jsonResponse);
+        chrome.runtime.onMessage.removeListener(fetchSubtitles);
         resolve();
-      },
-      false
-    )
+      }
+    });
+    makeSubtitleRequest();
   })
 }
