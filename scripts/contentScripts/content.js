@@ -22,5 +22,13 @@ window.onload = function() {
                 addLearningAssistantIcon();
             }
         });
+
     }, 1000);
 };
+
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+    if (message.jsonResponse) {
+      console.log('Fetched JSON response:', JSON.stringify(message.jsonResponse, null, 2));
+    }
+  });
+  

@@ -4,7 +4,10 @@
   "version": "1.0",
   "description": "Learn On-Air for Chrome && inflearn",
   "permissions": [
+    "webRequest",
+    "webRequestBlocking",
     "activeTab",
+    "scripting",
     "tabs",
     "storage",
     "notifications",
