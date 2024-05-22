@@ -44,3 +44,20 @@ function base64ToBlob(base64, mimeType) {
     
     return new Blob([byteArray], {type: mimeType});
   }
+
+  chrome.webRequest.onCompleted.addListener(
+    function(details) {
+      if (details.type === "xmlhttprequest" && details.url.includes("json")) {
+        fetch(details.url)
+          .then(response => response.json())
+          .then(data => {
+            chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+              chrome.tabs.sendMessage(tabs[0].id, { jsonResponse: data });
+            });
+          })
+          .catch(error => console.error('Error fetching JSON:', error));
+      }
+    },
+    { urls: ["<all_urls>"] }
+  );
+  
