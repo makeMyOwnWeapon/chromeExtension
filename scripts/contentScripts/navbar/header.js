@@ -23,6 +23,8 @@ export function createNavbarHeader() {
     loaIconLabel.classList.remove("fade", "hidden");
     loaIcon.style.top = navBar.style.top;
     loaIcon.style.left = navBar.style.left;
+    loaIconLabel.style.top = parseInt(navBar.style.top.split('px')[0]) + loaIcon.offsetHeight + 'px';
+    loaIconLabel.style.left = navBar.style.left;
   };
 
   return header;

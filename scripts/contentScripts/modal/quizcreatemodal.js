@@ -19,32 +19,32 @@ export async function showCreateModal() {
 
 
     function setIframeUrl(url) {
-    const videoContainer = document.getElementById('course-body');
-    const videoLocation = document.getElementById('player-container');
-    if (!videoContainer) {
-        console.error('Video container not found');
-        return;
-    }    
+        const videoContainer = document.getElementById('course-body');
+        const videoLocation = document.getElementById('player-container');
+        if (!videoContainer) {
+            console.error('Video container not found');
+            return;
+        }
 
-    const modal = document.createElement('div');
-    modal.classList.add('overlay');
-    modal.innerHTML = `
+        const modal = document.createElement('div');
+        modal.classList.add('overlay');
+        modal.innerHTML = `
         <div class="draggable-header"></div>
         <iframe id="iframeContent" class="close" src="" style="width:100%; height:100%;"></iframe>
-    `;
-    videoLocation.style.width = '50%';
+        `;
+        videoLocation.style.width = '50%';
 
-    videoContainer.appendChild(modal);
-    modal.style.left = '50%';
-    modal.style.width = '50%';
-    modal.style.height = '95%';
-    modal.style.position = 'absolute';
-    
+        videoContainer.appendChild(modal);
+        modal.style.left = '50%';
+        modal.style.width = '50%';
+        modal.style.height = '95%';
+        modal.style.position = 'absolute';
+
         const iframe = document.getElementById('iframeContent');
         if (iframe) {
             iframe.src = url;
-            iframe.onload = function() {
-                chrome.storage.local.get('authToken', function(data) {
+            iframe.onload = function () {
+                chrome.storage.local.get('authToken', function (data) {
                     const token = data.authToken;
                     const dataToSend = {
                         courseTitle,
@@ -57,17 +57,17 @@ export async function showCreateModal() {
                     };
                     console.log('post iframe data', dataToSend);
                     iframe.contentWindow?.postMessage(dataToSend, '*');
-                    
-                    window.addEventListener('message', (e) => {
 
+                    window.addEventListener('message', (e) => {
                         if (e.data.functionName === 'exitModal') {
                             const modal = document.querySelector('.overlay');
                             if (modal) {
                                 modal.remove();
                                 videoLocation.style.width = '100%';
+                                document.querySelector("#createQuizsetsBtn").classList.remove('creating');
                             }
                         }
-                    
+
                         if (e.data.functionName === 'closeModal') {
                             const modal = document.querySelector('.overlay');
                             if (modal) {
@@ -76,6 +76,7 @@ export async function showCreateModal() {
                                 displayWorkbookContent();
                                 modal.remove();
                                 videoLocation.style.width = '100%';
+                                document.querySelector("#createQuizsetsBtn").classList.remove('creating');
                             }
                         }
                     });
@@ -90,7 +91,7 @@ export async function showCreateModal() {
 }
 
 async function AIQuizSetControllerForExtension(callbacks) {
-    
+
     let lastRequestTimeIdx = 0;
 
     function calculateRequestTimes(durationInSeconds) {
@@ -183,7 +184,7 @@ async function AIQuizSetControllerForExtension(callbacks) {
             console.error('Error fetching quiz:', error);
             throw error;
         });
-        
+
     }
 
     return select();
