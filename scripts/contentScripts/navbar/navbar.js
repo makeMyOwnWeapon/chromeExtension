@@ -48,6 +48,16 @@ function createDraggableNavbar() {
             let newX = pageX - shiftX;
             let newY = pageY - shiftY;
 
+            const minX = 0;
+            const minY = 0;
+            const maxX = window.innerWidth - navbar.offsetWidth;
+            const maxY = window.innerHeight - navbar.offsetHeight;
+
+            if (newX < minX) newX = minX;
+            if (newX > maxX) newX = maxX;
+            if (newY < minY) newY = minY;
+            if (newY > maxY) newY = maxY;
+
             navbar.style.left = newX + 'px';
             navbar.style.top = newY + 'px';
         }
@@ -77,11 +87,25 @@ function createDraggableNavbar() {
             navbar.oncontextmenu = null;
         };
     };
+
+    window.addEventListener('resize', () => {
+        const navbarRect = navbar.getBoundingClientRect();
+        const maxX = window.innerWidth - navbar.offsetWidth;
+        const maxY = window.innerHeight - navbar.offsetHeight;
+
+        if (navbarRect.left > maxX) {
+            navbar.style.left = maxX + 'px';
+        }
+        if (navbarRect.top > maxY) {
+            navbar.style.top = maxY + 'px';
+        }
+    });
     
     observeTextChange();
     document.body.appendChild(navbar);
     displayWorkbookContent();
 }
+
 
 
 function observeTextChange() {

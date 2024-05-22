@@ -49,7 +49,6 @@ export function showWakeUpModal() {
                 "analysisType": 0
             },
             (response) => {
-                console.log(response);
             }
         )
         analyticsContext.startedAt = null;

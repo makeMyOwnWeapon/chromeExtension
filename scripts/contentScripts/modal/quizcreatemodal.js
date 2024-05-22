@@ -55,7 +55,6 @@ export async function showCreateModal() {
                         authToken: token,
                         quizRequestTimes
                     };
-                    console.log('post iframe data', dataToSend);
                     iframe.contentWindow?.postMessage(dataToSend, '*');
 
                     window.addEventListener('message', (e) => {
