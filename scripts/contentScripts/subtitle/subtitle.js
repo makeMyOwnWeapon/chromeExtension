@@ -111,7 +111,7 @@ function makeSubtitleRequest() {
       // 버튼이 존재하면 클릭 이벤트를 트리거합니다.
       if (button) {
         button.click();
-        setTimeout(function() { button.click() }, 0);
+        setTimeout(function() { button.click() }, 100);
       } else {
         console.error('해당 요소에 버튼이 없습니다');
       }
