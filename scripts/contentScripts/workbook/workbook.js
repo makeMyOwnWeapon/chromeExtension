@@ -100,7 +100,7 @@ function makeWorkbookHTML_TOBE() {
             <span> 학습 종료 </span>
         </button>
         </div>
-        <video autoplay style="width: 100%; display: none;" id="web-cam"></video>
+        <video autoplay style="width: 100%; display: none; transform: rotateY(180deg);" id="web-cam"></video>
     </div>
   `;
 }
