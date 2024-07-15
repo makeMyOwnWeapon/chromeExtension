@@ -12,6 +12,8 @@ export const analyticsContext = {
   videoIntervalId: null
 };
 
+const STATUS_RECOGNITION_COUNT = 60;
+
 function captureAndSendImages(video) {
   const canvas = document.createElement('canvas');
   const context = canvas.getContext('2d');
@@ -28,23 +30,23 @@ function captureAndSendImages(video) {
               else if(!response.isExist){
                 analyticsContext.existCount += 1;
               }
-              else{
+              else {
                 initializeStatusCount(0);
               }
-              if(analyticsContext.sleepCount >= 6){
+              if(analyticsContext.sleepCount >= STATUS_RECOGNITION_COUNT) {
                 analyticsContext.startedAt = formatDate(new Date());
                 showWakeUpModal();
                 setAnalysisType(ANALYSIS_TYPE.SLEEP);
               }
-              else if (analyticsContext.sleepCount >= 4) {
+              else if (analyticsContext.sleepCount >= STATUS_RECOGNITION_COUNT - 10) {
                 setAnalysisType(ANALYSIS_TYPE.PRE_SLEEP);
               }
-              else if(analyticsContext.existCount >= 6){
+              else if(analyticsContext.existCount >= STATUS_RECOGNITION_COUNT){
                 analyticsContext.startedAt = formatDate(new Date());
                 showLeaveSeatModal();
                 setAnalysisType(ANALYSIS_TYPE.LEAVE_SEAT);
               }
-              else if(analyticsContext.existCount >= 4){
+              else if(analyticsContext.existCount >= STATUS_RECOGNITION_COUNT - 10){
                 setAnalysisType(ANALYSIS_TYPE.PRE_LEAVE_SEAT);
               } else {
                 setAnalysisType(ANALYSIS_TYPE.DEFAULT);
